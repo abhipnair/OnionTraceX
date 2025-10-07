@@ -15,12 +15,12 @@ def normalise_url(url) -> str:
 
 
     normalized = parsed_url._replace(
-    scheme=parsed_url.scheme.lower(),
-    netloc=parsed_url.netloc.lower(),
-    path=path,
-    params="",
-    query="",
-    fragment="",
+        scheme=parsed_url.scheme.lower(),
+        netloc=parsed_url.netloc.lower(),
+        path=path,
+        params="",
+        query="",
+        fragment="",
     )   
 
 
