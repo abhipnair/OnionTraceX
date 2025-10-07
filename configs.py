@@ -1,0 +1,7 @@
+# default configurations tor network
+
+
+TOR_SOCKS_DEFAULT = 9050
+TOR_SOCKS_CONTROL_DEFAULT = 9051
+TOR_CONTROL_PASSWORD = ""
+SOCKS_HOST = "127.0.0.1"
