@@ -17,6 +17,8 @@ from Crawler.unified_crawler import UnifiedCrawler
 from Essentials.configs import *
 from datetime import datetime
 
+from Logging_Mechanism.logger import *
+import atexit
 
 
 
@@ -43,14 +45,28 @@ crawler_message = ""
 
 # Create a dedicated async loop in a background thread
 loop = asyncio.new_event_loop()
+db_pool = None
 
+async def init_db_pool():
+    global db_pool
+    if not db_pool:
+        db_pool = await asyncpg.create_pool(**DB_CONFIG, min_size=1, max_size=10)
+        info("AsyncPG pool initialized.")
 
 def run_background_loop(loop):
     asyncio.set_event_loop(loop)
     loop.run_forever()
 
-
 threading.Thread(target=run_background_loop, args=(loop,), daemon=True).start()
+
+
+@atexit.register
+def close_pool():
+    global db_pool
+    if db_pool:
+        future = asyncio.run_coroutine_threadsafe(db_pool.close(), loop)
+        future.result()
+        print("Closed asyncpg connection pool.")
 
 
 # ==================== ASYNC CRAWLER CORE ====================
@@ -62,10 +78,18 @@ async def run_crawler(keywords: list[str], seed_depth: int, pages: int, crawl_de
         crawler_message = "Initializing crawler components..."
         crawler_progress = 5
 
-        pool = await asyncpg.create_pool(**DB_CONFIG)
-        link_manager = LinkManager(pool=pool)
+        if not db_pool:
+            try:
+                await init_db_pool()
+            except Exception as e:
+                crawler_status = "error"
+                crawler_message = f"Failed to initialize DB pool: {e}"
+                error(f"[CRAWLER INIT ERROR] {e}")
+                return
 
-        # 1️⃣ Seed collection phase
+        link_manager = LinkManager(pool=db_pool) # type: ignore
+
+        # 1️ Seed collection phase
         if keywords:
             crawler_message = f"Collecting seeds for: {', '.join(keywords)}"
             seed = SeedCollector(link_manager=link_manager, max_depth=seed_depth, max_pages=pages)
@@ -73,7 +97,7 @@ async def run_crawler(keywords: list[str], seed_depth: int, pages: int, crawl_de
                 await seed.collect_from_keywords(kw)
             crawler_progress = 30
 
-        # 2️⃣ Crawler start
+        # 2️ Crawler start
         crawler_status = "running"
         crawler_message = "Launching unified crawler..."
         crawler_progress = 50
@@ -85,7 +109,6 @@ async def run_crawler(keywords: list[str], seed_depth: int, pages: int, crawl_de
         crawler_message = "Crawler finished successfully!"
         crawler_progress = 100
 
-        await pool.close()
 
     except asyncio.CancelledError:
         crawler_status = "stopped"
@@ -95,30 +118,73 @@ async def run_crawler(keywords: list[str], seed_depth: int, pages: int, crawl_de
         crawler_status = "error"
         crawler_message = f"Error: {e}"
         crawler_progress = 0
-        print(f"[CRAWLER ERROR] {e}")
+        error(f"[CRAWLER ERROR] {e}")
 
 
-# ==================== API ROUTES ====================
 @app.route("/api/crawler/start", methods=["POST"])
 def start_crawler():
     global crawler_task, crawler_status, crawler_progress, crawler_message
 
-    # Prevent multiple concurrent runs
     if crawler_task and not crawler_task.done():
         return jsonify({"status": "error", "message": "Crawler already running"}), 400
 
-    data = request.json or {}
-    keywords_field = data.get("keywords", [])
-    if isinstance(keywords_field, list):
-        keywords = [kw.strip() for kw in keywords_field if kw.strip()]
+    # --- Handle both JSON and multipart/form-data ---
+    keywords = []
+    seed_file = None
+
+    if request.content_type.startswith("multipart/form-data"):
+        # Text keywords
+        raw_kw = request.form.get("keywords", "")
+        if raw_kw:
+            keywords += [k.strip() for k in raw_kw.split(",") if k.strip()]
+
+        # Uploaded file
+        seed_file = request.files.get("seed_file")
+        if seed_file:
+            try:
+                # Try reading as text (UTF-8)
+                content = seed_file.read().decode("utf-8", errors="ignore")
+                # Split by line or comma
+                file_keywords = [
+                    k.strip() for part in content.splitlines() for k in part.split(",") if k.strip()
+                ]
+                keywords += file_keywords
+            except Exception as e:
+                error(f"Error reading seed file: {e}")
+                return jsonify({"status": "error", "message": "Invalid seed file format"}), 400
     else:
-        keywords = [kw.strip() for kw in keywords_field.split(",") if kw.strip()]
+        # JSON-based request
+        data = request.json or {}
+        kw_field = data.get("keywords", [])
+        if isinstance(kw_field, list):
+            keywords = [k.strip() for k in kw_field if k.strip()]
+        elif isinstance(kw_field, str):
+            keywords = [k.strip() for k in kw_field.split(",") if k.strip()]
 
-    seed_depth = int(data.get("seed_depth", 2))
-    pages = int(data.get("pages", 5))
-    crawl_depth = int(data.get("crawl_depth", 2))
-    polite_delay = float(data.get("polite_delay", 2.0))
+    # Deduplicate keywords
+    keywords = list(set(keywords))
 
+    # --- Handle empty keyword set ---
+    if not keywords:
+        return jsonify({
+            "status": "error",
+            "message": "No valid keywords provided (enter keywords or upload a seed file)"
+        }), 400
+
+    # --- Parameters ---
+    def get_param(key, default, cast_func):
+        return cast_func(
+            request.form.get(key)
+            or (request.json.get(key) if request.is_json else None) # type: ignore
+            or default
+        )
+
+    seed_depth = get_param("seed_depth", 2, int)
+    pages = get_param("pages", 5, int)
+    crawl_depth = get_param("crawl_depth", 2, int)
+    polite_delay = get_param("polite_delay", 2.0, float)
+
+    # --- Start crawler ---
     crawler_message = "Crawler starting..."
     crawler_status = "starting"
     crawler_progress = 1
@@ -127,7 +193,13 @@ def start_crawler():
         run_crawler(keywords, seed_depth, pages, crawl_depth, polite_delay), loop
     )
 
-    return jsonify({"status": "success", "message": "Crawler started"})
+    info(f"Starting crawler with {len(keywords)} keywords: {keywords[:5]}{'...' if len(keywords) > 5 else ''}")
+    return jsonify({
+        "status": "success",
+        "message": f"Crawler started with {len(keywords)} keyword(s)"
+    })
+
+
 
 
 @app.route("/api/crawler/status", methods=["GET"])
@@ -153,12 +225,7 @@ def stop_crawler():
         return jsonify({"status": "success", "message": "Crawler stopped"}), 200
     return jsonify({"status": "idle", "message": "No active crawler"}), 400
 
-def connect_db():
-    """Placeholder function for future DB connection"""
-    global conn
-    conn = {"status": "connected", "engine": "mock"}
-    print("✅ Mock database connection established.")
-    return conn
+
 
 # ==================== MOCK DATA INITIALIZATION ====================
 
@@ -236,7 +303,7 @@ def initialize_mock_data():
             'isMixer': random.random() < 0.15,
             'lastActivity': (datetime.now() - timedelta(hours=random.randint(0, 2160))).strftime('%Y-%m-%d %H:%M')
         })
-    print("✅ Mock data initialized.")
+    print("Mock data initialized.")
 
 
 # ==================== HELPERS ====================
@@ -264,21 +331,29 @@ def get_int_param(param, default, min_val=1, max_val=None):
 @app.route("/api/stats")
 def stats():
     async def fetch_stats():
-        pool = await asyncpg.create_pool(**DB_CONFIG)
-        async with pool.acquire() as conn:
-            # Total count
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn: # type: ignore
             total = await conn.fetchval('SELECT COUNT(*) FROM "onionsites";')
-            # Count by status
-            alive = await conn.fetchval('SELECT COUNT(*) FROM "onionsites" WHERE LOWER(current_status) = LOWER($1);', 'Alive')
-            dead = await conn.fetchval('SELECT COUNT(*) FROM "onionsites" WHERE LOWER(current_status) = LOWER($1);', 'Dead')
-            timeout = await conn.fetchval('SELECT COUNT(*) FROM "onionsites" WHERE LOWER(current_status) = LOWER($1);', 'Timeout')
-        await pool.close()
+            alive = await conn.fetchval(
+                'SELECT COUNT(*) FROM "onionsites" WHERE LOWER(current_status) = LOWER($1);', 'Alive'
+            )
+            dead = await conn.fetchval(
+                'SELECT COUNT(*) FROM "onionsites" WHERE LOWER(current_status) = LOWER($1);', 'Dead'
+            )
+            timeout = await conn.fetchval(
+                'SELECT COUNT(*) FROM "onionsites" WHERE LOWER(current_status) = LOWER($1);', 'Timeout'
+            )
         return total, alive, dead, timeout
 
     try:
-        total, alive, dead, timeout = asyncio.run(fetch_stats())
+        # Run the coroutine safely in the existing background loop
+        future = asyncio.run_coroutine_threadsafe(fetch_stats(), loop)
+        total, alive, dead, timeout = future.result()
 
-        # Prevent division by zero
+        # Avoid division by zero
         if total == 0:
             alive_percent = dead_percent = timeout_percent = 0.0
         else:
@@ -286,7 +361,7 @@ def stats():
             dead_percent = round((dead / total) * 100, 1)
             timeout_percent = round((timeout / total) * 100, 1)
 
-        # Response JSON — structure matches your existing frontend
+        # Structure matches frontend expectations
         return jsonify({
             "success": True,
             "data": {
@@ -296,13 +371,13 @@ def stats():
                 "timeoutPercent": timeout_percent,
                 "activeCrawlers": 1,
                 "avgCrawlTime": round(random.uniform(2, 8), 2),
-                "totalVendors": 0,   # keep mock for now
-                "totalWallets": 0   # keep mock for now
+                "totalVendors": 0,
+                "totalWallets": 0
             }
         })
 
     except Exception as e:
-        print("❌ /api/stats DB error:", e)
+        error("❌ /api/stats DB error:", e)
         return jsonify({"success": False, "error": str(e)}), 500
 
 
@@ -311,8 +386,10 @@ def _get_liveness():
     days = int(request.args.get("days", 30))
 
     async def fetch_liveness():
-        pool = await asyncpg.create_pool(**DB_CONFIG)
-        async with pool.acquire() as conn:
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+        async with db_pool.acquire() as conn: # type: ignore
             rows = await conn.fetch("""
                 SELECT 
                     DATE(last_seen) AS date,
@@ -324,25 +401,35 @@ def _get_liveness():
                 GROUP BY DATE(last_seen)
                 ORDER BY DATE(last_seen);
             """ % days)
-        await pool.close()
         return rows
 
     try:
-        rows = asyncio.run(fetch_liveness())
+        future = asyncio.run_coroutine_threadsafe(fetch_liveness(), loop)
+        rows = future.result()
+
         data = [
-            {"date": str(r["date"]), "alive": r["alive"], "dead": r["dead"], "timeout": r["timeout"]}
+            {
+                "date": str(r["date"]),
+                "alive": r["alive"],
+                "dead": r["dead"],
+                "timeout": r["timeout"]
+            }
             for r in rows
         ]
         return jsonify({"success": True, "data": data})
+
     except Exception as e:
-        print("❌ /api/liveness DB error:", e)
+        error("❌ /api/liveness DB error:", e)
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 @app.route("/api/categories", methods=["GET"])
 def _get_categories():
     async def fetch_categories():
-        pool = await asyncpg.create_pool(**DB_CONFIG)
-        async with pool.acquire() as conn:
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+        async with db_pool.acquire() as conn: # type: ignore
             rows = await conn.fetch("""
                 SELECT 
                     COALESCE(NULLIF(TRIM(keyword), ''), 'Others') AS name,
@@ -351,14 +438,13 @@ def _get_categories():
                 GROUP BY name
                 ORDER BY value DESC;
             """)
-        await pool.close()
         return rows
 
     try:
-        rows = asyncio.run(fetch_categories())
+        future = asyncio.run_coroutine_threadsafe(fetch_categories(), loop)
+        rows = future.result()
+
         palette = ["#06b6d4", "#8b5cf6", "#ef4444", "#f59e0b", "#10b981", "#6366f1", "#3b82f6", "#a855f7"]
-        
-        # Transform to frontend-ready structure
         data = [
             {
                 "name": r["name"],
@@ -367,20 +453,22 @@ def _get_categories():
             }
             for i, r in enumerate(rows)
         ]
-
         return jsonify({"success": True, "data": data})
-    
+
     except Exception as e:
-        print("❌ /api/categories DB error:", e)
+        error("/api/categories DB error:", e)
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 
 
 @app.route("/api/keywords", methods=["GET"])
 def _get_keywords():
     async def fetch_keywords():
-        pool = await asyncpg.create_pool(**DB_CONFIG)
-        async with pool.acquire() as conn:
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+        async with db_pool.acquire() as conn: # type: ignore
             rows = await conn.fetch("""
                 SELECT 
                     COALESCE(NULLIF(TRIM(keyword), ''), 'Others') AS keyword,
@@ -390,13 +478,12 @@ def _get_keywords():
                 ORDER BY discovered DESC
                 LIMIT 20;
             """)
-        await pool.close()
         return rows
 
     try:
-        rows = asyncio.run(fetch_keywords())
-        
-        # Transform query results to frontend-compatible format
+        future = asyncio.run_coroutine_threadsafe(fetch_keywords(), loop)
+        rows = future.result()
+
         data = [
             {
                 "keyword": r["keyword"],
@@ -404,12 +491,12 @@ def _get_keywords():
             }
             for r in rows
         ]
-        
         return jsonify({"success": True, "data": data})
-    
+
     except Exception as e:
-        print("❌ /api/keywords DB error:", e)
+        error("/api/keywords DB error:", e)
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 
 
@@ -417,8 +504,11 @@ def _get_keywords():
 @app.route("/api/sites")
 def sites():
     async def fetch_sites(search, status, keyword, start_date, end_date, page, size):
-        pool = await asyncpg.create_pool(**DB_CONFIG)
-        async with pool.acquire() as conn:
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn: # type: ignore
             query = """
                 SELECT site_id AS id, url, keyword, current_status AS status,
                        first_seen, last_seen, source
@@ -433,9 +523,8 @@ def sites():
             """
             offset = (page - 1) * size
 
-            # Convert dates safely
-            start_dt = None
-            end_dt = None
+            # Safely parse dates
+            start_dt = end_dt = None
             try:
                 if start_date:
                     start_dt = datetime.strptime(start_date, "%Y-%m-%d")
@@ -446,7 +535,7 @@ def sites():
 
             rows = await conn.fetch(query, search, status, keyword, start_dt, end_dt, size, offset)
             total = await conn.fetchval("SELECT COUNT(*) FROM onionsites;")
-        await pool.close()
+
         return rows, total
 
     try:
@@ -458,7 +547,11 @@ def sites():
         page = int(request.args.get("page", 1))
         size = int(request.args.get("page_size", 25))
 
-        rows, total = asyncio.run(fetch_sites(search, status, keyword, start_date, end_date, page, size))
+        # ✅ Run coroutine in background loop
+        future = asyncio.run_coroutine_threadsafe(
+            fetch_sites(search, status, keyword, start_date, end_date, page, size), loop
+        )
+        rows, total = future.result()
 
         data = [
             {
@@ -484,14 +577,17 @@ def sites():
         })
 
     except Exception as e:
-        print("❌ /api/sites DB error:", e)
+        error("/api/sites DB error:", e)
         return jsonify({"success": False, "error": str(e)}), 500
 
 @app.route("/api/site/<site_id>", methods=["GET"])
 def get_site_details(site_id):
     async def fetch_site(site_id):
-        pool = await asyncpg.create_pool(**DB_CONFIG)
-        async with pool.acquire() as conn:
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn: # type: ignore
             query = """
                 SELECT 
                     site_id,
@@ -504,12 +600,13 @@ def get_site_details(site_id):
                 FROM onionsites
                 WHERE site_id = $1;
             """
-            result = await conn.fetchrow(query, site_id)
-        await pool.close()
-        return result
+            return await conn.fetchrow(query, site_id)
 
     try:
-        row = asyncio.run(fetch_site(site_id))
+        # ✅ Run async safely inside Flask
+        future = asyncio.run_coroutine_threadsafe(fetch_site(site_id), loop)
+        row = future.result()
+
         if not row:
             return jsonify({"success": False, "error": "Site not found"}), 404
 
@@ -521,7 +618,6 @@ def get_site_details(site_id):
             "status": row["status"],
             "firstSeen": row["first_seen"].strftime("%Y-%m-%d %H:%M") if row["first_seen"] else None,
             "lastSeen": row["last_seen"].strftime("%Y-%m-%d %H:%M") if row["last_seen"] else None,
-            # Future-proof placeholder for metadata or page analysis
             "title": None,
             "metadata": {
                 "ssl_cert": "N/A",
@@ -534,7 +630,7 @@ def get_site_details(site_id):
         return jsonify({"success": True, "data": data})
 
     except Exception as e:
-        print(f"❌ /api/site/{site_id} error:", e)
+        error(f"/api/site/{site_id} error:", e)
         return jsonify({"success": False, "error": str(e)}), 500
 
 
@@ -739,12 +835,12 @@ def internal_error(e):
 # ==================== ENTRYPOINT ====================
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("🌐  OnionTraceX Flask Backend API")
-    print("=" * 60)
-    connect_db()
+    info("=" * 60)
+    info("🌐  OnionTraceX Flask Backend API")
+    info("=" * 60)
+    asyncio.run_coroutine_threadsafe(init_db_pool(), loop)
     initialize_mock_data()
-    print(f"Sites: {len(mock_data['sites'])} | Vendors: {len(mock_data['vendors'])} | Wallets: {len(mock_data['bitcoins'])}")
-    print("Running at: http://localhost:5000")
-    print("=" * 60)
+    info(f"Sites: {len(mock_data['sites'])} | Vendors: {len(mock_data['vendors'])} | Wallets: {len(mock_data['bitcoins'])}")
+    info("Running at: http://localhost:5000")
+    info("=" * 60)
     app.run(host="0.0.0.0", port=5000, debug=True)
