@@ -9,6 +9,12 @@ const CrawlerControlPanel: React.FC = () => {
   const [crawlerMessage, setCrawlerMessage] = useState("");
   const [crawlerLoading, setCrawlerLoading] = useState(false);
 
+  // adjustable crawler parameters
+  const [seedDepth, setSeedDepth] = useState(2);
+  const [pages, setPages] = useState(5);
+  const [crawlDepth, setCrawlDepth] = useState(3);
+  const [politeDelay, setPoliteDelay] = useState(2.0);
+
   const API_BASE = "http://localhost:5000/api/crawler";
 
   // --- API Functions ---
@@ -17,18 +23,34 @@ const CrawlerControlPanel: React.FC = () => {
     setCrawlerMessage("Starting crawler...");
 
     try {
-      const body = {
-        keywords: crawlerKeywords.split(",").map(k => k.trim()).filter(Boolean),
-        seed_depth: 2,
-        pages: 5,
-        crawl_depth: 3,
-        polite_delay: 2.0,
-      };
+      // build body or form data based on file
+      let body: BodyInit;
+      let headers: Record<string, string> = {};
+
+      if (crawlerFile) {
+        const formData = new FormData();
+        formData.append("keywords", crawlerKeywords);
+        formData.append("seed_depth", String(seedDepth));
+        formData.append("pages", String(pages));
+        formData.append("crawl_depth", String(crawlDepth));
+        formData.append("polite_delay", String(politeDelay));
+        formData.append("seed_file", crawlerFile);
+        body = formData;
+      } else {
+        headers["Content-Type"] = "application/json";
+        body = JSON.stringify({
+          keywords: crawlerKeywords.split(",").map(k => k.trim()).filter(Boolean),
+          seed_depth: seedDepth,
+          pages,
+          crawl_depth: crawlDepth,
+          polite_delay: politeDelay,
+        });
+      }
 
       const res = await fetch(`${API_BASE}/start`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        headers,
+        body,
       });
 
       const data = await res.json();
@@ -68,7 +90,6 @@ const CrawlerControlPanel: React.FC = () => {
     }
   };
 
-  // Auto-refresh crawler status every 5s
   useEffect(() => {
     const interval = setInterval(checkCrawlerStatus, 5000);
     return () => clearInterval(interval);
@@ -94,47 +115,115 @@ const CrawlerControlPanel: React.FC = () => {
       </div>
 
       {/* Input Section */}
-      <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50">
-        <div className="space-y-4">
+      <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50 space-y-6">
+        {/* Keyword and file inputs */}
+        <div>
+          <label className="block text-gray-400 mb-2 font-medium">Search Keywords</label>
+          <input
+            type="text"
+            value={crawlerKeywords}
+            onChange={(e) => setCrawlerKeywords(e.target.value)}
+            placeholder="Enter comma-separated keywords (e.g., drugs, hacking, forum)"
+            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-400 mb-2 font-medium">Seed File (optional)</label>
+          <input
+            type="file"
+            onChange={(e) => setCrawlerFile(e.target.files ? e.target.files[0] : null)}
+            className="w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-cyan-600/20 file:text-cyan-300 hover:file:bg-cyan-600/30 transition-all"
+          />
+          {crawlerFile && (
+            <p className="text-sm text-gray-400 mt-2">
+              Selected: <span className="text-cyan-400">{crawlerFile.name}</span>
+            </p>
+          )}
+        </div>
+
+        {/* Parameter sliders */}
+        <div className="grid grid-cols-2 gap-6">
           <div>
-            <label className="block text-gray-400 mb-2 font-medium">Search Keywords</label>
+            <label className="block text-gray-400 mb-2 font-medium">
+              Seed Depth ({seedDepth})
+            </label>
             <input
-              type="text"
-              value={crawlerKeywords}
-              onChange={(e) => setCrawlerKeywords(e.target.value)}
-              placeholder="Enter comma-separated keywords (e.g., drugs, hacking, forum)"
-              className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
+              type="range"
+              min="1"
+              max="5"
+              step="1"
+              value={seedDepth}
+              onChange={(e) => setSeedDepth(Number(e.target.value))}
+              className="w-full accent-cyan-500"
             />
           </div>
 
           <div>
-            <label className="block text-gray-400 mb-2 font-medium">Seed File (optional)</label>
+            <label className="block text-gray-400 mb-2 font-medium">
+              Crawl Depth ({crawlDepth})
+            </label>
             <input
-              type="file"
-              onChange={(e) => setCrawlerFile(e.target.files ? e.target.files[0] : null)}
-              className="w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-cyan-600/20 file:text-cyan-300 hover:file:bg-cyan-600/30 transition-all"
+              type="range"
+              min="1"
+              max="5"
+              step="1"
+              value={crawlDepth}
+              onChange={(e) => setCrawlDepth(Number(e.target.value))}
+              className="w-full accent-cyan-500"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              onClick={handleStartCrawler}
-              disabled={crawlerLoading || (!crawlerKeywords && !crawlerFile)}
-              className="py-3 bg-cyan-600 hover:bg-cyan-700 rounded-lg font-semibold text-white flex justify-center items-center gap-2 disabled:opacity-50 transition-all"
-            >
-              {crawlerLoading ? <RefreshCw className="animate-spin" size={18} /> : <Play size={18} />}
-              {crawlerLoading ? "Starting..." : "Start Crawler"}
-            </button>
-
-            <button
-              onClick={handleStopCrawler}
-              disabled={crawlerStatus !== "running"}
-              className="py-3 bg-red-600 hover:bg-red-700 rounded-lg font-semibold text-white flex justify-center items-center gap-2 disabled:opacity-50 transition-all"
-            >
-              <Square size={18} />
-              Stop Crawler
-            </button>
+          <div>
+            <label className="block text-gray-400 mb-2 font-medium">
+              Pages ({pages})
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="20"
+              step="1"
+              value={pages}
+              onChange={(e) => setPages(Number(e.target.value))}
+              className="w-full accent-cyan-500"
+            />
           </div>
+
+          <div>
+            <label className="block text-gray-400 mb-2 font-medium">
+              Polite Delay ({politeDelay}s)
+            </label>
+            <input
+              type="range"
+              min="0.5"
+              max="5"
+              step="0.5"
+              value={politeDelay}
+              onChange={(e) => setPoliteDelay(Number(e.target.value))}
+              className="w-full accent-cyan-500"
+            />
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="grid grid-cols-2 gap-4">
+          <button
+            onClick={handleStartCrawler}
+            disabled={crawlerLoading || (!crawlerKeywords && !crawlerFile)}
+            className="py-3 bg-cyan-600 hover:bg-cyan-700 rounded-lg font-semibold text-white flex justify-center items-center gap-2 disabled:opacity-50 transition-all"
+          >
+            {crawlerLoading ? <RefreshCw className="animate-spin" size={18} /> : <Play size={18} />}
+            {crawlerLoading ? "Starting..." : "Start Crawler"}
+          </button>
+
+          <button
+            onClick={handleStopCrawler}
+            disabled={crawlerStatus !== "running"}
+            className="py-3 bg-red-600 hover:bg-red-700 rounded-lg font-semibold text-white flex justify-center items-center gap-2 disabled:opacity-50 transition-all"
+          >
+            <Square size={18} />
+            Stop Crawler
+          </button>
         </div>
       </div>
 
@@ -169,7 +258,7 @@ const CrawlerControlPanel: React.FC = () => {
         <p className="text-gray-400 text-sm mt-2">Progress: {crawlerProgress}%</p>
       </div>
 
-      {/* Log / Message Box */}
+      {/* Message / Logs */}
       {crawlerMessage && (
         <div
           className={`p-4 rounded-lg font-mono text-sm border ${
