@@ -1,4 +1,7 @@
 from urllib.parse import urlparse, urlunparse
+import hashlib
+from datetime import datetime, timedelta, timezone
+
 
 def normalise_url(url) -> str:
 
@@ -25,6 +28,24 @@ def normalise_url(url) -> str:
 
 
     return urlunparse(normalized)
-    
 
-normalise_url("http://example.onion/about")
+
+def remove_path_from_url(url:str) -> str:
+
+    parsed_url = urlparse(url.strip())
+
+    normalized = parsed_url._replace(
+        scheme=parsed_url.scheme.lower(),
+        netloc=parsed_url.netloc.lower(),
+        path='/',
+        params="",
+        query="",
+        fragment="",
+    )  
+
+    return urlunparse(normalized)
+
+
+
+print(normalise_url("http://darknet4bff34uw2miup7apwov45cz3gzs34q4hiloabfurwrvbajlid.onion/threads/leaked-onlyfans-1000-account.14568/"))
+print(remove_path_from_url("http://darknet4bff34uw2miup7apwov45cz3gzs34q4hiloabfurwrvbajlid.onion/threads/leaked-onlyfans-1000-account.14568/"))

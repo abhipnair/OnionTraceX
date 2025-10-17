@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "OnionTraceXDB",
+            "group": "OnionTraceX",
+            "database": "oniontracex_db",
+            "username": "onion_user",
+            "password": "112233"
+        }
+    ]
+}

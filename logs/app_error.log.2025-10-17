@@ -1,0 +1,8 @@
+2025-10-17 05:55:01 - app - ERROR - [logger.py:104] - ❌ Fatal error in main: Invalid scheme component: socks5h
+2025-10-17 12:19:32 - app - ERROR - [logger.py:104] - Unexpected error for http://efdpwqctrwjfsl44kmxdvfn4ljwqf2e6w3h3jr74dlm6cnueolyxpyid.onion/: Host unreachable
+2025-10-17 13:09:53 - app - ERROR - [logger.py:104] - Unexpected error for http://blackgjlz4hzr7uzlvpgmbef7nmujdl4gy4ae4hjus5lghadz4e7hryd.onion/: Host unreachable
+2025-10-17 13:22:29 - app - ERROR - [logger.py:104] - Unexpected error for http://wiki6lfogb43ifgrn2m7jsb443v2opleqjyk433enwsiaofyj5c45tyd.onion/: Host unreachable
+2025-10-17 13:23:20 - app - ERROR - [logger.py:104] - Unexpected error for http://duxorwwyvw5ceh76bpqgritag7w2rqds5untnt52gmfndn54z74fe5id.onion/: Host unreachable
+2025-10-17 13:23:45 - app - ERROR - [logger.py:104] - Unexpected error for http://kem53mu3dlq4czv2icaxcg5ifzgz4vd6zy4644k6w46t6suun6evatad.onion/: Host unreachable
+2025-10-17 13:25:34 - app - ERROR - [logger.py:104] - Unexpected error for http://wiki6lfogb43ifgrn2m7jsb443v2opleqjyk433enwsiaofyj5c45tyd.onion/: Host unreachable
+2025-10-17 13:30:49 - app - ERROR - [logger.py:104] - Unexpected error for http://wiki6lfogb43ifgrn2m7jsb443v2opleqjyk433enwsiaofyj5c45tyd.onion/: Host unreachable

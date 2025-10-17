@@ -1,4 +1,4 @@
-import configs
+import Essentials.configs as configs
 from typing import cast
 
 
@@ -24,7 +24,7 @@ class Connector:
 
 
     def connect(self):
-        self._controller = Controller.from_port(port=str(self.default_control_port))
+        self._controller = Controller.from_port(port=int(control_port))
         
         if self.control_password :
             self._controller.authenticate(password=self.control_password)
@@ -60,9 +60,12 @@ class TorProcessManager:
             raise RuntimeError("No tor binary available to launch !")
         
         config = {
-            "SocksPort": str(self.socks_port),
-            "ControlPort": str(self.control_port)
+            "SocksPort": "0",          # auto-assign free SOCKS port
+            "ControlPort": "0",        # auto-assign free Control port
+            "DataDirectory": "./tor_data",
+            "Log": "notice stdout"
         }
+
         tor_cmd = cast(str, self.tor_binary)
         self.process = launch_tor_with_config(config=config, take_ownership=True, tor_cmd=tor_cmd)
 
@@ -83,9 +86,8 @@ async def tor_session(socks_host=configs.SOCKS_HOST, socks_port=configs.TOR_SOCK
     If launch_tor_if_missing==True, will attempt to launch tor process (requires tor binary).
     """
 
-    connector = ProxyConnector.from_url(f"socks5h://{socks_host}:{socks_port}")
+    connector = ProxyConnector.from_url(f"socks5://{socks_host}:{socks_port}")
     session = aiohttp.ClientSession(connector=connector, trust_env=False)
-
     tor_proc_mgr = None
     controller = None
 
