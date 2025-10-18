@@ -45,7 +45,3 @@ def remove_path_from_url(url:str) -> str:
 
     return urlunparse(normalized)
 
-
-
-print(normalise_url("http://darknet4bff34uw2miup7apwov45cz3gzs34q4hiloabfurwrvbajlid.onion/threads/leaked-onlyfans-1000-account.14568/"))
-print(remove_path_from_url("http://darknet4bff34uw2miup7apwov45cz3gzs34q4hiloabfurwrvbajlid.onion/threads/leaked-onlyfans-1000-account.14568/"))

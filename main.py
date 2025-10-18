@@ -28,7 +28,7 @@ class Main:
         SeedCollector(link_manager=link_manager, max_depth=self.seed_max_depth, max_pages=self.pages)
 
         #4. Crawler Based on keywords
-        UnifiedCrawler(link_manager=link_manager, max_depth=self.crawler_max_depth, polite_delay=self.polite_delay)
+        crawler = UnifiedCrawler(link_manager=link_manager, max_depth=self.crawler_max_depth, polite_delay=self.polite_delay)
         task = asyncio.create_task(crawler.start())
         await asyncio.sleep(60)
         await crawler.stop()

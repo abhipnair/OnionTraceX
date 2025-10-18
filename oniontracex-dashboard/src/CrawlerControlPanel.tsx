@@ -151,7 +151,7 @@ const CrawlerControlPanel: React.FC = () => {
             <input
               type="range"
               min="1"
-              max="5"
+              max="15"
               step="1"
               value={seedDepth}
               onChange={(e) => setSeedDepth(Number(e.target.value))}
@@ -166,7 +166,7 @@ const CrawlerControlPanel: React.FC = () => {
             <input
               type="range"
               min="1"
-              max="5"
+              max="10"
               step="1"
               value={crawlDepth}
               onChange={(e) => setCrawlDepth(Number(e.target.value))}
@@ -181,7 +181,7 @@ const CrawlerControlPanel: React.FC = () => {
             <input
               type="range"
               min="1"
-              max="20"
+              max="25"
               step="1"
               value={pages}
               onChange={(e) => setPages(Number(e.target.value))}
@@ -196,7 +196,7 @@ const CrawlerControlPanel: React.FC = () => {
             <input
               type="range"
               min="0.5"
-              max="5"
+              max="10"
               step="0.5"
               value={politeDelay}
               onChange={(e) => setPoliteDelay(Number(e.target.value))}
