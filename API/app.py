@@ -843,4 +843,9 @@ if __name__ == "__main__":
     info(f"Sites: {len(mock_data['sites'])} | Vendors: {len(mock_data['vendors'])} | Wallets: {len(mock_data['bitcoins'])}")
     info("Running at: http://localhost:5000")
     info("=" * 60)
-    app.run(host="0.0.0.0", port=5000, debug=True)
+
+
+
+    # ✅ NEW — disables auto-reload but keeps logs
+    app.run(host="0.0.0.0", port=5000, debug=False, use_reloader=False)
+
