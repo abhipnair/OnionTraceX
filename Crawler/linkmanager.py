@@ -1,6 +1,6 @@
 import asyncio
 import hashlib
-from datetime import datetime, timedelta, timezone  # <-- add timedelta here
+from datetime import datetime, timedelta, timezone
 import asyncpg
 
 from Essentials.utils import remove_path_from_url
@@ -10,15 +10,24 @@ from Logging_Mechanism.logger import info, warning, error
 class LinkManager:
     """
     Handles queues and DB integration for the crawler.
-    Fixed: separate visited sets for sites vs pages, keep full page URLs for inner queue.
+    - Separates visited sets for sites vs pages.
+    - Limits number of inner links per site.
+    - Enforces maximum crawl depth.
     """
 
-    def __init__(self, pool: asyncpg.Pool):
+    def __init__(self, pool: asyncpg.Pool, max_depth: int = 2, max_inner_links_per_site: int = 50):
         self.pool = pool
-        self.LinksQueue = asyncio.Queue()          # Outer (site-level) items: (site_root_url, "OuterLink")
-        self.InnerLinksQueue = asyncio.Queue()     # Inner (page-level) items: (full_page_url, depth)
-        self.visited_sites = set()                 # normalized site roots (remove_path)
-        self.visited_pages = set()                 # full page URLs (with path)
+        self.LinksQueue = asyncio.Queue()          # Outer (site-level): (root_url, "OuterLink")
+        self.InnerLinksQueue = asyncio.Queue()     # Inner (page-level): (full_url, depth)
+        self.visited_sites = set()
+        self.visited_pages = set()
+
+        # Control limits
+        self.max_depth = max_depth
+        self.max_inner_links_per_site = max_inner_links_per_site
+
+        # Track how many inner pages we've queued per domain
+        self.domain_inner_counts = {}
 
     async def init_LinksQueue(self, hours_threshold: int = 6):
         """Initialize queue from DB (site roots)."""
@@ -43,7 +52,7 @@ class LinkManager:
 
     # ---------- Site-level (outer) queue ----------
     async def add_url_LinksQueue(self, url: str):
-        """Add a new site root to LinksQueue and visited_sites (site-level)."""
+        """Add a new site root to LinksQueue."""
         site_root = remove_path_from_url(url)
         if site_root not in self.visited_sites:
             await self.LinksQueue.put((site_root, "OuterLink"))
@@ -53,25 +62,43 @@ class LinkManager:
     # ---------- Page-level (inner) queue ----------
     async def add_url_InnerLinksQueue(self, page_url: str, depth: int):
         """
-        Add full page URL (with path) to InnerLinksQueue with depth.
-        Uses visited_pages for page-level dedupe (do NOT remove path).
+        Add full page URL to InnerLinksQueue if:
+        - Not visited.
+        - Depth <= max_depth.
+        - Site's inner link count < max_inner_links_per_site.
         """
-        normalized = page_url.rstrip("/")  # keep path but normalize trailing slash
+        normalized = page_url.rstrip("/")
+        if depth > self.max_depth:
+            warning(f"⛔ Depth limit reached (depth={depth}) for {normalized}")
+            return
+
+        # Track domain count
+        domain = remove_path_from_url(normalized)
+        count = self.domain_inner_counts.get(domain, 0)
+        if count >= self.max_inner_links_per_site:
+            warning(f"🚫 Skipping inner link — limit {self.max_inner_links_per_site} reached for {domain}")
+            return
+
         if normalized not in self.visited_pages:
             await self.InnerLinksQueue.put((normalized, depth))
             self.visited_pages.add(normalized)
-            info(f"↳ Added to InnerLinksQueue (depth={depth}): {normalized}")
+            self.domain_inner_counts[domain] = count + 1
+            info(f"↳ Added to InnerLinksQueue (depth={depth}) [{count+1}/{self.max_inner_links_per_site}]: {normalized}")
 
-    # ---------- DB insertion for new site roots ----------
-    async def add_url_to_DB(self, url: str, source: str, keyword: str = ""):
-        """Insert new onion site (site root) into OnionSites. Store site root."""
+    # ---------- DB management ----------
+    async def add_url_to_DB(self, url: str, source: str, keyword: str = "") -> bool:
+        """
+        Insert a new onion site (site root) into the DB.
+        Returns:
+            bool: True if inserted, False if it already existed (duplicate)
+        """
         site_root = remove_path_from_url(url)
         url_hash = hashlib.sha256(site_root.encode()).hexdigest()
         now = datetime.now(timezone.utc)
 
         try:
             async with self.pool.acquire() as connection:
-                await connection.execute(
+                result = await connection.execute(
                     """
                     INSERT INTO OnionSites (site_id, url, source, keyword, current_status, first_seen, last_seen)
                     VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -79,12 +106,21 @@ class LinkManager:
                     """,
                     url_hash, site_root, source, keyword, "Alive", now, now
                 )
-            info(f"🗃️ Added site root to DB: {site_root}")
+
+            if result and "INSERT 0 1" in result:
+                info(f"🗃️ Added site root to DB: {site_root}")
+                return True  # new record
+            else:
+                # already existed
+                return False
+
         except Exception as e:
             error(f"DB insert failed for {site_root}: {e}")
+            return False
+
 
     async def update_status_in_DB(self, url: str, status: str):
-        """Update liveness for a site root (use remove_path to get site root)."""
+        """Update liveness for a site root."""
         site_root = remove_path_from_url(url)
         url_hash = hashlib.sha256(site_root.encode()).hexdigest()
         now = datetime.now(timezone.utc)

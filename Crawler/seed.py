@@ -76,7 +76,23 @@ class SeedCollector:
             error(f"File read error: {e}")
 
     async def _store_links(self, urls: list[str], source: str, keyword: str):
+        """Store discovered URLs into DB and queue, counting new vs duplicate."""
+        inserted_count = 0
+        duplicate_count = 0
+
         for url in urls:
-            await self.link_manager.add_url_to_DB(url, source, keyword)
-            await self.link_manager.add_url_LinksQueue(url)
-        info(f"✅ Stored {len(urls)} links from [{source}] into DB & queue.")
+            try:
+                added = await self.link_manager.add_url_to_DB(url, source, keyword)
+                if added:
+                    await self.link_manager.add_url_LinksQueue(url)
+                    inserted_count += 1
+                else:
+                    duplicate_count += 1
+            except Exception as e:
+                error(f"Error storing link {url}: {e}")
+
+        info(
+            f"✅ [{source}] Stored {inserted_count}/{len(urls)} new unique links "
+            f"({duplicate_count} duplicates skipped) into DB & queue."
+        )
+
