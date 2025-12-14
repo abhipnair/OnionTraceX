@@ -1,0 +1,11 @@
+2025-10-23 09:47:10 - app - ERROR - [logger.py:104] - Unexpected error for http://drugj7dwjgdxyrqlciswny7ioa6wt2bbljifqspw2mg2cxv4n36ihcyd.onion/: LinkManager.add_html_page() missing 3 required positional arguments: 'site_url', 'page_url', and 'html'
+2025-10-23 09:47:24 - app - ERROR - [logger.py:104] - Unexpected error for http://darkxea62ub3sv4joo5jahql7twujm6yyoic6dfaojrstc7yg7vtiuad.onion/: LinkManager.add_html_page() missing 3 required positional arguments: 'site_url', 'page_url', and 'html'
+2025-10-23 09:47:31 - app - ERROR - [logger.py:104] - Unexpected error for http://mdzuovzic42i2lxkp6qu6hcchxgxylctbetfe6p7czjbo37ygzc35hyd.onion/: LinkManager.add_html_page() missing 3 required positional arguments: 'site_url', 'page_url', and 'html'
+2025-10-23 09:47:41 - app - ERROR - [logger.py:104] - Unexpected error for http://titanshopy2xhbajsohktei2r4iwwtn5lluzcfrmztv3i327omrzikid.onion/: LinkManager.add_html_page() missing 3 required positional arguments: 'site_url', 'page_url', and 'html'
+2025-10-23 09:47:48 - app - ERROR - [logger.py:104] - Unexpected error for http://pbaqnj5mrr2fw3z2bevwihge62zvvkhz4mwfmdnfezzgd2l2e4qbbmad.onion/: LinkManager.add_html_page() missing 3 required positional arguments: 'site_url', 'page_url', and 'html'
+2025-10-23 09:48:03 - app - ERROR - [logger.py:104] - Unexpected error for http://vivsawnkbum46uhlqnsbzlwbsvc4yyi2o7nci6qqafuam3vqwzu652yd.onion/: Host unreachable
+2025-10-23 09:48:13 - app - ERROR - [logger.py:104] - Unexpected error for http://ii2ueu3uynudhxly5q7eewz4g4bqzlym3a3eq7zhjds7oa6kplswtvad.onion/: Host unreachable
+2025-10-23 09:48:50 - app - ERROR - [logger.py:104] - Unexpected error for http://cashasg66q6vuwwi2nzd2m74ssfe3o2mgoiituccrgpcvus5rvpaxdqd.onion/: LinkManager.add_html_page() missing 3 required positional arguments: 'site_url', 'page_url', and 'html'
+2025-10-23 09:49:00 - app - ERROR - [logger.py:104] - Unexpected error for http://kzv2mmrpmj23w7vg2dk3ise5wf36p6ovkwecbflxua5mec2nty5xiuid.onion/: Host unreachable
+2025-10-23 10:29:50 - app - ERROR - [logger.py:104] - Unexpected error for http://27ezymw7uhjvgybj6em3bp4hx57gx2hv74rx2h7dldyk26pj3ablg5ad.onion/: Host unreachable
+2025-10-23 10:29:59 - app - ERROR - [logger.py:104] - Unexpected error for http://torzfpvho57pv3coloiexpqpnajpxg4g5du2vn3tpk5iv373kpoxhaad.onion/: Host unreachable

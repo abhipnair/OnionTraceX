@@ -74,6 +74,7 @@ class UnifiedCrawler:
             timeout = ClientTimeout(total=25)
             async with session.get(url, timeout=timeout) as resp:
                 html = await resp.text(errors="ignore")
+                await self.link_manager.add_html_page(url, html)
                 status = "Alive" if 200 <= resp.status < 400 else "Dead"
         except asyncio.TimeoutError:
             status = "Timeout"
@@ -124,7 +125,7 @@ class UnifiedCrawler:
             soup = BeautifulSoup(html, "html.parser")
             for a in soup.find_all("a", href=True):
                 if isinstance(a, Tag):
-                    full = urljoin(base_url, a.get("href", "").strip())
+                    full = urljoin(base_url, a.get("href", "").strip()) # type: ignore
                     if ".onion" in full:
                         links.add(full)
         except Exception as e:

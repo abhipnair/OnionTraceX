@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
 
 import { 
-  Search, Globe, Users, DollarSign, FileText, Settings, Activity, 
-  Database, TrendingUp, AlertCircle, Download, Filter, Eye, Clock, 
+  Search, Globe, Users, FileText, Settings, Activity, 
+  Database, TrendingUp, AlertCircle, Download, Eye, Clock, 
   Network, RefreshCw, Shield, Bitcoin, Server, BarChart3,
-  SearchCodeIcon, Play
+  SearchCodeIcon
 } from 'lucide-react';
 
 // Import interfaces
 import {
   Stats, LivenessData, CategoryData, KeywordData, Site, SiteDetails,
-  Vendor, VendorNetwork, BitcoinData, BitcoinWallet, Report, ReportConfig,
+  Vendor, VendorNetwork, BitcoinData, Report, ReportConfig,
   SystemHealth, CrawlerConfig
 } from './types';
 
 import CrawlerControlPanel from "./CrawlerControlPanel";
 import DashboardCharts from "./DashboardCharts";
 import SitesExplorer from "./SitesExplorer";
+import BitcoinAnalysis from "./BitcoinAnalysis";
+
 
 // API Configuration
 const API_BASE_URL = 'http://localhost:5000/api';
@@ -918,231 +920,6 @@ const OnionTraceX: React.FC = () => {
 };
 
 
-  const renderBitcoin = (): JSX.Element => (
-    <div className="space-y-6 h-full">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold text-white">Bitcoin Analysis</h2>
-          <p className="text-gray-400">Cryptocurrency transaction tracking and analysis</p>
-        </div>
-        <button
-          onClick={loadBitcoinData}
-          disabled={loading}
-          className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg flex items-center gap-2 disabled:opacity-50 transition-colors"
-        >
-          <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
-          Refresh
-        </button>
-      </div>
-
-      {error && (
-        <div className="bg-red-900/50 border border-red-500 text-red-200 p-4 rounded-lg">
-          <div className="flex items-center gap-2">
-            <AlertCircle size={20} />
-            <span>Error: {error}</span>
-          </div>
-        </div>
-      )}
-
-      {/* Bitcoin Stats */}
-      {btcData?.stats && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-br from-yellow-900/50 to-yellow-800/30 p-4 rounded-xl border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-300">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Tracked Wallets</p>
-                <p className="text-2xl font-bold text-yellow-400">{btcData.stats.totalWallets.toLocaleString()}</p>
-              </div>
-              <div className="p-2 bg-yellow-500/20 rounded-lg">
-                <Bitcoin className="text-yellow-400" size={24} />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-gradient-to-br from-green-900/50 to-green-800/30 p-4 rounded-xl border border-green-500/20 hover:border-green-500/40 transition-all duration-300">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Total Transactions</p>
-                <p className="text-2xl font-bold text-green-400">{btcData.stats.totalTransactions.toLocaleString()}</p>
-              </div>
-              <div className="p-2 bg-green-500/20 rounded-lg">
-                <Activity className="text-green-400" size={24} />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-4 rounded-xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Suspected Mixers</p>
-                <p className="text-2xl font-bold text-purple-400">{btcData.stats.suspectedMixers}</p>
-              </div>
-              <div className="p-2 bg-purple-500/20 rounded-lg">
-                <AlertCircle className="text-purple-400" size={24} />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-4 rounded-xl border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Total Volume</p>
-                <p className="text-2xl font-bold text-blue-400">{btcData.stats.totalVolume} BTC</p>
-              </div>
-              <div className="p-2 bg-blue-500/20 rounded-lg">
-                <TrendingUp className="text-blue-400" size={24} />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Bitcoin Network Graph */}
-      <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50">
-        <div className="flex items-center gap-2 mb-4">
-          <Network className="text-cyan-400" size={20} />
-          <h3 className="text-lg font-semibold text-cyan-400">Bitcoin Transaction Network</h3>
-        </div>
-        <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 p-8 rounded-lg min-h-[400px] flex items-center justify-center border border-gray-700/30">
-          {btcData?.network ? (
-            <div className="text-center">
-              <div className="w-20 h-20 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Bitcoin className="text-yellow-400" size={32} />
-              </div>
-              <p className="text-gray-300 mb-2">Bitcoin Network Graph Loaded</p>
-              <p className="text-gray-400 text-sm mb-4">Transaction flow visualization ready</p>
-              <div className="max-h-80 overflow-auto bg-gray-900/50 p-4 rounded-lg border border-gray-700/30">
-                <pre className="text-left text-xs text-gray-400">
-                  {JSON.stringify(btcData.network, null, 2)}
-                </pre>
-              </div>
-            </div>
-          ) : loading ? (
-            <div className="text-center">
-              <RefreshCw size={48} className="animate-spin text-cyan-500 mx-auto mb-4" />
-              <p className="text-gray-400">Loading bitcoin network data...</p>
-            </div>
-          ) : (
-            <div className="text-center">
-              <Bitcoin className="mx-auto mb-4 text-yellow-500" size={64} />
-              <p className="text-gray-400 text-lg mb-2">Bitcoin Transaction Flow</p>
-              <p className="text-gray-500 text-sm">Wallet addresses and transaction relationships</p>
-              <div className="mt-6 grid grid-cols-3 gap-4 text-xs text-gray-400">
-                <div className="text-center">
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full mx-auto mb-1"></div>
-                  <span>Wallets</span>
-                </div>
-                <div className="text-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-1"></div>
-                  <span>Transactions</span>
-                </div>
-                <div className="text-center">
-                  <div className="w-3 h-3 bg-red-500 rounded-full mx-auto mb-1"></div>
-                  <span>Mixers</span>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Wallet List */}
-      {btcData?.wallets && btcData.wallets.length > 0 && (
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden">
-          <div className="p-6 border-b border-gray-700/50">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-cyan-400">Tracked Wallets</h3>
-              <span className="text-gray-400 text-sm">{btcData.wallets.length} wallets monitored</span>
-            </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-900/50">
-                <tr>
-                  <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Wallet Address</th>
-                  <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Balance</th>
-                  <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Transactions</th>
-                  <th className="px-6 py-4 text-left text-cyan-400 font-semibold">First Seen</th>
-                  <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Last Activity</th>
-                  <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Linked Sites</th>
-                  <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Risk Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {btcData.wallets.map((wallet, index) => (
-                  <tr 
-                    key={wallet.address} 
-                    className={`border-t border-gray-700/30 hover:bg-gray-700/30 transition-colors ${
-                      index % 2 === 0 ? 'bg-gray-800/20' : 'bg-gray-800/10'
-                    }`}
-                  >
-                    <td className="px-6 py-4">
-                      <code className="text-gray-300 font-mono text-sm bg-gray-900/50 px-2 py-1 rounded">
-                        {wallet.address.slice(0, 12)}...{wallet.address.slice(-8)}
-                      </code>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="text-yellow-400 font-semibold">{wallet.balance} BTC</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="text-gray-300">{wallet.transactionCount.toLocaleString()}</span>
-                    </td>
-                    <td className="px-6 py-4 text-gray-400 text-sm">{wallet.firstSeen}</td>
-                    <td className="px-6 py-4 text-gray-400 text-sm">{wallet.lastActivity}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-wrap gap-1">
-                        {wallet.linkedSites?.slice(0, 2).map((site, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded text-xs border border-cyan-500/30">
-                            {site}
-                          </span>
-                        ))}
-                        {wallet.linkedSites?.length > 2 && (
-                          <span className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs border border-gray-600">
-                            +{wallet.linkedSites.length - 2}
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          wallet.riskScore >= 80 ? 'bg-red-900/50 text-red-300 border border-red-500/30' :
-                          wallet.riskScore >= 60 ? 'bg-yellow-900/50 text-yellow-300 border border-yellow-500/30' :
-                          'bg-green-900/50 text-green-300 border border-green-500/30'
-                        }`}>
-                          {wallet.riskScore}/100
-                        </span>
-                        <div className="w-16 bg-gray-700 rounded-full h-2">
-                          <div 
-                            className={`h-2 rounded-full ${
-                              wallet.riskScore >= 80 ? 'bg-red-500' :
-                              wallet.riskScore >= 60 ? 'bg-yellow-500' :
-                              'bg-green-500'
-                            }`}
-                            style={{ width: `${wallet.riskScore}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {!loading && (!btcData || !btcData.wallets || btcData.wallets.length === 0) && (
-        <div className="bg-gray-800/50 backdrop-blur-sm p-12 rounded-xl border border-gray-700/50 text-center">
-          <Bitcoin className="mx-auto mb-4 text-gray-500" size={48} />
-          <p className="text-gray-400 text-lg mb-2">No bitcoin data available</p>
-          <p className="text-gray-500">Bitcoin wallet information will appear here once tracked</p>
-        </div>
-      )}
-    </div>
-  );
-
 const renderReports = (): JSX.Element => (
   <div className="space-y-6 h-full">
     {/* Header */}
@@ -1559,8 +1336,6 @@ const renderSettings = (): JSX.Element => (
   </div>
 );
 
-  // [Rest of the component remains the same for other sections...]
-  // Note: I've shown the dashboard section as an example. You would apply similar improvements to other sections.
 
   // Navigation items
   const navItems: NavItem[] = [
@@ -1670,7 +1445,7 @@ const renderSettings = (): JSX.Element => (
           {activeSection === "crawler" && <CrawlerControlPanel />}
           {activeSection === 'sites' && <SitesExplorer/>}
           {activeSection === 'vendors' && renderVendors()}
-          {activeSection === 'bitcoin' && renderBitcoin()}
+          {activeSection === "bitcoin" && <BitcoinAnalysis />}
           {activeSection === 'reports' && renderReports()}
           {activeSection === 'settings' && renderSettings()}
         </main>

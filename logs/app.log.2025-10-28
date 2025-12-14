@@ -1,0 +1,7 @@
+2025-10-28 09:50:54 - app - INFO - [logger.py:98] - ============================================================
+2025-10-28 09:50:54 - app - INFO - [logger.py:98] - 🌐  OnionTraceX Flask Backend API
+2025-10-28 09:50:54 - app - INFO - [logger.py:98] - ============================================================
+2025-10-28 09:50:54 - app - INFO - [logger.py:98] - Sites: 80 | Vendors: 50 | Wallets: 100
+2025-10-28 09:50:54 - app - INFO - [logger.py:98] - Running at: http://localhost:5000
+2025-10-28 09:50:54 - app - INFO - [logger.py:98] - ============================================================
+2025-10-28 09:50:54 - app - INFO - [logger.py:98] - AsyncPG pool initialized.

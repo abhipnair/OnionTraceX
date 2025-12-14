@@ -141,6 +141,43 @@ class LinkManager:
         except Exception as e:
             error(f"DB update failed for {site_root}: {e}")
 
+    async def add_html_page(self, page_url: str, html: str):
+        """
+        Inserts a crawled HTML page into the Pages table (BYTEA compatible).
+        Args:
+            page_url: Full page URL
+            html: Raw HTML content as string
+        """
+        try:
+            # Normalize & compute identifiers
+            site_root = remove_path_from_url(page_url)
+            site_id = hashlib.sha256(site_root.encode()).hexdigest()
+            page_id = hashlib.sha256(page_url.encode()).hexdigest()
+
+            html_bytes = html.encode("utf-8", errors="ignore")  # store as BYTEA
+            html_hash = hashlib.sha256(html_bytes).hexdigest()
+            crawl_date = datetime.now(timezone.utc)
+
+            # Insert into Pages table
+            async with self.pool.acquire() as connection:
+                await connection.execute(
+                    """
+                    INSERT INTO Pages (page_id, site_id, url, html_hash, raw_html, crawl_date)
+                    VALUES ($1, $2, $3, $4, $5, $6)
+                    ON CONFLICT (page_id) DO UPDATE
+                    SET html_hash = EXCLUDED.html_hash,
+                        raw_html = EXCLUDED.raw_html,
+                        crawl_date = EXCLUDED.crawl_date;
+                    """,
+                    page_id, site_id, page_url, html_hash, html_bytes, crawl_date
+                )
+
+            info(f"📝 Page stored successfully: {page_url}")
+
+        except Exception as e:
+            error(f"❌ Page insert failed for {page_url}: {e}")
+
+
     # ---------- Queue helpers ----------
     async def has_inner_links(self) -> bool:
         return not self.InnerLinksQueue.empty()

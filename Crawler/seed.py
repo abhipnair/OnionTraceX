@@ -26,6 +26,7 @@ class SeedCollector:
     def _extract_onion_links(self, html: str) -> list[str]:
         pattern = re.compile(r"http[s]?://[a-zA-Z0-9\-\.]{16,56}\.onion\b")
         return list(set(pattern.findall(html)))
+    
 
     async def _fetch(self, session: ClientSession, url: str) -> str:
         for _ in range(3):
@@ -39,28 +40,74 @@ class SeedCollector:
                 await asyncio.sleep(2)
         return ""
 
-    async def collect_from_keywords(self, keyword: str):
-        """Collect seeds from Ahmia search results."""
-        connector = ProxyConnector.from_url(self.tor_proxy)
-        all_links = set()
+    async def _fetch_clearnet(self, url: str) -> str:
+        timeout = ClientTimeout(total=20)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64)",
+            "Accept": "text/html,application/xhtml+xml",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Connection": "close",
+        }
 
-        async with ClientSession(connector=connector, timeout=self.timeout) as session:
-            tasks = []
-            for start in range(0, self.max_pages * 10, 10):
-                url = f"https://ahmia.fi/search/?q={keyword}&start={start}"
-                tasks.append(self._fetch(session, url))
-            pages = await asyncio.gather(*tasks)
+        try:
+            async with ClientSession(timeout=timeout, headers=headers) as session:
+                async with session.get(url) as resp:
+                    if resp.status == 200:
+                        return await resp.text(errors="ignore")
+        except Exception as e:
+            warning(f"Clearnet fetch failed for {url}: {e}")
 
-            for html in pages:
-                if html:
-                    all_links.update(self._extract_onion_links(html))
+        return ""
 
-        deduped = [u for u in all_links if self._hash_url(u) not in self.visited_hashes]
-        for u in deduped:
-            self.visited_hashes.add(self._hash_url(u))
 
-        info(f"[Ahmia:{keyword}] Found {len(deduped)} new onion links.")
-        await self._store_links(deduped, "Keyword", keyword)
+    async def collect_from_ahmia_and_duckduckgo(self, keyword: str):
+        """
+        Reliable seed collection using:
+        - Ahmia (clearnet, primary)
+        - DuckDuckGo (clearnet references)
+        """
+
+        discovered = set()  # (url, source)
+
+        # ---------------- Ahmia (PRIMARY SOURCE) ----------------
+        ahmia_url = f"https://ahmia.fi/search/?q={keyword}&3224b8=090ada"
+        ahmia_html = await self._fetch_clearnet(ahmia_url)
+
+        if ahmia_html:
+            for u in self._extract_onion_links(ahmia_html):
+                discovered.add((u, "Ahmia"))
+        else:
+            warning(f"Ahmia returned no data for keyword: {keyword}")
+
+        # ---------------- DuckDuckGo (SECONDARY SOURCE) ----------------
+        ddg_url = f"https://duckduckgo.com/html/?q={keyword}+site:.onion"
+        ddg_html = await self._fetch_clearnet(ddg_url)
+
+        if ddg_html:
+            for u in self._extract_onion_links(ddg_html):
+                discovered.add((u, "DuckDuckGo"))
+        else:
+            warning(f"DuckDuckGo returned no data for keyword: {keyword}")
+
+        # ---------------- Deduplication + Storage ----------------
+        stored = 0
+        skipped = 0
+
+        for url, source in discovered:
+            h = self._hash_url(url)
+            if h not in self.visited_hashes:
+                self.visited_hashes.add(h)
+                await self.link_manager.add_url_to_DB(url, source, keyword)
+                await self.link_manager.add_url_LinksQueue(url)
+                stored += 1
+            else:
+                skipped += 1
+
+        info(
+            f"[SeedCollector] Keyword='{keyword}' | "
+            f"Stored={stored}, Skipped(Duplicates)={skipped}, "
+            f"Sources=Ahmia+DuckDuckGo"
+        )
 
     async def collect_from_file(self, file_path: str):
         """Load seeds from a file."""
