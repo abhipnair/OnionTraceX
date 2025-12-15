@@ -70,12 +70,13 @@ class SeedCollector:
         discovered = set()  # (url, source)
 
         # ---------------- Ahmia (PRIMARY SOURCE) ----------------
-        ahmia_url = f"https://ahmia.fi/search/?q={keyword}&3224b8=090ada"
+        ahmia_url = f"https://ahmia.fi/search/?q={keyword}&8de34a=471bc3"
         ahmia_html = await self._fetch_clearnet(ahmia_url)
 
         if ahmia_html:
             for u in self._extract_onion_links(ahmia_html):
                 discovered.add((u, "Ahmia"))
+                info("ahmia discoverd")
         else:
             warning(f"Ahmia returned no data for keyword: {keyword}")
 

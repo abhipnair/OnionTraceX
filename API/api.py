@@ -13,6 +13,8 @@ import asyncio
 import asyncpg
 from datetime import datetime
 import threading
+from collections import defaultdict
+
 
 from Logging_Mechanism.logger import *
 import atexit
@@ -646,24 +648,223 @@ def vendors():
     })
 
 
-@app.route("/api/bitcoin/wallets")
-def btc_wallets():
+@app.route("/api/bitcoin/wallets", methods=["GET"])
+def api_bitcoin_wallets():
     page = get_int_param(request.args.get("page"), 1)
-    size = get_int_param(request.args.get("page_size"), CONFIG['DEFAULT_PAGE_SIZE'])
-    data = paginate(mock_data['bitcoins'], page, size)
-    return jsonify({
-        "success": True,
-        "data": {
-            "stats": {
-                "totalWallets": len(mock_data['bitcoins']),
-                "totalTransactions": sum(w['transactionCount'] for w in mock_data['bitcoins']),
-                "suspectedMixers": sum(1 for w in mock_data['bitcoins'] if w['isMixer']),
-                "totalVolume": round(sum(w['balance'] for w in mock_data['bitcoins']), 2),
-                "averageBalance": round(sum(w['balance'] for w in mock_data['bitcoins']) / len(mock_data['bitcoins']), 4)
-            },
-            "wallets": data
-        }
-    })
+    size = get_int_param(request.args.get("page_size"), CONFIG["DEFAULT_PAGE_SIZE"])
+    offset = (page - 1) * size
+
+    async def fetch_real_data():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn:  # type: ignore
+            wallets = await conn.fetch("""
+                SELECT 
+                    b.address,
+                    COUNT(t.tx_id) AS tx_count,
+                    COALESCE(SUM(t.amount), 0) AS total_volume,
+                    MIN(t.timestamp) AS first_seen,
+                    MAX(t.timestamp) AS last_activity,
+                    BOOL_OR(t.is_mixer) AS is_mixer,
+                    ARRAY_AGG(DISTINCT s.url) FILTER (WHERE s.url IS NOT NULL) AS linked_sites
+                FROM BitcoinAddresses b
+                LEFT JOIN Transactions t ON b.address_id = t.address_id
+                LEFT JOIN OnionSites s ON b.site_id = s.site_id
+                GROUP BY b.address
+                ORDER BY last_activity DESC NULLS LAST
+                LIMIT $1 OFFSET $2;
+            """, size, offset)
+
+            stats = await conn.fetchrow("""
+                SELECT
+                    COUNT(DISTINCT address_id) AS total_wallets,
+                    COUNT(tx_id) AS total_transactions,
+                    SUM(amount) AS total_volume,
+                    COUNT(DISTINCT address_id) FILTER (WHERE is_mixer = TRUE) AS suspected_mixers
+                FROM Transactions;
+            """)
+
+        return wallets, stats
+
+    try:
+        future = asyncio.run_coroutine_threadsafe(fetch_real_data(), loop)
+        wallets, stats = future.result()
+
+        # ---------- FALLBACK TO MOCK ----------
+        if not wallets:
+            data = paginate(mock_data["bitcoins"], page, size)
+            return jsonify({
+                "success": True,
+                "data": {
+                    "stats": {
+                        "totalWallets": len(mock_data["bitcoins"]),
+                        "totalTransactions": sum(w["transactionCount"] for w in mock_data["bitcoins"]),
+                        "suspectedMixers": sum(1 for w in mock_data["bitcoins"] if w["isMixer"]),
+                        "totalVolume": round(sum(w["balance"] for w in mock_data["bitcoins"]), 2)
+                    },
+                    "wallets": data,
+                    "network": None
+                }
+            })
+
+        # ---------- REAL DATA ----------
+        wallet_rows = []
+        for w in wallets:
+            risk = min(
+                95,
+                20 +
+                (w["tx_count"] or 1) * 3 +
+                (30 if w["is_mixer"] else 0)
+            )
+
+            wallet_rows.append({
+                "address": w["address"],
+                "balance": round(w["total_volume"], 4),
+                "transactionCount": w["tx_count"] or 0,
+                "firstSeen": w["first_seen"].strftime("%Y-%m-%d") if w["first_seen"] else "N/A",
+                "lastActivity": w["last_activity"].strftime("%Y-%m-%d %H:%M") if w["last_activity"] else "N/A",
+                "linkedSites": w["linked_sites"] or [],
+                "riskScore": risk
+            })
+
+        return jsonify({
+            "success": True,
+            "data": {
+                "stats": {
+                    "totalWallets": stats["total_wallets"] or 0,
+                    "totalTransactions": stats["total_transactions"] or 0,
+                    "suspectedMixers": stats["suspected_mixers"] or 0,
+                    "totalVolume": round(stats["total_volume"] or 0, 2)
+                },
+                "wallets": wallet_rows,
+                "network": None
+            }
+        })
+
+    except Exception as e:
+        error("❌ /api/bitcoin/wallets error:", e)
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+@app.route("/api/bitcoin/network", methods=["GET"])
+def bitcoin_transaction_network():
+    async def fetch_network():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn:  # type: ignore
+            rows = await conn.fetch("""
+                SELECT 
+                    t.tx_id,
+                    t.address_id,
+                    b.address,
+                    t.fan_in,
+                    t.fan_out,
+                    t.amount,
+                    t.is_mixer
+                FROM Transactions t
+                JOIN BitcoinAddresses b ON t.address_id = b.address_id
+                LIMIT 500;
+            """)
+        return rows
+
+    try:
+        future = asyncio.run_coroutine_threadsafe(fetch_network(), loop)
+        rows = future.result()
+
+        # --------------------------------------------------
+        # EMPTY DB → FALLBACK MOCK NETWORK
+        # --------------------------------------------------
+        if not rows:
+            info("⚠ Bitcoin network empty → using mock graph")
+            nodes = []
+            links = []
+
+            for i in range(15):
+                addr = f"bc1qmock{i:04d}"
+                nodes.append({
+                    "id": addr,
+                    "fanIn": random.randint(1, 20),
+                    "fanOut": random.randint(1, 20),
+                    "isMixer": random.random() < 0.2,
+                    "riskScore": random.randint(20, 95)
+                })
+
+            for i in range(20):
+                src = random.choice(nodes)["id"]
+                dst = random.choice(nodes)["id"]
+                if src != dst:
+                    links.append({
+                        "source": src,
+                        "target": dst,
+                        "amount": round(random.uniform(0.01, 3.5), 4)
+                    })
+
+            return jsonify({
+                "success": True,
+                "data": {"nodes": nodes, "links": links}
+            })
+
+        # --------------------------------------------------
+        # REAL GRAPH BUILD
+        # --------------------------------------------------
+        node_map = {}
+        link_map = defaultdict(float)
+
+        for r in rows:
+            addr = r["address"]
+
+            if addr not in node_map:
+                risk = min(
+                    95,
+                    20 + (r["fan_in"] + r["fan_out"]) * 2 +
+                    (30 if r["is_mixer"] else 0)
+                )
+
+                node_map[addr] = {
+                    "id": addr,
+                    "fanIn": r["fan_in"],
+                    "fanOut": r["fan_out"],
+                    "isMixer": r["is_mixer"],
+                    "riskScore": risk
+                }
+
+            # Self-loop collapsed later
+            link_map[(addr, addr)] += float(r["amount"])
+
+        # Convert maps → arrays
+        nodes = list(node_map.values())
+
+        links = [
+            {
+                "source": src,
+                "target": tgt,
+                "amount": round(amount, 4)
+            }
+            for (src, tgt), amount in link_map.items()
+            if amount > 0
+        ]
+
+        info(f"🔗 Bitcoin network built | Nodes={len(nodes)} Links={len(links)}")
+
+        return jsonify({
+            "success": True,
+            "data": {
+                "nodes": nodes,
+                "links": links
+            }
+        })
+
+    except Exception as e:
+        error(f"❌ /api/bitcoin/network error: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
 
 
 @app.route("/api/system/health")

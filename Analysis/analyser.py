@@ -1,8 +1,10 @@
 import asyncio
 import json
+import aiohttp
 from Logging_Mechanism.logger import info, error
 from .metadata_extractor import MetadataExtractor
 from .bitcoin_extractor import BitcoinExtractor
+from .transaction_analyzer import TransactionAnalyzer
 
 
 class PageAnalyzer:
@@ -58,7 +60,7 @@ class PageAnalyzer:
         site_id = row["site_id"]
         raw_html = row["raw_html"]
 
-        # -------- Metadata Extraction --------
+        # ---------------- Metadata ----------------
         meta = MetadataExtractor.extract(page_id, raw_html)
 
         async with self.pool.acquire() as conn:
@@ -72,35 +74,35 @@ class PageAnalyzer:
                 meta["metadata_id"],
                 page_id,
                 meta["title"],
-                json.dumps(meta["meta_tags"]),   # ✅ FIX
-                json.dumps(meta["emails"]),      # ✅ FIX
-                json.dumps(meta["pgp_keys"]),    # ✅ FIX
+                json.dumps(meta["meta_tags"]),
+                json.dumps(meta["emails"]),
+                json.dumps(meta["pgp_keys"]),
                 meta["language"]
             )
 
-        # -------- Bitcoin Extraction --------
+        # ---------------- Bitcoin Addresses ----------------
         btc_results = self.btc_extractor.extract_from_html(
             raw_html.decode("utf-8", errors="ignore"),
             site_id,
             page_id
         )
 
-        if btc_results:
-            async with self.pool.acquire() as conn:
-                for btc in btc_results:
-                    await conn.execute(
-                        """
-                        INSERT INTO BitcoinAddresses
-                        (address_id, address, site_id, page_id, valid, detected_at)
-                        VALUES ($1, $2, $3, $4, $5, $6)
-                        ON CONFLICT (address_id) DO NOTHING;
-                        """,
-                        btc["address_id"],
-                        btc["address"],
-                        btc["site_id"],
-                        btc["page_id"],
-                        btc["valid"],
-                        btc["detected_at"]
-                    )
+        async with self.pool.acquire() as conn:
+            for btc in btc_results:
+                await conn.execute(
+                    """
+                    INSERT INTO BitcoinAddresses
+                    (address_id, address, site_id, page_id, valid, detected_at)
+                    VALUES ($1, $2, $3, $4, $5, $6)
+                    ON CONFLICT (address_id) DO NOTHING;
+                    """,
+                    btc["address_id"],
+                    btc["address"],
+                    btc["site_id"],
+                    btc["page_id"],
+                    btc["valid"],
+                    btc["detected_at"]
+                )
 
-        info(f"📄 Page enriched: {page_id}")
+
+        info(f"📄 Page fully enriched: {page_id}")

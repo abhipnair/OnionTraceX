@@ -32,50 +32,58 @@ interface BitcoinData {
 }
 
 const API_URL = "http://localhost:5000/api/bitcoin/wallets"
+import BitcoinTransactionNetwork from "./BitcoinTransactionNetwork"
+
+
 
 const BitcoinAnalysis = (): JSX.Element => {
   const [btcData, setBtcData] = useState<BitcoinData | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const loadBitcoinData = async () => {
+    const loadBitcoinData = async () => {
     try {
-      setLoading(true)
-      setError(null)
+        setLoading(true)
+        setError(null)
 
-      const res = await fetch(API_URL)
-      if (!res.ok) throw new Error("Failed to fetch bitcoin data")
+        // Wallets + stats
+        const res = await fetch(API_URL)
+        if (!res.ok) throw new Error("Failed to fetch bitcoin data")
+        const json = await res.json()
+        if (!json.success) throw new Error(json.error || "Bitcoin API error")
 
-      const json = await res.json()
-      if (!json.success) throw new Error(json.error || "Bitcoin API error")
+        // Network graph
+        const netRes = await fetch("http://localhost:5000/api/bitcoin/network")
+        if (!netRes.ok) throw new Error("Failed to fetch bitcoin network")
+        const netJson = await netRes.json()
 
-      // ---- Normalize API → UI ----
-      setBtcData({
+        setBtcData({
         stats: {
-          totalWallets: json.data.stats?.totalWallets ?? 0,
-          totalTransactions: json.data.stats?.totalTransactions ?? 0,
-          suspectedMixers: json.data.stats?.suspectedMixers ?? 0,
-          totalVolume: json.data.stats?.totalVolume ?? 0
+            totalWallets: json.data.stats?.totalWallets ?? 0,
+            totalTransactions: json.data.stats?.totalTransactions ?? 0,
+            suspectedMixers: json.data.stats?.suspectedMixers ?? 0,
+            totalVolume: json.data.stats?.totalVolume ?? 0
         },
         wallets: (json.data.wallets || []).map((w: any) => ({
-          address: w.address,
-          balance: w.balance ?? "N/A",
-          transactionCount: w.transactionCount ?? 0,
-          firstSeen: w.firstSeen ?? "N/A",
-          lastActivity: w.lastActivity ?? "N/A",
-          linkedSites: w.linkedSites ?? [],
-          riskScore:
+            address: w.address,
+            balance: w.balance ?? "N/A",
+            transactionCount: w.transactionCount ?? 0,
+            firstSeen: w.firstSeen ?? "N/A",
+            lastActivity: w.lastActivity ?? "N/A",
+            linkedSites: w.linkedSites ?? [],
+            riskScore:
             w.riskScore ??
             Math.min(95, 20 + (w.transactionCount || 1) * 4)
         })),
-        network: json.data.network ?? null
-      })
+        network: netJson.success ? netJson.data : null
+        })
     } catch (err: any) {
-      setError(err.message || "Unknown error")
+        setError(err.message || "Unknown error")
     } finally {
-      setLoading(false)
+        setLoading(false)
     }
-  }
+    }
+
 
   // Auto-load on mount
   useEffect(() => {
@@ -158,10 +166,8 @@ const BitcoinAnalysis = (): JSX.Element => {
             Bitcoin Transaction Network
           </h3>
         </div>
-        <div className="min-h-[300px] flex items-center justify-center text-gray-500">
-          {loading ? "Loading network…" : "Graph rendering coming next"}
+            <BitcoinTransactionNetwork data={btcData?.network} />
         </div>
-      </div>
 
       {/* Wallet Table */}
       {btcData?.wallets?.length ? (
