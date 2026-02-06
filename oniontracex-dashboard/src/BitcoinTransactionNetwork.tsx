@@ -1,5 +1,10 @@
 import ForceGraph2D from "react-force-graph-2d"
-import { AlertTriangle, Circle } from "lucide-react"
+import {
+  AlertTriangle,
+  ArrowDownLeft,
+  ArrowUpRight,
+  ArrowRightLeft
+} from "lucide-react"
 
 interface NetworkNode {
   id: string
@@ -19,75 +24,134 @@ interface Props {
   data: {
     nodes: NetworkNode[]
     links: NetworkLink[]
-  }
+  } | null
 }
 
 const BitcoinTransactionNetwork = ({ data }: Props): JSX.Element => {
-  if (!data || !data.nodes?.length) {
+  if (!data || !data.nodes.length || !data.links.length) {
     return (
-      <div className="text-center text-gray-500 py-16">
-        No transaction network data available
+      <div className="h-[360px] flex items-center justify-center text-gray-500">
+        No transaction network available
       </div>
     )
   }
 
+  /* ---------- FLOW BALANCE PER NODE ---------- */
+  const flowBalance: Record<string, number> = {}
+
+  data.links.forEach(l => {
+    flowBalance[l.target] = (flowBalance[l.target] || 0) + l.amount
+    flowBalance[l.source] = (flowBalance[l.source] || 0) - l.amount
+  })
+
+  /* ---------- NODE COLOR ---------- */
+  const nodeColor = (n: any) => {
+    if (n.isMixer) return "#ef4444"        // Mixer
+    if (flowBalance[n.id] > 0) return "#22c55e" // Inbound
+    if (flowBalance[n.id] < 0) return "#f97316" // Outbound
+    return "#facc15" // Balanced
+  }
+
   return (
-    <div className="relative w-full h-[420px] bg-gray-900/40 rounded-lg border border-gray-700/50">
-      
-      {/* ================= GRAPH ================= */}
+    <div className="relative w-full h-[380px] rounded-xl overflow-hidden bg-gradient-to-br from-gray-900/70 to-gray-800/40 border border-gray-700/50">
+
       <ForceGraph2D
         graphData={data}
-        backgroundColor="transparent"
-        nodeLabel={(n: any) =>
-          `Wallet: ${n.id}
+
+        /* ================= PHYSICS ================= */
+        warmupTicks={250}
+        cooldownTicks={400}
+        d3AlphaDecay={0.015}
+        d3VelocityDecay={0.35}
+        nodeRelSize={6}
+        enableNodeDrag={true}
+
+        d3Force="charge"
+        d3ForceConfig={{
+          strength: -280,
+          distanceMax: 420
+        }}
+
+        /* ================= NODE LABEL ================= */
+        nodeLabel={(n: any) => `
+Wallet: ${n.id}
+────────────────
 Fan-In: ${n.fanIn}
 Fan-Out: ${n.fanOut}
-Risk Score: ${n.riskScore}
-${n.isMixer ? "⚠ Suspected Mixer" : "Normal Wallet"}`
-        }
-        nodeCanvasObject={(node: any, ctx) => {
-          const radius = node.isMixer ? 10 : 6
+Risk Score: ${n.riskScore}/100
+${flowBalance[n.id] > 0 ? "⬇ Mostly Receiving BTC" : ""}
+${flowBalance[n.id] < 0 ? "⬆ Mostly Sending BTC" : ""}
+${n.isMixer ? "⚠ Suspected Mixer" : ""}
+        `}
+
+        /* ================= NODE DRAW ================= */
+        nodeCanvasObject={(node: any, ctx, scale) => {
+          const radius = 6 + (node.riskScore / 100) * 12
 
           ctx.beginPath()
           ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI)
-
-          // Mixer → red, normal → green
-          ctx.fillStyle = node.isMixer ? "#ef4444" : "#22c55e"
+          ctx.fillStyle = nodeColor(node)
           ctx.fill()
 
-          // Outline
-          ctx.lineWidth = 1
-          ctx.strokeStyle = "#0f172a"
+          // Mixer glow
+          if (node.isMixer) {
+            ctx.shadowColor = "#ef4444"
+            ctx.shadowBlur = 14
+          } else {
+            ctx.shadowBlur = 0
+          }
+
+          ctx.lineWidth = 1.5 / scale
+          ctx.strokeStyle = "#020617"
           ctx.stroke()
         }}
-        linkColor={() => "#f59e0b"}
-        linkWidth={(l: any) => Math.max(1, Math.log(l.amount + 1))}
-        cooldownTicks={100}
+
+        /* ================= LINKS ================= */
+        linkColor={(l: any) =>
+          flowBalance[l.source] < 0 ? "#ef4444" : "#22c55e"
+        }
+
+        linkWidth={(l: any) =>
+          Math.max(1.5, Math.log(l.amount + 1))
+        }
+
+        linkDirectionalParticles={2}
+        linkDirectionalParticleSpeed={(l: any) =>
+          Math.min(0.03, l.amount / 30)
+        }
       />
 
       {/* ================= LEGEND ================= */}
-      <div className="absolute top-4 right-4 bg-gray-900/80 backdrop-blur-md border border-gray-700 rounded-lg p-3 space-y-2 text-xs text-gray-300">
-        <div className="font-semibold text-cyan-400 mb-1">
-          Network Indicators
+      <div className="absolute top-3 right-3 bg-gray-900/85 border border-gray-700 rounded-lg p-3 text-xs text-gray-300 space-y-2 w-[220px]">
+
+        <div className="text-cyan-400 font-semibold">
+          Transaction Flow Legend
         </div>
 
         <div className="flex items-center gap-2">
-          <Circle size={10} className="text-green-500 fill-green-500" />
-          <span>Normal Wallet</span>
+          <ArrowDownLeft size={12} className="text-green-400" />
+          Mostly Receiving BTC
+        </div>
+
+        <div className="flex items-center gap-2">
+          <ArrowUpRight size={12} className="text-orange-400" />
+          Mostly Sending BTC
+        </div>
+
+        <div className="flex items-center gap-2">
+          <ArrowRightLeft size={12} className="text-yellow-400" />
+          Balanced Activity
         </div>
 
         <div className="flex items-center gap-2">
           <AlertTriangle size={12} className="text-red-400" />
-          <span>Suspected Mixer</span>
+          Suspected Mixer
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-[2px] bg-yellow-400"></div>
-          <span>Transaction Flow</span>
-        </div>
-
-        <div className="text-gray-400 pt-1 border-t border-gray-700">
-          Node size ↑ = mixer likelihood
+        <div className="pt-2 border-t border-gray-700 text-gray-400 leading-snug">
+          • Node size → Risk score<br />
+          • Line width → BTC amount<br />
+          • Moving dots → Money direction
         </div>
       </div>
     </div>

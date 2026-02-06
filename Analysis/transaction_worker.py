@@ -11,6 +11,7 @@ class TransactionWorker:
     - Scans BitcoinAddresses table
     - Fetches blockchain tx history
     - Stores Transactions
+    - Stores REAL transaction edges
     - Flags mixers
     """
 
@@ -79,18 +80,27 @@ class TransactionWorker:
             await self._mark_analyzed(address_id)
             return
 
+        # ---------------- SUMMARY TRANSACTIONS ----------------
         tx_rows = analyzer.analyze_transactions(
             raw_txs,
             address_id,
             address
         )
 
-        if not tx_rows:
-            warning(f"No relevant tx rows extracted for {address}")
+        # ---------------- REAL FLOW EDGES ----------------
+        all_edges = []
+        for tx in raw_txs:
+            edges = analyzer.extract_edges(tx)
+            all_edges.extend(edges)
+
+        if not tx_rows and not all_edges:
+            warning(f"No usable tx data extracted for {address}")
             await self._mark_analyzed(address_id)
             return
 
         async with self.pool.acquire() as conn:
+
+            # ----------- TRANSACTIONS (SUMMARY) -----------
             for tx in tx_rows:
                 await conn.execute(
                     """
@@ -108,6 +118,24 @@ class TransactionWorker:
                     tx["fan_out"],
                     tx["is_mixer"]
                 )
+
+            # ----------- REAL TRANSACTION EDGES -----------
+            for e in all_edges:
+                await conn.execute(
+                    """
+                    INSERT INTO BitcoinTransactionEdges
+                    (tx_id, from_address, to_address, amount, timestamp)
+                    VALUES ($1, $2, $3, $4, $5)
+                    ON CONFLICT DO NOTHING;
+                    """,
+                    e["tx_id"],
+                    e["from_address"],
+                    e["to_address"],
+                    e["amount"],
+                    e["timestamp"]
+                )
+
+        info(f"🔗 Stored {len(all_edges)} real edges for {address}")
 
         await self._mark_analyzed(address_id)
         info(f"✅ Wallet fully analyzed: {address}")

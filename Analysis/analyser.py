@@ -67,8 +67,21 @@ class PageAnalyzer:
             await conn.execute(
                 """
                 INSERT INTO Metadata
-                (metadata_id, page_id, title, meta_tags, emails, pgp_keys, language)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                (
+                    metadata_id,
+                    page_id,
+                    title,
+                    meta_tags,
+                    emails,
+
+                    pgp_keys,
+                    pgp_fingerprints,
+                    xmr_addresses,
+                    vendor_handles,
+
+                    language
+                )
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                 ON CONFLICT (metadata_id) DO NOTHING;
                 """,
                 meta["metadata_id"],
@@ -76,11 +89,15 @@ class PageAnalyzer:
                 meta["title"],
                 json.dumps(meta["meta_tags"]),
                 json.dumps(meta["emails"]),
-                json.dumps(meta["pgp_keys"]),
+                json.dumps(meta["pgp_keys"]),       
+                json.dumps(meta["pgp_fingerprints"]),  
+                json.dumps(meta["xmr_addresses"]),
+                json.dumps(meta["vendor_handles"]),
                 meta["language"]
             )
 
-        # ---------------- Bitcoin Addresses ----------------
+
+        # ---------------- Bitcoin Addresses (UNCHANGED) ----------------
         btc_results = self.btc_extractor.extract_from_html(
             raw_html.decode("utf-8", errors="ignore"),
             site_id,
@@ -92,7 +109,14 @@ class PageAnalyzer:
                 await conn.execute(
                     """
                     INSERT INTO BitcoinAddresses
-                    (address_id, address, site_id, page_id, valid, detected_at)
+                    (
+                        address_id,
+                        address,
+                        site_id,
+                        page_id,
+                        valid,
+                        detected_at
+                    )
                     VALUES ($1, $2, $3, $4, $5, $6)
                     ON CONFLICT (address_id) DO NOTHING;
                     """,
@@ -104,5 +128,4 @@ class PageAnalyzer:
                     btc["detected_at"]
                 )
 
-
-        info(f"📄 Page fully enriched: {page_id}")
+        info(f"📄 Page fully enriched (Phase-2): {page_id}")

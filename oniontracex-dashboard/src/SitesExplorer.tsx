@@ -1,400 +1,324 @@
 import React, { useState, useEffect } from "react";
-import { RefreshCw, Search, Filter, AlertCircle, Eye } from "lucide-react";
+import { RefreshCw, Filter, Eye, Globe, Clock, X } from "lucide-react";
 
 const API_BASE = "http://localhost:5000/api";
 
+/* -------------------------------------------------
+   SAFE JSON HANDLING
+------------------------------------------------- */
+const safeJsonArray = (value: any): string[] => {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+};
+
+/* -------------------------------------------------
+   STATUS BADGES
+------------------------------------------------- */
+const STATUS_STYLES: Record<string, string> = {
+  Alive: "bg-green-900/40 text-green-300 border border-green-500/40",
+  Dead: "bg-red-900/40 text-red-300 border border-red-500/40",
+  Timeout: "bg-yellow-900/40 text-yellow-300 border border-yellow-500/40",
+};
+
+/* -------------------------------------------------
+   KEYWORD BADGES (EXTENSIBLE + SAFE)
+------------------------------------------------- */
+const DEFAULT_KEYWORD_STYLE =
+  "bg-slate-800/60 text-slate-300 border border-slate-500/30";
+
+const KEYWORD_COLORS: Record<string, string> = {
+  drugs: "bg-purple-900/40 text-purple-300 border border-purple-500/40",
+  fraud: "bg-red-900/40 text-red-300 border border-red-500/40",
+  carding: "bg-orange-900/40 text-orange-300 border border-orange-500/40",
+  hacking: "bg-blue-900/40 text-blue-300 border border-blue-500/40",
+  malware: "bg-pink-900/40 text-pink-300 border border-pink-500/40",
+  weapons: "bg-gray-800 text-gray-300 border border-gray-500/40",
+  forum: "bg-cyan-900/40 text-cyan-300 border border-cyan-500/40",
+  marketplace: "bg-indigo-900/40 text-indigo-300 border border-indigo-500/40",
+
+  money: "bg-emerald-900/40 text-emerald-300 border border-emerald-500/40",
+  mafia: "bg-rose-900/40 text-rose-300 border border-rose-500/40",
+  finance: "bg-green-900/40 text-green-300 border border-green-500/40",
+
+  other: "bg-gray-700 text-gray-300 border border-gray-500/40",
+};
+
+const keywordBadge = (kw?: string) => {
+  if (!kw) return DEFAULT_KEYWORD_STYLE;
+  const normalized = kw.trim().toLowerCase();
+  return KEYWORD_COLORS[normalized] || DEFAULT_KEYWORD_STYLE;
+};
+
+/* =================================================
+   MAIN COMPONENT
+================================================= */
 const SitesExplorer: React.FC = () => {
-  const [sitesData, setSitesData] = useState<any[]>([]);
+  const [sites, setSites] = useState<any[]>([]);
+  const [cursor, setCursor] = useState<any>(null);
+  const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [filterKeyword, setFilterKeyword] = useState("");
+
+  /* FILTERS */
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("all");
+  const [keyword, setKeyword] = useState("");
+  const [source, setSource] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(25);
-  const [pagination, setPagination] = useState({ total: 0 });
-  const [selectedSite, setSelectedSite] = useState<any>(null);
+
   const [siteDetails, setSiteDetails] = useState<any>(null);
-  const [keywords, setKeywords] = useState<string[]>([]);
 
-  // Load available keywords for filter dropdown
-  const loadKeywords = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/keywords`);
-      const data = await res.json();
-      if (data.success) setKeywords(data.data.map((k: any) => k.keyword));
-    } catch (e) {
-      console.error("Keyword load error:", e);
+  /* -------------------------------------------------
+     LOAD SITES (CURSOR PAGINATION)
+  ------------------------------------------------- */
+  const loadSites = async (reset = false) => {
+    if (loading) return;
+    setLoading(true);
+
+    const params = new URLSearchParams({
+      search,
+      status,
+      keyword,
+      source,
+      start_date: startDate,
+      end_date: endDate,
+      page_size: "25",
+    });
+
+    if (!reset && cursor) {
+      params.set("cursor_last_seen", cursor.last_seen);
+      params.set("cursor_site_id", cursor.site_id);
     }
+
+    const res = await fetch(`${API_BASE}/sites?${params.toString()}`);
+    const data = await res.json();
+
+    if (data.success) {
+      setSites(prev => (reset ? data.data : [...prev, ...data.data]));
+      setCursor(data.next_cursor || null);
+      setHasMore(Boolean(data.next_cursor));
+    }
+
+    setLoading(false);
   };
 
-  const loadSitesData = async () => {
-    try {
-      setLoading(true);
-      setError("");
-      const params = new URLSearchParams({
-        search: searchTerm,
-        status: filterStatus,
-        keyword: filterKeyword,
-        start_date: startDate,
-        end_date: endDate,
-        page: page.toString(),
-        page_size: pageSize.toString(),
-      });
-      const res = await fetch(`${API_BASE}/sites?${params.toString()}`);
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error || "Failed to load sites");
-      setSitesData(data.data);
-      setPagination(data.pagination);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  /* APPLY FILTERS */
+  const applyFilters = () => {
+    setSites([]);
+    setCursor(null);
+    setHasMore(true);
+    loadSites(true);
   };
 
-  const handleViewDetails = async (siteId: string) => {
-    try {
-      setSiteDetails(null);
-      const res = await fetch(`${API_BASE}/site/${siteId}`);
-      const data = await res.json();
-      if (data.success) setSiteDetails(data.data);
-    } catch (err) {
-      console.error("Detail fetch error:", err);
-    }
+  /* REFRESH */
+  const refresh = () => {
+    setSites([]);
+    setCursor(null);
+    setHasMore(true);
+    loadSites(true);
   };
 
+  /* INITIAL LOAD */
   useEffect(() => {
-    loadSitesData();
-    loadKeywords();
-  }, [page, filterStatus, filterKeyword]);
+    loadSites(true);
+    // eslint-disable-next-line
+  }, []);
 
-  // --- Render ---
+  const openSiteDetails = async (id: string) => {
+    const res = await fetch(`${API_BASE}/site/${id}`);
+    const data = await res.json();
+    if (data.success) setSiteDetails(data.data);
+  };
+
   return (
-    <div className="space-y-6 h-full">
-      {/* Header */}
+    <div className="space-y-6">
+
+      {/* HEADER */}
       <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold text-white">Sites Explorer</h2>
-          <p className="text-gray-400">Browse and search discovered onion sites</p>
-        </div>
+        <h2 className="text-2xl font-bold text-white">Sites Explorer</h2>
         <button
-          onClick={loadSitesData}
-          disabled={loading}
-          className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg flex items-center gap-2 disabled:opacity-50 transition-colors"
+          onClick={refresh}
+          className="bg-cyan-600 px-4 py-2 rounded flex gap-2"
         >
-          <RefreshCw size={18} className={loading ? "animate-spin" : ""} />
-          Refresh
+          <RefreshCw size={18} /> Refresh
         </button>
       </div>
 
-      {error && (
-        <div className="bg-red-900/50 border border-red-500 text-red-200 p-4 rounded-lg">
-          <div className="flex items-center gap-2">
-            <AlertCircle size={20} />
-            <span>Error: {error}</span>
-          </div>
-        </div>
-      )}
+      {/* FILTER BAR */}
+      <div className="bg-gray-800 p-4 rounded-xl flex flex-wrap gap-4 items-center">
+        <input className="bg-gray-900 px-4 py-2 rounded w-64" placeholder="Search URL / Site ID" value={search} onChange={e => setSearch(e.target.value)} />
+        <select className="bg-gray-900 px-4 py-2 rounded" value={status} onChange={e => setStatus(e.target.value)}>
+          <option value="all">All Status</option>
+          <option value="Alive">Alive</option>
+          <option value="Dead">Dead</option>
+          <option value="Timeout">Timeout</option>
+        </select>
+        <input className="bg-gray-900 px-4 py-2 rounded w-40" placeholder="Keyword" value={keyword} onChange={e => setKeyword(e.target.value)} />
+        <input className="bg-gray-900 px-4 py-2 rounded w-40" placeholder="Source" value={source} onChange={e => setSource(e.target.value)} />
+        <input type="date" className="bg-gray-900 px-3 py-2 rounded" value={startDate} onChange={e => setStartDate(e.target.value)} />
+        <input type="date" className="bg-gray-900 px-3 py-2 rounded" value={endDate} onChange={e => setEndDate(e.target.value)} />
+        <button onClick={applyFilters} className="bg-gray-700 px-4 py-2 rounded flex gap-2">
+          <Filter size={16} /> Apply
+        </button>
+      </div>
 
-      {/* Filters */}
-      <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50 space-y-4">
-        <div className="flex flex-col lg:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input
-              type="text"
-              placeholder="Search by URL or ID..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-            />
-          </div>
-          <div className="flex gap-3">
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-            >
-              <option value="all">All Status</option>
-              <option value="Alive">🟢 Alive</option>
-              <option value="Dead">🔴 Dead</option>
-              <option value="Timeout">🟡 Timeout</option>
-            </select>
-
-            <select
-              value={filterKeyword}
-              onChange={(e) => setFilterKeyword(e.target.value)}
-              className="px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-            >
-              <option value="">All Keywords</option>
-              {keywords.map((k) => (
-                <option key={k} value={k}>
-                  {k}
-                </option>
+      {/* TABLE */}
+      <div className="bg-gray-800 rounded-xl overflow-x-auto">
+        <table className="min-w-[1300px] w-full">
+          <thead className="bg-gray-900">
+            <tr>
+              {["ID", "URL", "Keyword", "Status", "First Seen", "Last Seen", "Source", ""].map(h => (
+                <th key={h} className="px-6 py-3 text-left text-cyan-400">{h}</th>
               ))}
-            </select>
-
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="px-3 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white"
-            />
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="px-3 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white"
-            />
-
-            <button
-              onClick={loadSitesData}
-              className="px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg flex items-center gap-2 transition-colors"
-            >
-              <Filter size={18} /> Apply
-            </button>
-          </div>
-        </div>
+            </tr>
+          </thead>
+          <tbody>
+            {sites.map(site => (
+              <tr key={site.id} className="border-t border-gray-700 hover:bg-gray-700/30">
+                <td className="px-6 py-3 font-mono text-xs">{site.id.slice(0, 12)}…</td>
+                <td className="px-6 py-3 font-mono truncate max-w-[350px]"><Globe size={14} className="inline mr-1" />{site.url}</td>
+                <td className="px-6 py-3">
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium tracking-wide ${keywordBadge(site.category)}`}>
+                    {site.category}
+                  </span>
+                </td>
+                <td className="px-6 py-3">
+                  <span className={`px-3 py-1 rounded-full text-xs ${STATUS_STYLES[site.status]}`}>
+                    {site.status}
+                  </span>
+                </td>
+                <td className="px-6 py-3 text-sm"><Clock size={14} className="inline mr-1" />{site.firstSeen}</td>
+                <td className="px-6 py-3 text-sm">{site.lastSeen}</td>
+                <td className="px-6 py-3">{site.source}</td>
+                <td className="px-6 py-3">
+                  <button onClick={() => openSiteDetails(site.id)} className="bg-cyan-600/20 p-2 rounded">
+                    <Eye size={18} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {/* Table */}
-      {!loading && sitesData.length > 0 && (
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden">
-          <div className="p-6 border-b border-gray-700/50 flex justify-between">
-            <h3 className="text-lg font-semibold text-cyan-400">Discovered Sites</h3>
-            <span className="text-gray-400 text-sm">
-              {pagination.total.toLocaleString()} sites total
-            </span>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-900/50">
-                <tr>
-                  {["Site ID", "URL", "Keyword", "Status", "First Seen", "Last Seen", "Source", "Actions"].map((h) => (
-                    <th key={h} className="px-6 py-4 text-left text-cyan-400 font-semibold">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {sitesData.map((site, i) => (
-                  <tr
-                    key={site.id}
-                    className={`border-t border-gray-700/30 hover:bg-gray-700/30 transition-colors ${
-                      i % 2 === 0 ? "bg-gray-800/20" : "bg-gray-800/10"
-                    }`}
-                  >
-                    <td className="px-6 py-4">
-                      <code className="text-gray-300 font-mono text-sm bg-gray-900/50 px-2 py-1 rounded">
-                        {site.id}
-                      </code>
-                    </td>
-                    <td className="px-6 py-4 text-gray-300 font-mono truncate max-w-xs">{site.url}</td>
-                    <td className="px-6 py-4 text-gray-400">{site.category}</td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          site.status === "Alive"
-                            ? "bg-green-900/50 text-green-300 border border-green-500/30"
-                            : site.status === "Dead"
-                            ? "bg-red-900/50 text-red-300 border border-red-500/30"
-                            : "bg-yellow-900/50 text-yellow-300 border border-yellow-500/30"
-                        }`}
-                      >
-                        {site.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-gray-400 text-sm">{site.firstSeen}</td>
-                    <td className="px-6 py-4 text-gray-400 text-sm">{site.lastSeen}</td>
-                    <td className="px-6 py-4 text-gray-400 text-sm">{site.source}</td>
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={() => {
-                          setSelectedSite(site);
-                          handleViewDetails(site.id);
-                        }}
-                        className="text-cyan-400 hover:text-cyan-300 p-2 hover:bg-cyan-500/10 rounded-lg transition-colors"
-                      >
-                        <Eye size={18} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Pagination */}
-          <div className="flex justify-between items-center p-4 text-gray-400 text-sm">
-            <span>
-              Page {page} of {Math.ceil(pagination.total / pageSize) || 1}
-            </span>
-            <div className="flex gap-2">
-              <button
-                disabled={page <= 1}
-                onClick={() => setPage((p) => p - 1)}
-                className="px-3 py-1 bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50"
-              >
-                Prev
-              </button>
-              <button
-                disabled={page * pageSize >= pagination.total}
-                onClick={() => setPage((p) => p + 1)}
-                className="px-3 py-1 bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-          </div>
+      {/* LOAD MORE */}
+      {hasMore && (
+        <div className="text-center">
+          <button
+            onClick={() => loadSites()}
+            disabled={loading}
+            className="bg-gray-700 px-6 py-2 rounded mt-4"
+          >
+            {loading ? "Loading…" : "Load More"}
+          </button>
         </div>
       )}
 
-      {/* Loading / Empty States */}
-      {loading && (
-        <div className="flex justify-center items-center py-12">
-          <div className="text-center">
-            <RefreshCw size={48} className="animate-spin text-cyan-500 mx-auto mb-4" />
-            <p className="text-gray-400">Loading sites...</p>
-          </div>
-        </div>
-      )}
-      {!loading && sitesData.length === 0 && (
-        <div className="bg-gray-800/50 backdrop-blur-sm p-12 rounded-xl border border-gray-700/50 text-center">
-          <Search className="mx-auto mb-4 text-gray-500" size={48} />
-          <p className="text-gray-400 text-lg mb-2">No sites found</p>
-          <p className="text-gray-500">Try adjusting your filters or refresh the data</p>
-        </div>
-      )}
-
-      {/* Details Modal */}
-      {/* Site Details Modal */}
-{selectedSite && (
-  <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-    <div className="bg-gray-800 rounded-xl border border-gray-700/50 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      {/* Header */}
-      <div className="p-6 border-b border-gray-700/50 flex justify-between items-center">
-        <div>
-          <h3 className="text-xl font-bold text-cyan-400">Site Details</h3>
-          <p className="text-gray-400 text-sm">Detailed information from database</p>
-        </div>
-        <button
-          onClick={() => {
-            setSelectedSite(null);
-            setSiteDetails(null);
-          }}
-          className="text-gray-400 hover:text-white p-2 hover:bg-gray-700 rounded-lg transition-colors"
-          title="Close"
-        >
-          ✕
-        </button>
-      </div>
-
-      {/* Content */}
-      <div className="p-6 space-y-6">
-        {siteDetails ? (
-          <>
-            {/* Basic Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <p className="text-gray-400 text-sm mb-2">URL</p>
-                <p className="text-white font-mono bg-gray-900/50 p-3 rounded-lg break-all border border-gray-700/50">
-                  {siteDetails.url}
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm mb-2">Category</p>
-                <span
-                  className={`px-3 py-2 rounded-lg text-sm font-medium border ${
-                    siteDetails.category === "Marketplace"
-                      ? "bg-cyan-900/50 text-cyan-300 border-cyan-500/30"
-                      : siteDetails.category === "Forum"
-                      ? "bg-purple-900/50 text-purple-300 border-purple-500/30"
-                      : siteDetails.category === "Scam"
-                      ? "bg-red-900/50 text-red-300 border-red-500/30"
-                      : "bg-gray-700 text-gray-300 border-gray-600"
-                  }`}
-                >
-                  {siteDetails.category || "Other"}
-                </span>
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm mb-2">Status</p>
-                <span
-                  className={`px-3 py-2 rounded-lg text-sm font-semibold border ${
-                    siteDetails.status === "Alive"
-                      ? "bg-green-900/50 text-green-300 border-green-500/30"
-                      : siteDetails.status === "Dead"
-                      ? "bg-red-900/50 text-red-300 border-red-500/30"
-                      : "bg-yellow-900/50 text-yellow-300 border-yellow-500/30"
-                  }`}
-                >
-                  {siteDetails.status}
-                </span>
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm mb-2">Source</p>
-                <span className="text-white bg-gray-900/50 border border-gray-700/50 rounded-lg px-3 py-2 text-sm">
-                  {siteDetails.source || "Unknown"}
-                </span>
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm mb-2">First Seen</p>
-                <p className="text-white bg-gray-900/50 p-3 rounded-lg border border-gray-700/50">
-                  {siteDetails.firstSeen || "N/A"}
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm mb-2">Last Seen</p>
-                <p className="text-white bg-gray-900/50 p-3 rounded-lg border border-gray-700/50">
-                  {siteDetails.lastSeen || "N/A"}
-                </p>
-              </div>
-            </div>
-
-            {/* Title (optional) */}
-            {siteDetails.title && (
-              <div>
-                <p className="text-gray-400 text-sm mb-2">Title</p>
-                <p className="text-white bg-gray-900/50 p-3 rounded-lg border border-gray-700/50">
-                  {siteDetails.title}
-                </p>
-              </div>
-            )}
-
-            {/* Metadata */}
-            {siteDetails.metadata && (
-              <div>
-                <p className="text-gray-400 text-sm mb-3">Metadata</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {Object.entries(siteDetails.metadata).map(([key, value]) => (
-                    <div
-                      key={key}
-                      className="bg-gray-900/50 border border-gray-700/50 p-3 rounded-lg"
-                    >
-                      <p className="text-gray-400 text-xs uppercase mb-1">{key}</p>
-                      <p className="text-white text-sm break-all">{value?.toString() || "N/A"}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="flex justify-center py-12">
-            <RefreshCw size={32} className="animate-spin text-cyan-500" />
-          </div>
-        )}
-      </div>
-    </div>
-  </div>
-)}
-
+      {/* DETAILS MODAL */}
+      {siteDetails && <SiteDetailsModal data={siteDetails} onClose={() => setSiteDetails(null)} />}
     </div>
   );
 };
 
 export default SitesExplorer;
+
+
+/* =================================================
+   CLEAN DETAILS MODAL
+================================================= */
+const SiteDetailsModal = ({ data, onClose }: any) => (
+  <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50">
+    <div className="bg-gray-900 w-[90%] max-w-6xl rounded-xl max-h-[90vh] overflow-y-auto">
+
+      <div className="p-6 flex justify-between border-b border-gray-700">
+        <h3 className="text-xl font-bold text-cyan-400">Site Analysis</h3>
+        <button onClick={onClose}><X /></button>
+      </div>
+
+      <div className="p-6 space-y-6">
+
+        {/* SITE SUMMARY */}
+        <div className="grid grid-cols-3 gap-6 bg-gray-800 p-4 rounded">
+          <div>
+            <div className="text-gray-400 text-sm">URL</div>
+            <div className="font-mono break-all">{data.site.url}</div>
+          </div>
+          <div>
+            <div className="text-gray-400 text-sm">Status</div>
+            <div>{data.site.status}</div>
+          </div>
+          <div>
+            <div className="text-gray-400 text-sm">Category</div>
+            <div>{data.site.category}</div>
+          </div>
+        </div>
+
+        {/* PAGES */}
+        <div>
+          <h4 className="text-cyan-400 mb-3">Pages ({data.pages.length})</h4>
+          <div className="space-y-4">
+            {data.pages.map((p: any) => (
+              <div key={p.page_id} className="bg-gray-800 p-4 rounded">
+                <div className="font-mono text-sm break-all">{p.url}</div>
+                <div className="text-xs text-gray-400">{p.crawled_at}</div>
+
+                {/* EMAILS */}
+                {safeJsonArray(p.metadata?.emails).length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {safeJsonArray(p.metadata.emails).map(e => (
+                      <span
+                        key={e}
+                        className="bg-green-900/30 text-green-300 px-2 py-1 rounded text-xs"
+                      >
+                        {e}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* PGP */}
+                {safeJsonArray(p.metadata?.pgp_keys).length > 0 && (
+                  <details className="mt-3">
+                    <summary className="cursor-pointer text-purple-300">
+                      PGP Keys ({safeJsonArray(p.metadata.pgp_keys).length})
+                    </summary>
+                    <pre className="text-xs bg-black p-3 mt-2 rounded overflow-x-auto">
+                      {safeJsonArray(p.metadata.pgp_keys)[0]}
+                    </pre>
+                  </details>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* BITCOIN */}
+        {data.bitcoin_addresses.length > 0 && (
+          <div>
+            <h4 className="text-orange-400 mb-3">Bitcoin Addresses</h4>
+            <div className="grid grid-cols-2 gap-3">
+              {data.bitcoin_addresses.map((b: any) => (
+                <div
+                  key={b.address}
+                  className="font-mono text-sm bg-gray-800 p-2 rounded break-all"
+                >
+                  {b.address}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  </div>
+);

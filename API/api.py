@@ -14,6 +14,7 @@ import asyncpg
 from datetime import datetime
 import threading
 from collections import defaultdict
+from datetime import timezone
 
 
 from Logging_Mechanism.logger import *
@@ -73,7 +74,13 @@ def close_pool():
 
 
 # ==================== ASYNC CRAWLER CORE ====================
-async def run_crawler(keywords: list[str], seed_depth: int, pages: int, crawl_depth: int, polite_delay: float):
+# ==================== ASYNC CRAWLER CORE ====================
+async def run_crawler(
+    keywords: list[str],
+    manual_urls: list[str],
+    crawl_depth: int,
+    polite_delay: float
+):
     global crawler_status, crawler_progress, crawler_message, crawler_instance
 
     try:
@@ -90,33 +97,78 @@ async def run_crawler(keywords: list[str], seed_depth: int, pages: int, crawl_de
                 error(f"[CRAWLER INIT ERROR] {e}")
                 return
 
-        link_manager = LinkManager(pool=db_pool) # type: ignore
+        link_manager = LinkManager(pool=db_pool)  # type: ignore
 
-        # 1️ Seed collection phase
+        # --------------------------------------------------
+        # 🔥 MANUAL URL INGESTION (CORRECT FOR YOUR LINKMANAGER)
+        # --------------------------------------------------
+        if manual_urls:
+            crawler_message = f"Injecting {len(manual_urls)} manual URLs"
+            crawler_progress = 10
+
+            for raw_url in manual_urls:
+                try:
+                    url = raw_url.strip()
+
+                    # Normalize onion URL
+                    if not url.startswith(("http://", "https://")):
+                        url = "http://" + url
+
+                    if ".onion" not in url:
+                        warning(f"[MANUAL URL SKIPPED] Not an onion: {url}")
+                        continue
+
+                    # Insert into DB (dedup handled internally)
+                    inserted = await link_manager.add_url_to_DB(
+                        url=url,
+                        source="manual",
+                        keyword="manual"
+                    )
+
+                    # Add to crawl queue only once
+                    if inserted:
+                        await link_manager.add_url_LinksQueue(url)
+
+                except Exception as e:
+                    error(f"[MANUAL URL ERROR] {raw_url}: {e}")
+
+
+        # --------------------------------------------------
+        # 🔍 SEED COLLECTION (UNCHANGED)
+        # --------------------------------------------------
         if keywords:
             crawler_message = f"Collecting seeds for: {', '.join(keywords)}"
-            seed = SeedCollector(link_manager=link_manager, max_depth=seed_depth, max_pages=pages)
+            seed = SeedCollector(
+                link_manager=link_manager
+            )
             for kw in keywords:
                 await seed.collect_from_ahmia_and_duckduckgo(kw)
             crawler_progress = 30
 
-        # 2️ Crawler start
+        # --------------------------------------------------
+        # 🚀 UNIFIED CRAWLER START
+        # --------------------------------------------------
         crawler_status = "running"
         crawler_message = "Launching unified crawler..."
         crawler_progress = 50
 
-        crawler_instance = UnifiedCrawler(link_manager=link_manager, max_depth=crawl_depth, polite_delay=polite_delay)
+        crawler_instance = UnifiedCrawler(
+            link_manager=link_manager,
+            max_depth=crawl_depth,
+            polite_delay=polite_delay
+        )
+
         await crawler_instance.start()
 
         crawler_status = "completed"
         crawler_message = "Crawler finished successfully!"
         crawler_progress = 100
 
-
     except asyncio.CancelledError:
         crawler_status = "stopped"
         crawler_message = "Crawler manually stopped."
         crawler_progress = 0
+
     except Exception as e:
         crawler_status = "error"
         crawler_message = f"Error: {e}"
@@ -131,77 +183,94 @@ def start_crawler():
     if crawler_task and not crawler_task.done():
         return jsonify({"status": "error", "message": "Crawler already running"}), 400
 
-    # --- Handle both JSON and multipart/form-data ---
     keywords = []
-    seed_file = None
+    manual_urls = []
 
-    if request.content_type.startswith("multipart/form-data"):
-        # Text keywords
+    # --------------------------------------------------
+    # HANDLE INPUT (JSON or FORM)
+    # --------------------------------------------------
+    if request.content_type and request.content_type.startswith("multipart/form-data"):
         raw_kw = request.form.get("keywords", "")
+        raw_urls = request.form.get("manual_urls", "")
+
         if raw_kw:
             keywords += [k.strip() for k in raw_kw.split(",") if k.strip()]
 
-        # Uploaded file
-        seed_file = request.files.get("seed_file")
-        if seed_file:
-            try:
-                # Try reading as text (UTF-8)
-                content = seed_file.read().decode("utf-8", errors="ignore")
-                # Split by line or comma
-                file_keywords = [
-                    k.strip() for part in content.splitlines() for k in part.split(",") if k.strip()
-                ]
-                keywords += file_keywords
-            except Exception as e:
-                error(f"Error reading seed file: {e}")
-                return jsonify({"status": "error", "message": "Invalid seed file format"}), 400
+        if raw_urls:
+            manual_urls += [
+                u.strip()
+                for line in raw_urls.splitlines()
+                for u in line.split(",")
+                if u.strip()
+            ]
+
     else:
-        # JSON-based request
         data = request.json or {}
+
         kw_field = data.get("keywords", [])
-        if isinstance(kw_field, list):
-            keywords = [k.strip() for k in kw_field if k.strip()]
-        elif isinstance(kw_field, str):
-            keywords = [k.strip() for k in kw_field.split(",") if k.strip()]
+        url_field = data.get("manual_urls", [])
 
-    # Deduplicate keywords
+        if isinstance(kw_field, str):
+            keywords += [k.strip() for k in kw_field.split(",") if k.strip()]
+        elif isinstance(kw_field, list):
+            keywords += [k.strip() for k in kw_field if k.strip()]
+
+        if isinstance(url_field, str):
+            manual_urls += [u.strip() for u in url_field.split(",") if u.strip()]
+        elif isinstance(url_field, list):
+            manual_urls += [u.strip() for u in url_field if u.strip()]
+
+    # Deduplicate
     keywords = list(set(keywords))
+    manual_urls = list(set(manual_urls))
 
-    # --- Handle empty keyword set ---
-    if not keywords:
+    # --------------------------------------------------
+    # VALIDATION
+    # --------------------------------------------------
+    if not keywords and not manual_urls:
         return jsonify({
             "status": "error",
-            "message": "No valid keywords provided (enter keywords or upload a seed file)"
+            "message": "Provide keywords OR manual .onion URLs"
         }), 400
 
-    # --- Parameters ---
+    # --------------------------------------------------
+    # PARAMETERS
+    # --------------------------------------------------
     def get_param(key, default, cast_func):
         return cast_func(
             request.form.get(key)
-            or (request.json.get(key) if request.is_json else None) # type: ignore
+            or (request.json.get(key) if request.is_json else None)
             or default
         )
 
-    seed_depth = get_param("seed_depth", 2, int)
-    pages = get_param("pages", 5, int)
     crawl_depth = get_param("crawl_depth", 2, int)
     polite_delay = get_param("polite_delay", 2.0, float)
 
-    # --- Start crawler ---
-    crawler_message = "Crawler starting..."
+    # --------------------------------------------------
+    # START CRAWLER
+    # --------------------------------------------------
     crawler_status = "starting"
+    crawler_message = "Crawler starting..."
     crawler_progress = 1
 
     crawler_task = asyncio.run_coroutine_threadsafe(
-        run_crawler(keywords, seed_depth, pages, crawl_depth, polite_delay), loop
+        run_crawler(
+            keywords,
+            manual_urls,
+            crawl_depth,
+            polite_delay
+        ),
+        loop
     )
 
-    info(f"Starting crawler with {len(keywords)} keywords: {keywords[:5]}{'...' if len(keywords) > 5 else ''}")
+    info(
+        f"Starting crawler | keywords={len(keywords)} | manual_urls={len(manual_urls)}"
+    )
+
     return jsonify({
         "status": "success",
-        "message": f"Crawler started with {len(keywords)} keyword(s)"
+        "message": f"Crawler started ({len(keywords)} keywords, {len(manual_urls)} manual URLs)"
     })
-
 
 
 
@@ -500,152 +569,285 @@ def _get_keywords():
         error("/api/keywords DB error:", e)
         return jsonify({"success": False, "error": str(e)}), 500
 
+from datetime import datetime, timedelta
+import asyncio
+from flask import request, jsonify
 
-
-
+from datetime import datetime
+from flask import request, jsonify
+import asyncio
 
 @app.route("/api/sites")
 def sites():
-    async def fetch_sites(search, status, keyword, start_date, end_date, page, size):
+
+    async def fetch_sites(
+        search,
+        status,
+        keyword,
+        source,
+        start_date,
+        end_date,
+        page_size,
+        cursor_last_seen,
+        cursor_site_id
+    ):
         global db_pool
         if not db_pool:
             await init_db_pool()
 
-        async with db_pool.acquire() as conn: # type: ignore
-            query = """
-                SELECT site_id AS id, url, keyword, current_status AS status,
-                       first_seen, last_seen, source
-                FROM onionsites
-                WHERE ($1 = '' OR LOWER(url) LIKE LOWER('%' || $1 || '%'))
-                  AND ($2 = 'all' OR LOWER(current_status) = LOWER($2))
-                  AND ($3 = '' OR LOWER(keyword) = LOWER($3))
-                  AND ($4::timestamp IS NULL OR first_seen >= $4::timestamp)
-                  AND ($5::timestamp IS NULL OR last_seen <= $5::timestamp)
-                ORDER BY last_seen DESC
-                LIMIT $6 OFFSET $7;
-            """
-            offset = (page - 1) * size
+        # ---------------- NORMALIZE FILTERS ----------------
+        search = search or None
+        keyword = keyword or None
+        source = source or None
+        status = None if status == "all" else status
 
-            # Safely parse dates
-            start_dt = end_dt = None
+        # ---------------- DATE FILTERS ----------------
+        start_dt = None
+        end_dt = None
+
+        try:
+            if start_date:
+                start_dt = datetime.strptime(start_date, "%Y-%m-%d")
+            if end_date:
+                end_dt = datetime.strptime(end_date, "%Y-%m-%d") + timedelta(days=1)
+        except ValueError:
+            get_logger().warning("Invalid date filter")
+
+        # ---------------- CURSOR PARSING (CRITICAL FIX) ----------------
+
+        # ---------------- CURSOR PARSING (FINAL FIX) ----------------
+        cursor_dt = None
+        if cursor_last_seen:
             try:
-                if start_date:
-                    start_dt = datetime.strptime(start_date, "%Y-%m-%d")
-                if end_date:
-                    end_dt = datetime.strptime(end_date, "%Y-%m-%d")
+                cursor_dt = datetime.fromisoformat(
+                    cursor_last_seen.replace("Z", "+00:00")
+                )
+
+                # 🔥 CRITICAL FIX: make it NAIVE UTC
+                if cursor_dt.tzinfo is not None:
+                    cursor_dt = cursor_dt.astimezone(timezone.utc).replace(tzinfo=None)
+
             except ValueError:
-                start_dt = end_dt = None
+                get_logger().warning(
+                    "Invalid cursor_last_seen",
+                    extra={"value": cursor_last_seen}
+                )
+                cursor_dt = None
 
-            rows = await conn.fetch(query, search, status, keyword, start_dt, end_dt, size, offset)
-            total = await conn.fetchval("SELECT COUNT(*) FROM onionsites;")
 
-        return rows, total
+        async with db_pool.acquire() as conn:
+            query = """
+                SELECT
+                    site_id AS id,
+                    url,
+                    keyword,
+                    current_status AS status,
+                    first_seen,
+                    last_seen,
+                    source
+                FROM OnionSites
+                WHERE
+                    ($1::text IS NULL OR LOWER(url) LIKE '%' || LOWER($1) || '%' OR site_id = $1)
+                AND ($2::text IS NULL OR LOWER(current_status) = LOWER($2))
+                AND ($3::text IS NULL OR LOWER(keyword) = LOWER($3))
+                AND ($4::text IS NULL OR LOWER(source) = LOWER($4))
+                AND ($5::timestamp IS NULL OR first_seen >= $5)
+                AND ($6::timestamp IS NULL OR last_seen < $6)
+                AND (
+                    $7::timestamp IS NULL OR
+                    (last_seen, site_id) < ($7, $8)
+                )
+                ORDER BY last_seen DESC, site_id DESC
+                LIMIT $9;
+            """
 
-    try:
-        search = request.args.get("search", "").strip()
-        status = request.args.get("status", "all").strip()
-        keyword = request.args.get("keyword", "").strip()
-        start_date = request.args.get("start_date", "").strip()
-        end_date = request.args.get("end_date", "").strip()
-        page = int(request.args.get("page", 1))
-        size = int(request.args.get("page_size", 25))
+            rows = await conn.fetch(
+                query,
+                search,
+                status,
+                keyword,
+                source,
+                start_dt,
+                end_dt,
+                cursor_dt,
+                cursor_site_id,
+                page_size,
+            )
 
-        # ✅ Run coroutine in background loop
-        future = asyncio.run_coroutine_threadsafe(
-            fetch_sites(search, status, keyword, start_date, end_date, page, size), loop
-        )
-        rows, total = future.result()
-
-        data = [
-            {
-                "id": r["id"],
-                "url": r["url"],
-                "category": r["keyword"] or "Other",
-                "status": r["status"],
-                "firstSeen": r["first_seen"].strftime("%Y-%m-%d %H:%M") if r["first_seen"] else None,
-                "lastSeen": r["last_seen"].strftime("%Y-%m-%d %H:%M") if r["last_seen"] else None,
-                "source": r["source"],
+        # ---------------- NEXT CURSOR ----------------
+        next_cursor = None
+        if rows:
+            last = rows[-1]
+            next_cursor = {
+                "last_seen": last["last_seen"].isoformat(),
+                "site_id": last["id"]
             }
-            for r in rows
-        ]
+
+        return rows, next_cursor
+
+    # ========================= ROUTE HANDLER =========================
+    try:
+        args = request.args
+
+        future = asyncio.run_coroutine_threadsafe(
+            fetch_sites(
+                search=args.get("search", "").strip(),
+                status=args.get("status", "all").strip(),
+                keyword=args.get("keyword", "").strip(),
+                source=args.get("source", "").strip(),
+                start_date=args.get("start_date", "").strip(),
+                end_date=args.get("end_date", "").strip(),
+                page_size=min(int(args.get("page_size", 25)), 100),
+                cursor_last_seen=args.get("cursor_last_seen"),
+                cursor_site_id=args.get("cursor_site_id"),
+            ),
+            loop,
+        )
+
+        rows, next_cursor = future.result()
+
+        data = [{
+            "id": r["id"],
+            "url": r["url"],
+            "category": r["keyword"] or "Other",
+            "status": r["status"],
+            "firstSeen": r["first_seen"].strftime("%Y-%m-%d %H:%M") if r["first_seen"] else None,
+            "lastSeen": r["last_seen"].strftime("%Y-%m-%d %H:%M") if r["last_seen"] else None,
+            "source": r["source"],
+        } for r in rows]
 
         return jsonify({
             "success": True,
             "data": data,
-            "pagination": {
-                "page": page,
-                "page_size": size,
-                "total": total
-            }
+            "next_cursor": next_cursor
         })
 
-    except Exception as e:
-        error("/api/sites DB error:", e)
-        return jsonify({"success": False, "error": str(e)}), 500
+    except Exception:
+        get_logger().exception("/api/sites failed")
+        return jsonify({
+            "success": False,
+            "error": "Internal server error"
+        }), 500
+
 
 @app.route("/api/site/<site_id>", methods=["GET"])
-def get_site_details(site_id):
-    async def fetch_site(site_id):
+def get_site_full_analysis(site_id):
+    async def fetch_site_data(site_id):
         global db_pool
         if not db_pool:
             await init_db_pool()
 
-        async with db_pool.acquire() as conn: # type: ignore
-            query = """
-                SELECT 
-                    site_id,
-                    url,
-                    source,
-                    keyword,
-                    current_status AS status,
-                    first_seen,
-                    last_seen
-                FROM onionsites
+        async with db_pool.acquire() as conn:
+
+            # ---------------- SITE ----------------
+            site = await conn.fetchrow("""
+                SELECT site_id, url, source, keyword, current_status,
+                       first_seen, last_seen
+                FROM OnionSites
                 WHERE site_id = $1;
-            """
-            return await conn.fetchrow(query, site_id)
+            """, site_id)
+
+            if not site:
+                return None
+
+            # ---------------- PAGES ----------------
+            pages = await conn.fetch("""
+                SELECT page_id, url, crawl_date
+                FROM Pages
+                WHERE site_id = $1
+                ORDER BY crawl_date DESC;
+            """, site_id)
+
+            page_ids = [p["page_id"] for p in pages]
+
+            # ---------------- METADATA ----------------
+            metadata_rows = []
+            if page_ids:
+                metadata_rows = await conn.fetch("""
+                    SELECT page_id, title, meta_tags, emails,
+                           pgp_keys, language
+                    FROM Metadata
+                    WHERE page_id = ANY($1);
+                """, page_ids)
+
+            metadata_map = {m["page_id"]: m for m in metadata_rows}
+
+            # ---------------- BITCOIN ADDRESSES ----------------
+            btc_rows = await conn.fetch("""
+                SELECT address,
+                    page_id,
+                    valid,
+                    detected_at,
+                    tx_analyzed
+                FROM BitcoinAddresses
+                WHERE site_id = $1;
+            """, site_id)
+
+
+        return site, pages, metadata_map, btc_rows
 
     try:
-        # ✅ Run async safely inside Flask
-        future = asyncio.run_coroutine_threadsafe(fetch_site(site_id), loop)
-        row = future.result()
+        future = asyncio.run_coroutine_threadsafe(
+            fetch_site_data(site_id), loop
+        )
+        result = future.result()
 
-        if not row:
+        if not result:
             return jsonify({"success": False, "error": "Site not found"}), 404
 
-        data = {
-            "id": row["site_id"],
-            "url": row["url"],
-            "source": row["source"],
-            "category": row["keyword"] or "Other",
-            "status": row["status"],
-            "firstSeen": row["first_seen"].strftime("%Y-%m-%d %H:%M") if row["first_seen"] else None,
-            "lastSeen": row["last_seen"].strftime("%Y-%m-%d %H:%M") if row["last_seen"] else None,
-            "title": None,
-            "metadata": {
-                "ssl_cert": "N/A",
-                "language": "N/A",
-                "indexed_pages": 0,
-                "server": "N/A"
-            }
+        site, pages, metadata_map, btc_rows = result
+
+        # ---------------- FORMAT RESPONSE ----------------
+        response = {
+            "site": {
+                "site_id": site["site_id"],
+                "url": site["url"],
+                "category": site["keyword"] or "Unknown",
+                "status": site["current_status"],
+                "source": site["source"],
+                "first_seen": site["first_seen"].strftime("%Y-%m-%d %H:%M") if site["first_seen"] else None,
+                "last_seen": site["last_seen"].strftime("%Y-%m-%d %H:%M") if site["last_seen"] else None
+            },
+            "pages": [],
+            "bitcoin_addresses": []
         }
 
-        return jsonify({"success": True, "data": data})
+        # ---------------- PAGES + METADATA ----------------
+        for p in pages:
+            meta = metadata_map.get(p["page_id"])
+
+            response["pages"].append({
+                "page_id": p["page_id"],
+                "url": p["url"],
+                "crawled_at": p["crawl_date"].strftime("%Y-%m-%d %H:%M"),
+                "metadata": {
+                    "title": meta["title"] if meta else None,
+                    "language": meta["language"] if meta else None,
+                    "emails": meta["emails"] if meta and meta["emails"] else [],
+                    "pgp_keys": meta["pgp_keys"] if meta and meta["pgp_keys"] else [],
+                    "meta_tags": meta["meta_tags"] if meta and meta["meta_tags"] else {}
+                }
+            })
+
+        # ---------------- BITCOIN ----------------
+        for b in btc_rows:
+            response["bitcoin_addresses"].append({
+                "address": b["address"],
+                "page_id": b["page_id"],
+                "valid": b["valid"],
+                "detected_at": b["detected_at"].strftime("%Y-%m-%d %H:%M") if b["detected_at"] else None,
+                "tx_analyzed": b["tx_analyzed"],
+            })
+
+
+        return jsonify({"success": True, "data": response})
 
     except Exception as e:
-        error(f"/api/site/{site_id} error:", e)
+        error(f"/api/site/{site_id} error: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
 
 
-@app.route("/api/vendors")
-def vendors():
-    page = get_int_param(request.args.get("page"), 1)
-    size = get_int_param(request.args.get("page_size"), CONFIG['DEFAULT_PAGE_SIZE'])
-    return jsonify({
-        "success": True,
-        "data": paginate(mock_data['vendors'], page, size),
-        "pagination": {"page": page, "total": len(mock_data['vendors'])}
-    })
+
 
 
 @app.route("/api/bitcoin/wallets", methods=["GET"])
@@ -755,115 +957,75 @@ def bitcoin_transaction_network():
         if not db_pool:
             await init_db_pool()
 
-        async with db_pool.acquire() as conn:  # type: ignore
-            rows = await conn.fetch("""
-                SELECT 
-                    t.tx_id,
-                    t.address_id,
-                    b.address,
-                    t.fan_in,
-                    t.fan_out,
-                    t.amount,
-                    t.is_mixer
-                FROM Transactions t
-                JOIN BitcoinAddresses b ON t.address_id = b.address_id
+        async with db_pool.acquire() as conn:
+
+            edges = await conn.fetch("""
+                SELECT
+                    e.from_address,
+                    e.to_address,
+                    SUM(e.amount) AS amount,
+                    BOOL_OR(t.is_mixer) AS is_mixer,
+                    MAX(t.fan_in) AS fan_in,
+                    MAX(t.fan_out) AS fan_out
+                FROM BitcoinTransactionEdges e
+                LEFT JOIN BitcoinAddresses b
+                    ON b.address = e.from_address
+                LEFT JOIN Transactions t
+                    ON t.address_id = b.address_id
+                GROUP BY e.from_address, e.to_address
+                HAVING SUM(e.amount) > 0
                 LIMIT 500;
             """)
-        return rows
+
+        return edges
 
     try:
         future = asyncio.run_coroutine_threadsafe(fetch_network(), loop)
         rows = future.result()
 
-        # --------------------------------------------------
-        # EMPTY DB → FALLBACK MOCK NETWORK
-        # --------------------------------------------------
-        if not rows:
-            info("⚠ Bitcoin network empty → using mock graph")
-            nodes = []
-            links = []
-
-            for i in range(15):
-                addr = f"bc1qmock{i:04d}"
-                nodes.append({
-                    "id": addr,
-                    "fanIn": random.randint(1, 20),
-                    "fanOut": random.randint(1, 20),
-                    "isMixer": random.random() < 0.2,
-                    "riskScore": random.randint(20, 95)
-                })
-
-            for i in range(20):
-                src = random.choice(nodes)["id"]
-                dst = random.choice(nodes)["id"]
-                if src != dst:
-                    links.append({
-                        "source": src,
-                        "target": dst,
-                        "amount": round(random.uniform(0.01, 3.5), 4)
-                    })
-
-            return jsonify({
-                "success": True,
-                "data": {"nodes": nodes, "links": links}
-            })
-
-        # --------------------------------------------------
-        # REAL GRAPH BUILD
-        # --------------------------------------------------
         node_map = {}
-        link_map = defaultdict(float)
+        links = []
 
         for r in rows:
-            addr = r["address"]
+            src = r["from_address"]
+            dst = r["to_address"]
 
-            if addr not in node_map:
-                risk = min(
-                    95,
-                    20 + (r["fan_in"] + r["fan_out"]) * 2 +
-                    (30 if r["is_mixer"] else 0)
-                )
+            for addr in (src, dst):
+                if addr not in node_map:
+                    risk = min(
+                        95,
+                        20 +
+                        ((r["fan_in"] or 0) + (r["fan_out"] or 0)) * 2 +
+                        (30 if r["is_mixer"] else 0)
+                    )
 
-                node_map[addr] = {
-                    "id": addr,
-                    "fanIn": r["fan_in"],
-                    "fanOut": r["fan_out"],
-                    "isMixer": r["is_mixer"],
-                    "riskScore": risk
-                }
+                    node_map[addr] = {
+                        "id": addr,
+                        "fanIn": r["fan_in"] or 0,
+                        "fanOut": r["fan_out"] or 0,
+                        "isMixer": r["is_mixer"] or False,
+                        "riskScore": risk
+                    }
 
-            # Self-loop collapsed later
-            link_map[(addr, addr)] += float(r["amount"])
-
-        # Convert maps → arrays
-        nodes = list(node_map.values())
-
-        links = [
-            {
+            links.append({
                 "source": src,
-                "target": tgt,
-                "amount": round(amount, 4)
-            }
-            for (src, tgt), amount in link_map.items()
-            if amount > 0
-        ]
+                "target": dst,
+                "amount": round(float(r["amount"]), 4)
+            })
 
-        info(f"🔗 Bitcoin network built | Nodes={len(nodes)} Links={len(links)}")
+        info(f"🔗 BTC Network | Nodes={len(node_map)} Links={len(links)}")
 
         return jsonify({
             "success": True,
             "data": {
-                "nodes": nodes,
+                "nodes": list(node_map.values()),
                 "links": links
             }
         })
 
     except Exception as e:
         error(f"❌ /api/bitcoin/network error: {e}")
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        }), 500
+        return jsonify({"success": False, "error": str(e)}), 500
 
 
 
@@ -927,51 +1089,119 @@ def get_reports():
         }
     })
 
+@app.route("/api/vendors/overview", methods=["GET"])
+def vendors_overview():
+    async def fetch():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
 
-@app.route('/api/vendors/network', methods=['GET'])
-def get_vendor_network():
-    """Return vendor relationship network graph"""
+        async with db_pool.acquire() as conn:
 
-    # Limit to 30 vendors for clarity
-    vendors = mock_data.get('vendors', [])[:30]
+            # ---------------- Vendors (list view) ----------------
+            vendor_rows = await conn.fetch("""
+                SELECT
+                    vendor_id,
+                    vendor_name,
+                    risk_score,
+                    first_seen,
+                    last_seen
+                FROM Vendors
+                ORDER BY risk_score DESC, last_seen DESC;
+            """)
 
-    # Build node list
-    nodes = [
-        {
-            'id': v['id'],
-            'name': v.get('alias', v['id']),
-            'status': v.get('status', 'unknown'),
-            'reputation': v.get('reputation', 0),
-            'size': max(3, (v.get('totalSales', 1) / 100)),  # Ensure visible node size
-            'color': '#06b6d4' if v.get('status') == 'active' else '#9ca3af'
-        }
-        for v in vendors
-    ]
+            # ---------------- Graph nodes ----------------
+            node_rows = await conn.fetch("""
+                SELECT
+                    v.vendor_id,
+                    v.vendor_name,
+                    v.risk_score,
+                    COUNT(DISTINCT va.artifact_value) AS artifact_count
+                FROM Vendors v
+                LEFT JOIN VendorArtifacts va
+                    ON v.vendor_id = va.vendor_id
+                GROUP BY v.vendor_id, v.vendor_name, v.risk_score;
+            """)
 
-    # Generate relationship links (edges)
-    links = []
-    for i, v1 in enumerate(vendors):
-        for v2 in vendors[i + 1:]:
-            shared = set(v1.get('marketplaces', [])) & set(v2.get('marketplaces', []))
-            if shared or random.random() < 0.12:  # 12% random links
-                links.append({
-                    'source': v1['id'],
-                    'target': v2['id'],
-                    'weight': len(shared) if shared else 1,
-                    'type': 'shared_marketplace' if shared else 'connection',
-                    'color': '#8b5cf6' if shared else '#10b981'
-                })
+            # ---------------- Graph edges ----------------
+            edge_rows = await conn.fetch("""
+                SELECT
+                    a.vendor_id AS source,
+                    b.vendor_id AS target,
+                    a.artifact_type,
+                    COUNT(*) AS weight
+                FROM VendorArtifacts a
+                JOIN VendorArtifacts b
+                  ON a.artifact_type = b.artifact_type
+                 AND a.artifact_value = b.artifact_value
+                 AND a.vendor_id < b.vendor_id
+                WHERE a.artifact_type IN ('pgp', 'email', 'xmr')
+                GROUP BY source, target, a.artifact_type;
+            """)
 
-    # Final JSON response
-    return jsonify({
-        'success': True,
-        'data': {
-            'nodes': nodes,
-            'links': links,
-            'nodeCount': len(nodes),
-            'linkCount': len(links)
-        }
-    })
+        return vendor_rows, node_rows, edge_rows
+
+    try:
+        vendor_rows, node_rows, edge_rows = (
+            asyncio.run_coroutine_threadsafe(fetch(), loop).result()
+        )
+
+        # -------- Vendors list --------
+        vendors = [
+            {
+                "id": r["vendor_id"],
+                "name": r["vendor_name"],
+                "riskScore": r["risk_score"],
+                "firstSeen": r["first_seen"].isoformat() if r["first_seen"] else None,
+                "lastSeen": r["last_seen"].isoformat() if r["last_seen"] else None
+            }
+            for r in vendor_rows
+        ]
+
+        # -------- Graph nodes --------
+        nodes = []
+        for r in node_rows:
+            risk = r["risk_score"] or 0
+            nodes.append({
+                "id": r["vendor_id"],
+                "name": r["vendor_name"],  # ✅ single source of truth
+                "risk": risk,
+                "size": min(30, 8 + (r["artifact_count"] or 0) * 2),
+                "color": (
+                    "#ef4444" if risk >= 80 else
+                    "#f59e0b" if risk >= 50 else
+                    "#10b981"
+                )
+            })
+
+        # -------- Graph links --------
+        links = [
+            {
+                "source": e["source"],
+                "target": e["target"],
+                "weight": e["weight"],
+                "type": e["artifact_type"]
+            }
+            for e in edge_rows
+        ]
+
+        return jsonify({
+            "success": True,
+            "data": {
+                "vendors": vendors,
+                "network": {
+                    "nodes": nodes,
+                    "links": links
+                }
+            }
+        })
+
+    except Exception as e:
+        error(f"/api/vendors/overview error: {e}")
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+
 
 
 # ==================== ERROR HANDLERS ====================

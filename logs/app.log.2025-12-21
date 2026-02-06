@@ -1,0 +1,2 @@
+2025-12-21 10:10:42 - app - INFO - [logger.py:97] - 🌐 Fetching http://darknet3szyhadtd2xgyvmgaoe6dn3evo6irnjljsaz5fx2e4yfo7aad.onion/lfs/tab/?tab_id=latest_posts via Tor [InnerLink] (depth=1)
+2025-12-21 10:11:10 - app - INFO - [logger.py:97] - 🌐 Fetching http://darknet3szyhadtd2xgyvmgaoe6dn3evo6irnjljsaz5fx2e4yfo7aad.onion/search/?type=post via Tor [InnerLink] (depth=1)

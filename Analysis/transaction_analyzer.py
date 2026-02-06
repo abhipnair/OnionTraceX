@@ -72,6 +72,58 @@ class TransactionAnalyzer:
                     })
         logger.info(results)
         return results
+    
+    def extract_edges(self, tx: Dict) -> List[Dict]:
+        """
+        Extract real sender → receiver flows from a Bitcoin tx
+        """
+        edges = []
+
+        tx_id = tx["txid"]
+
+        block_time = tx.get("status", {}).get("block_time")
+
+        timestamp = (
+            datetime.fromtimestamp(block_time, tz=timezone.utc)
+            if block_time
+            else None
+        )
+
+
+        # ---------------- INPUT ADDRESSES ----------------
+        senders = []
+        for vin in tx.get("vin", []):
+            prev = vin.get("prevout")
+            if prev:
+                addr = prev.get("scriptpubkey_address")
+                if addr:
+                    senders.append(addr)
+
+        if not senders:
+            return edges
+
+        # ---------------- OUTPUT ADDRESSES ----------------
+        for vout in tx.get("vout", []):
+            recv = vout.get("scriptpubkey_address")
+            if not recv:
+                continue
+
+            amount = vout.get("value", 0) / 1e8
+
+            for sender in senders:
+                if sender == recv:
+                    continue  # skip self-loops
+
+                edges.append({
+                    "tx_id": tx_id,
+                    "from_address": sender,
+                    "to_address": recv,
+                    "amount": amount,
+                    "timestamp": timestamp
+                })
+
+        return edges
+
 
     # -------------------------------------------------
     @staticmethod

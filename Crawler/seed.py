@@ -70,7 +70,7 @@ class SeedCollector:
         discovered = set()  # (url, source)
 
         # ---------------- Ahmia (PRIMARY SOURCE) ----------------
-        ahmia_url = f"https://ahmia.fi/search/?q={keyword}&8de34a=471bc3"
+        ahmia_url = f"https://ahmia.fi/search/?q={keyword}&46816c=b6aab9"
         ahmia_html = await self._fetch_clearnet(ahmia_url)
 
         if ahmia_html:

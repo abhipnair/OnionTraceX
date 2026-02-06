@@ -18,6 +18,8 @@ import CrawlerControlPanel from "./CrawlerControlPanel";
 import DashboardCharts from "./DashboardCharts";
 import SitesExplorer from "./SitesExplorer";
 import BitcoinAnalysis from "./BitcoinAnalysis";
+import VendorNetworkGraph from "./VendorNetworkGraph";
+
 
 
 // API Configuration
@@ -75,21 +77,19 @@ const apiService = {
     return result.data;
   },
 
-  async fetchVendors(): Promise<Vendor[]> {
-    const response = await fetch(`${API_BASE_URL}/vendors`);
-    if (!response.ok) throw new Error('Failed to fetch vendors');
+  async fetchVendorsOverview(): Promise<{
+    vendors: Vendor[];
+    network: VendorNetwork;
+  }> {
+    const response = await fetch(`${API_BASE_URL}/vendors/overview`);
+    if (!response.ok) throw new Error("Failed to fetch vendor overview");
+
     const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'API request failed');
+    if (!result.success) throw new Error(result.error || "API request failed");
+
     return result.data;
   },
 
-  async fetchVendorNetwork(): Promise<VendorNetwork> {
-    const response = await fetch(`${API_BASE_URL}/vendors/network`);
-    if (!response.ok) throw new Error('Failed to fetch vendor network');
-    const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'API request failed');
-    return result.data;
-  },
 
   async fetchBitcoinData(): Promise<BitcoinData> {
     const response = await fetch(`${API_BASE_URL}/bitcoin/wallets`);
@@ -204,6 +204,11 @@ const OnionTraceX: React.FC = () => {
   const [vendorData, setVendorData] = useState<Vendor[]>([]);
   const [vendorNetwork, setVendorNetwork] = useState<VendorNetwork | null>(null);
 
+  // ---------------- Vendor Network Helpers ----------------
+  const vendorGraphData = vendorNetwork;
+
+
+
   // Bitcoin state
   const [btcData, setBtcData] = useState<BitcoinData | null>(null);
 
@@ -224,6 +229,8 @@ const OnionTraceX: React.FC = () => {
     circuitRotation: 10,
     timeout: 30
   });
+
+  
 
   // Mock data for demonstration
   useEffect(() => {
@@ -374,19 +381,19 @@ const OnionTraceX: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const [vendorsRes, networkRes] = await Promise.all([
-        apiService.fetchVendors(),
-        apiService.fetchVendorNetwork()
-      ]);
-      setVendorData(vendorsRes);
-      setVendorNetwork(networkRes);
+      const overview = await apiService.fetchVendorsOverview();
+
+      setVendorData(overview.vendors);          // table / metadata
+      setVendorNetwork(overview.network);       // graph (nodes + links)
+
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
-      console.error('Error loading vendors:', err);
+      setError(err instanceof Error ? err.message : "An error occurred");
+      console.error("Error loading vendors:", err);
     } finally {
       setLoading(false);
     }
   };
+
 
   // Load bitcoin data
   const loadBitcoinData = async (): Promise<void> => {
@@ -622,303 +629,6 @@ const OnionTraceX: React.FC = () => {
       )}
     </div>
   );
-
-
-  const renderVendors = (): JSX.Element => {
-  // SVG-based vendor network graph with zoom + pan
-  const VendorNetworkGraphSVG: React.FC<{ data: any }> = ({ data }) => {
-    const [nodePositions, setNodePositions] = useState<{ [key: string]: { x: number; y: number } }>({});
-    const [zoom, setZoom] = useState(1);
-    const [pan, setPan] = useState({ x: 0, y: 0 });
-    const [isPanning, setIsPanning] = useState(false);
-    const [startPan, setStartPan] = useState({ x: 0, y: 0 });
-
-    // Zoom controls
-    const handleZoomIn = () => setZoom(prev => Math.min(prev * 1.3, 5));
-    const handleZoomOut = () => setZoom(prev => Math.max(prev / 1.3, 0.3));
-    const handleZoomReset = () => {
-      setZoom(1);
-      setPan({ x: 0, y: 0 });
-    };
-
-    // Panning handlers
-    const handleMouseDown = (e: React.MouseEvent) => {
-      setIsPanning(true);
-      setStartPan({ x: e.clientX - pan.x, y: e.clientY - pan.y });
-    };
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-      if (!isPanning) return;
-      setPan({
-        x: e.clientX - startPan.x,
-        y: e.clientY - startPan.y
-      });
-    };
-
-    const handleMouseUp = () => {
-      setIsPanning(false);
-    };
-
-    // Wheel zoom
-    const handleWheel = (e: React.WheelEvent) => {
-      e.preventDefault();
-      const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
-      setZoom(prev => Math.max(0.3, Math.min(5, prev * zoomFactor)));
-    };
-
-    // Force layout simulation
-    useEffect(() => {
-      if (!data) return;
-
-      const positions: { [key: string]: { x: number; y: number } } = {};
-      const width = 1200;
-      const height = 800;
-
-      data.nodes.forEach((node: any, index: number) => {
-        const angle = (index / data.nodes.length) * 2 * Math.PI;
-        const radius = Math.min(width, height) * 0.4;
-        positions[node.id] = {
-          x: width / 2 + radius * Math.cos(angle),
-          y: height / 2 + radius * Math.sin(angle)
-        };
-      });
-
-      for (let iteration = 0; iteration < 100; iteration++) {
-        // Node repulsion
-        data.nodes.forEach((nodeA: any) => {
-          data.nodes.forEach((nodeB: any) => {
-            if (nodeA.id === nodeB.id) return;
-            const posA = positions[nodeA.id];
-            const posB = positions[nodeB.id];
-            const dx = posB.x - posA.x;
-            const dy = posB.y - posA.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < 150) {
-              const force = 150 / (distance * distance);
-              posA.x -= dx * force * 0.2;
-              posA.y -= dy * force * 0.2;
-              posB.x += dx * force * 0.2;
-              posB.y += dy * force * 0.2;
-            }
-          });
-        });
-
-        // Link attraction
-        data.links.forEach((link: any) => {
-          const source = positions[link.source];
-          const target = positions[link.target];
-          if (source && target) {
-            const dx = target.x - source.x;
-            const dy = target.y - source.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const force = (distance - 200) * 0.01;
-            source.x += dx * force * 0.1;
-            source.y += dy * force * 0.1;
-            target.x -= dx * force * 0.1;
-            target.y -= dy * force * 0.1;
-          }
-        });
-
-        // Keep nodes in bounds
-        data.nodes.forEach((node: any) => {
-          const pos = positions[node.id];
-          pos.x = Math.max(50, Math.min(width - 50, pos.x));
-          pos.y = Math.max(50, Math.min(height - 50, pos.y));
-        });
-      }
-
-      setNodePositions(positions);
-    }, [data]);
-
-    if (!data || Object.keys(nodePositions).length === 0) {
-      return (
-        <div className="flex items-center justify-center h-full">
-          <RefreshCw size={32} className="animate-spin text-cyan-500" />
-          <span className="ml-2 text-gray-400">Calculating network layout...</span>
-        </div>
-      );
-    }
-
-    return (
-      <div className="relative w-full h-full">
-        {/* Zoom Controls */}
-        <div className="absolute top-6 right-6 z-10 flex flex-col gap-3 bg-gray-900/90 backdrop-blur-sm p-3 rounded-xl border border-gray-600/50">
-          <div className="text-center text-xs text-gray-400 mb-1">Zoom</div>
-          <button onClick={handleZoomIn} className="p-3 bg-cyan-600/20 hover:bg-cyan-600/30 rounded-lg border border-cyan-500/30 text-cyan-400">
-            +
-          </button>
-          <div className="text-center text-cyan-400 text-sm font-mono px-2 py-1 bg-gray-800/50 rounded">
-            {Math.round(zoom * 100)}%
-          </div>
-          <button onClick={handleZoomOut} className="p-3 bg-cyan-600/20 hover:bg-cyan-600/30 rounded-lg border border-cyan-500/30 text-cyan-400">
-            -
-          </button>
-          <button onClick={handleZoomReset} className="p-2 bg-gray-700/50 hover:bg-gray-600/50 rounded-lg border border-gray-500/30 text-gray-300 mt-2">
-            ⟲ Reset
-          </button>
-        </div>
-
-        {/* Network Info */}
-        <div className="absolute top-6 left-6 z-10 bg-gray-900/90 backdrop-blur-sm px-4 py-3 rounded-xl border border-gray-600/50">
-          <div className="text-xs text-gray-400 mb-2">Network Stats</div>
-          <div className="flex gap-4 text-sm">
-            <div className="text-cyan-400">
-              <div className="font-bold">{data.nodes.length}</div>
-              <div className="text-xs text-gray-400">Nodes</div>
-            </div>
-            <div className="text-purple-400">
-              <div className="font-bold">{data.links.length}</div>
-              <div className="text-xs text-gray-400">Links</div>
-            </div>
-          </div>
-        </div>
-
-        {/* SVG Graph */}
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 1200 800"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onWheel={handleWheel}
-          className="w-full h-full cursor-grab active:cursor-grabbing"
-          style={{
-            transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
-            transformOrigin: "center center",
-            transition: isPanning ? "none" : "transform 0.1s ease-out"
-          }}
-        >
-          <defs>
-            <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(75,85,99,0.2)" strokeWidth="1" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-
-          {/* Links */}
-          {data.links.map((link: any, i: number) => {
-            const s = nodePositions[link.source];
-            const t = nodePositions[link.target];
-            if (!s || !t) return null;
-            return (
-              <line
-                key={i}
-                x1={s.x}
-                y1={s.y}
-                x2={t.x}
-                y2={t.y}
-                stroke={link.color || "#4b5563"}
-                strokeWidth={(link.value || 1) * 2}
-                opacity={0.7}
-              />
-            );
-          })}
-
-          {/* Nodes */}
-          {data.nodes.map((node: any) => {
-            const pos = nodePositions[node.id];
-            if (!pos) return null;
-            const size = node.size || 16;
-            return (
-              <g key={node.id} transform={`translate(${pos.x}, ${pos.y})`}>
-                <circle r={size} fill={node.color || "#06b6d4"} stroke="#1e40af" strokeWidth="3" />
-                <text textAnchor="middle" dy={-size - 8} fontSize="12" fill="#e5e7eb">
-                  {node.name}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-    );
-  };
-
-  // Data preprocessing
-  const processVendorNetwork = (networkData: any) => {
-    if (!networkData || !networkData.links) return null;
-    const nodeMap: Record<string, any> = {};
-    const links: any[] = [];
-
-    networkData.links.forEach((link: any) => {
-      const color = link.type === "shared_marketplace" ? "#8b5cf6" : "#10b981";
-      links.push({ source: link.source, target: link.target, value: link.weight || 1, color });
-
-      [link.source, link.target].forEach(id => {
-        if (!nodeMap[id]) {
-          nodeMap[id] = {
-            id,
-            name: `Vendor ${id.split("_")[1]}`,
-            size: 14 + Math.random() * 8,
-            color: "#06b6d4"
-          };
-        }
-      });
-    });
-
-    return { nodes: Object.values(nodeMap), links };
-  };
-
-  const vendorGraphData = vendorNetwork ? processVendorNetwork(vendorNetwork) : null;
-
-  // Main return
-  return (
-    <div className="space-y-6 h-full">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold text-white">Vendor Clusters</h2>
-          <p className="text-gray-400">Interactive vendor relationship mapping</p>
-        </div>
-        <button
-          onClick={loadVendorsData}
-          disabled={loading}
-          className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg flex items-center gap-2 disabled:opacity-50 transition-colors"
-        >
-          <RefreshCw size={18} className={loading ? "animate-spin" : ""} />
-          Refresh
-        </button>
-      </div>
-
-      {error && (
-        <div className="bg-red-900/50 border border-red-500 text-red-200 p-4 rounded-lg">
-          <div className="flex items-center gap-2">
-            <AlertCircle size={20} />
-            <span>Error: {error}</span>
-          </div>
-        </div>
-      )}
-
-      <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50">
-        <div className="flex items-center gap-2 mb-4">
-          <Network className="text-cyan-400" size={20} />
-          <h3 className="text-lg font-semibold text-cyan-400">Vendor Network Graph</h3>
-          <span className="text-gray-400 text-sm ml-2">• Scroll to zoom • Drag to pan</span>
-        </div>
-
-        <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 rounded-xl min-h-[700px] h-[70vh] max-h-[800px] flex items-center justify-center border-2 border-gray-600/30 overflow-hidden relative shadow-2xl">
-          {loading ? (
-            <div className="text-center">
-              <RefreshCw size={48} className="animate-spin text-cyan-500 mx-auto mb-4" />
-              <p className="text-gray-400">Loading vendor network...</p>
-            </div>
-          ) : vendorGraphData ? (
-            <div className="w-full h-full">
-              <VendorNetworkGraphSVG data={vendorGraphData} />
-            </div>
-          ) : (
-            <div className="text-center w-full h-full flex flex-col items-center justify-center text-gray-400">
-              <Network className="mb-4 text-cyan-500" size={48} />
-              <p className="text-lg">No vendor network data available</p>
-              <p className="text-sm text-gray-500 mt-1">Try refreshing to fetch the latest network graph</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 
 const renderReports = (): JSX.Element => (
   <div className="space-y-6 h-full">
@@ -1444,7 +1154,7 @@ const renderSettings = (): JSX.Element => (
           {activeSection === 'dashboard' && renderDashboard()}
           {activeSection === "crawler" && <CrawlerControlPanel />}
           {activeSection === 'sites' && <SitesExplorer/>}
-          {activeSection === 'vendors' && renderVendors()}
+          {activeSection === "vendors" && <VendorNetworkGraph data={vendorGraphData} loading={loading} />}
           {activeSection === "bitcoin" && <BitcoinAnalysis />}
           {activeSection === 'reports' && renderReports()}
           {activeSection === 'settings' && renderSettings()}
