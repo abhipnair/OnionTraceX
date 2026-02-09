@@ -18,3 +18,109 @@
 2026-02-09 17:36:21 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
 2026-02-09 17:44:06 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
 2026-02-09 17:44:06 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 18:15:05 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:15:05 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 18:15:05 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:15:05 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 18:15:05 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 18:15:05 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:15:05 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 18:20:07 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:20:07 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 18:20:07 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:20:07 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 18:20:07 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 18:20:07 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:20:08 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 18:35:17 - app - INFO - [logger.py:97] - 📄 SITE_DOSSIER generated | site_id=64d21f0dc409faef3caa65f485c148cc7ef094e12073e9f9124036feb8ccd6e6
+2026-02-09 18:37:36 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 18:44:32 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:44:32 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 18:44:32 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:44:32 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 18:44:32 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 18:44:32 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:44:32 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 18:44:35 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 18:45:21 - app - INFO - [logger.py:97] - 📄 SITE_DOSSIER generated | site_id=64d21f0dc409faef3caa65f485c148cc7ef094e12073e9f9124036feb8ccd6e6
+2026-02-09 18:51:02 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:51:02 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 18:51:02 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:51:02 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 18:51:02 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 18:51:02 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:51:02 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 18:51:05 - app - INFO - [logger.py:97] - 📄 SITE_DOSSIER generated | site_id=64d21f0dc409faef3caa65f485c148cc7ef094e12073e9f9124036feb8ccd6e6
+2026-02-09 18:51:28 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 18:57:35 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:57:35 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 18:57:35 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:57:35 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 18:57:35 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 18:57:35 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 18:57:35 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 18:57:38 - app - INFO - [logger.py:97] - 📄 SITE_DOSSIER generated | site_id=64d21f0dc409faef3caa65f485c148cc7ef094e12073e9f9124036feb8ccd6e6
+2026-02-09 18:58:01 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 18:59:18 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:04:18 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:04:30 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:04:30 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 19:04:30 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:04:30 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 19:04:30 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 19:04:30 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:04:30 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 19:04:39 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:05:35 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:05:39 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:05:39 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 19:05:39 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:05:39 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 19:05:39 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 19:05:39 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:05:39 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 19:05:43 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:06:10 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:06:10 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 19:06:10 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:06:10 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 19:06:10 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 19:06:10 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:06:10 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 19:06:18 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:06:18 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:07:00 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:07:00 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 19:07:00 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:07:00 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 19:07:00 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 19:07:00 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:07:00 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 19:07:09 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:07:36 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:08:04 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:08:04 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 19:08:04 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:08:04 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 19:08:04 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 19:08:04 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:08:04 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 19:08:09 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 19:08:09 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 19:09:00 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:09:00 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 19:09:00 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:09:00 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 19:09:00 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 19:09:00 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:09:00 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 19:10:03 - app - INFO - [logger.py:97] - 📄 BTC_ADDRESS_REPORT generated | address_id=f1b63ff64b881df52c508e7b80eba6e870ecb6c5ab85d7c3a992194a1bc9f4f8
+2026-02-09 19:29:41 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:29:41 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 19:29:41 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:29:41 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 19:29:41 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 19:29:41 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 19:29:41 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 19:36:07 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 19:36:07 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500

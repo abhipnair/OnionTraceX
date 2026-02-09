@@ -129,6 +129,7 @@ async def fetch_site_vendor_artifacts(
             va.first_seen,
             va.last_seen,
             v.vendor_id,
+            v.vendor_name,
             v.risk_score
         FROM VendorArtifacts va
         LEFT JOIN Vendors v
@@ -248,6 +249,7 @@ async def fetch_btc_vendor_artifacts(conn, btc_address):
     return await conn.fetch("""
         SELECT
             va.vendor_id,
+            v.vendor_name,
             v.risk_score,
             va.artifact_hash,
             va.first_seen,
@@ -284,6 +286,7 @@ async def fetch_vendor_core(conn, vendor_id):
     return await conn.fetchrow("""
         SELECT
             vendor_id,
+            vendor_name,
             risk_score,
             first_seen,
             last_seen
@@ -384,6 +387,7 @@ async def fetch_category_vendors(conn, site_ids):
     return await conn.fetch("""
         SELECT DISTINCT
             v.vendor_id,
+            v.vendor_name,
             v.risk_score,
             v.first_seen,
             v.last_seen
@@ -467,6 +471,7 @@ async def fetch_all_vendors(conn):
     return await conn.fetch("""
         SELECT
         v.vendor_id,
+        v.vendor_name,
         v.risk_score,
         COUNT(DISTINCT va.site_id) AS site_count,
         COUNT(DISTINCT b.address_id) AS btc_count,

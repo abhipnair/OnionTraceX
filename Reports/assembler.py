@@ -131,6 +131,7 @@ def build_site_dossier(raw: Dict[str, Any]) -> Dict[str, Any]:
         "artifact_hash": v["artifact_hash"],
         "confidence": v["confidence"],
         "vendor_id": v["vendor_id"],
+        "vendor_name": v.get("vendor_name"),
         "risk_score": v["risk_score"],
         "first_seen": _iso(v["first_seen"]),
         "last_seen": _iso(v["last_seen"])
@@ -284,6 +285,7 @@ def build_vendor_profile_report(raw):
 
         "executive_summary": {
             "vendor_id": vendor["vendor_id"],
+            "vendor_name": vendor.get("vendor_name"),
             "risk_score": vendor["risk_score"],
             "risk_flags": risk_flags,
             "first_seen": _iso(vendor["first_seen"]),

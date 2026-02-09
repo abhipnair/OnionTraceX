@@ -59,6 +59,90 @@ def format_identity_field(emails, pgp_keys):
     return " | ".join(out) if out else "N/A"
 
 
+def cover_page(elements, logo_path, title, subtitle_lines, analyst):
+    """
+    Build a clean forensic cover page.
+    """
+
+    # Push content down slightly
+    # elements.append(Spacer(1, 40))
+
+    # -------- LOGO (COVER – BIG BUT SAFE) --------
+    # Lift content slightly
+    elements.append(Spacer(1, 20))
+
+    if logo_path and os.path.exists(logo_path):
+        img = Image(logo_path)
+
+        max_width = A4[0] - 40 * mm
+        max_height = A4[1] * 0.48   # reduced height
+
+        img._restrictSize(max_width, max_height)
+        img.hAlign = "CENTER"
+
+        elements.append(img)
+
+    elements.append(Spacer(1, 22))
+
+
+    # -------- TITLE --------
+    elements.append(Paragraph(
+        title,
+        ParagraphStyle(
+            "COVER_TITLE",
+            fontName="Times-Bold",
+            fontSize=22,
+            leading=26,
+            alignment=1,  # CENTER
+            spaceAfter=14
+        )
+    ))
+
+    # -------- SUB DETAILS --------
+    for line in subtitle_lines:
+        elements.append(Paragraph(
+            line,
+            ParagraphStyle(
+                "COVER_SUB",
+                fontName="Times-Roman",
+                fontSize=12,
+                alignment=1,
+                spaceAfter=6
+            )
+        ))
+
+    elements.append(Spacer(1, 40))
+
+    # -------- ANALYST --------
+    elements.append(Paragraph(
+        f"Analyst: <b>{analyst}</b>",
+        ParagraphStyle(
+            "COVER_ANALYST",
+            fontName="Times-Roman",
+            fontSize=11,
+            alignment=1,
+            spaceAfter=10
+        )
+    ))
+
+    elements.append(PageBreak())
+
+def add_section(elements, title, content_blocks):
+    """
+    Add a section only if content exists.
+    Prevents blank pages.
+    """
+    if not content_blocks:
+        return
+
+    elements.append(Paragraph(title, styles["H"]))
+    for block in content_blocks:
+        elements.append(block)
+
+    elements.append(PageBreak())
+
+
+
 
 # =====================================================
 # LOGGING
@@ -132,12 +216,13 @@ def header_footer(c, doc, logo_path, sha256):
             c.drawImage(
                 logo_path,
                 20 * mm,
-                A4[1] - 28 * mm,
-                20 * mm,
-                20 * mm,
+                A4[1] - 24 * mm,
+                14 * mm,   # smaller width
+                14 * mm,   # smaller height
                 preserveAspectRatio=True,
                 mask="auto"
             )
+
     except Exception as e:
         log.error(f"Logo error: {e}")
 
@@ -145,8 +230,8 @@ def header_footer(c, doc, logo_path, sha256):
     c.drawString(20 * mm, 15 * mm, "SHA-256:")
     c.drawString(20 * mm, 11 * mm, sha256[:64])
     c.drawString(20 * mm, 7 * mm, sha256[64:])
-
     c.drawRightString(A4[0] - 20 * mm, 10 * mm, f"Page {doc.page}")
+
     watermark(c)
 
 # =====================================================
@@ -246,16 +331,30 @@ def render_site_dossier_pdf(report, output_path, logo_path):
     # ======================================================
     # COVER
     # ======================================================
-    e.append(Paragraph("SITE DOSSIER REPORT", styles["TITLE"]))
-    e.append(Paragraph(f"<b>Onion URL:</b> {es['url']}", styles["B"]))
+    cover_page(
+        e,
+        logo_path='assets/cover_logo.png',
+        title="SITE DOSSIER REPORT",
+        subtitle_lines=[
+            f"Onion URL: {es['url']}",
+            f"Status: {es['status']} | Category: {es['category']}",
+            f"First Seen: {_safe(es['first_seen'])}",
+            f"Last Seen: {_safe(es['last_seen'])}",
+        ],
+        analyst="Abhishek P Nair"
+    )
+
+    
+    e.append(Paragraph("Site Overview", styles["H"]))
 
     if es.get("site_title"):
-        e.append(Paragraph(f"<b>Title:</b> {es['site_title']}", styles["B"]))
+        e.append(Paragraph(es["site_title"], styles["TITLE"]))
 
     e.append(Paragraph(
         f"Status: {es['status']} | Category: {es['category']}",
         styles["B"]
     ))
+
 
     e.append(PageBreak())
 
@@ -358,7 +457,9 @@ def render_site_dossier_pdf(report, output_path, logo_path):
 
     for v in report["artifacts"]["vendor_artifacts"]:
         vendor_rows.append([
-            cell(v["vendor_id"] or "Unlinked", "MONO"),
+            cell(
+            f"{v.get('vendor_name','Unknown')} ({v['vendor_id'][:8]})"
+            ),
             cell(v["artifact_type"]),
             cell(v["artifact_value"], "MONO"),
             cell(str(v["confidence"])),
@@ -418,18 +519,31 @@ def render_btc_address_pdf(report, output_path, logo_path):
     # --------------------------------------------------
     # COVER
     # --------------------------------------------------
-    e.append(Paragraph("BITCOIN ADDRESS INTELLIGENCE REPORT", styles["TITLE"]))
-    e.append(Paragraph(f"<b>BTC Address:</b> {es['btc_address']}", styles["B"]))
-    e.append(Paragraph(
-        f"<b>Checksum Valid:</b> {'Yes' if es['checksum_valid'] else 'No'}",
-        styles["B"]
-    ))
-    e.append(Paragraph(f"<b>First Seen:</b> {_safe(es['first_seen'])}", styles["B"]))
+    cover_page(
+        e,
+        logo_path='assets/cover_logo.png',
+        title="BITCOIN ADDRESS<br/>INTELLIGENCE REPORT",
+        subtitle_lines=[
+            f"BTC Address: {es['btc_address']}",
+            f"Checksum Valid: {'Yes' if es['checksum_valid'] else 'No'}",
+            f"First Seen: {_safe(es['first_seen'])}"
+        ],
+        analyst="Abhishek P Nair"
+    )
 
-    for rf in es.get("risk_flags", []):
-        e.append(Paragraph(f"⚠ {rf}", styles["R"]))
 
-    e.append(PageBreak())
+    risk_blocks = [
+        Paragraph(f"⚠ {rf}", styles["R"])
+        for rf in es.get("risk_flags", [])
+    ]
+
+    
+    add_section(
+        e,
+        title="Risk Summary",
+        content_blocks=risk_blocks
+    )
+
 
     # --------------------------------------------------
     # LINKED SITES
@@ -505,7 +619,9 @@ def render_btc_address_pdf(report, output_path, logo_path):
 
     for v in report["evidence"]["vendors"]:
         vend_rows.append([
-            cell(v["vendor_id"][:12], "MONO"),
+            cell(
+                f"{v.get('vendor_name','Unknown')} ({v['vendor_id'][:8]})"
+            ),
             cell(str(v["risk_score"])),
             cell(_safe(v["first_seen"])),
             cell(_safe(v["last_seen"]))
@@ -521,14 +637,29 @@ def render_btc_address_pdf(report, output_path, logo_path):
     # --------------------------------------------------
     # TRANSACTION GRAPH
     # --------------------------------------------------
-    graph = report["report_metadata"]["graph_artifacts"]["transaction_graph"]
-    if graph and os.path.exists(graph["file"]):
-        e.append(Paragraph("Transaction Network Graph", styles["H"]))
-        e.append(Spacer(1, 10))
-        e.append(Image(graph["file"], width=160*mm, height=120*mm))
-        e.append(Spacer(1, 6))
-        e.append(Paragraph(f"Graph SHA-256: {graph['sha256']}", styles["MONO"]))
-        e.append(PageBreak())
+    graph_blocks = []
+
+    graph = report["report_metadata"].get("graph_artifacts", {}).get("transaction_graph")
+    if graph and graph.get("file") and os.path.exists(graph["file"]):
+        graph_blocks.append(Spacer(1, 10))
+        graph_blocks.append(
+            Image(
+                graph["file"],
+                width=160 * mm,
+                height=120 * mm
+            )
+        )
+        graph_blocks.append(Spacer(1, 6))
+        graph_blocks.append(
+            Paragraph(f"Graph SHA-256: {graph['sha256']}", styles["MONO"])
+        )
+
+    add_section(
+        e,  # or elements — same function
+        title="Transaction Network Graph",
+        content_blocks=graph_blocks
+    )
+
 
     # --------------------------------------------------
     # INTEGRITY
@@ -572,16 +703,30 @@ def render_vendor_profile_pdf(report, output_path, logo_path):
     # --------------------------------------------------
     # COVER
     # --------------------------------------------------
-    e.append(Paragraph("VENDOR PROFILE INTELLIGENCE REPORT", styles["TITLE"]))
-    e.append(Paragraph(f"<b>Vendor ID:</b> {es['vendor_id']}", styles["B"]))
-    e.append(Paragraph(f"<b>Risk Score:</b> {es['risk_score']}",
-        styles["R"] if es["risk_score"] >= 70 else styles["B"]
-    ))
+    cover_page(
+        e,
+        logo_path='assets/cover_logo.png',
+        title = "VENDOR PROFILE<br/>INTELLIGENCE REPORT",
+        subtitle_lines=[
+            f"Vendor: {es.get('vendor_name','Unknown')}",
+            f"Vendor ID: {es['vendor_id']}",
+            f"Risk Score: {es['risk_score']}"
+        ],
+        analyst="Abhishek P Nair"
+    )
 
-    for rf in es.get("risk_flags", []):
-        e.append(Paragraph(f"⚠ {rf}", styles["R"]))
 
-    e.append(PageBreak())
+    risk_blocks = [
+        Paragraph(f"⚠ {rf}", styles["R"])
+        for rf in es.get("risk_flags", [])
+    ]
+
+    add_section(
+        e,
+        title="Risk Indicators",
+        content_blocks=risk_blocks
+    )
+
 
     # --------------------------------------------------
     # ASSOCIATED SITES
@@ -711,15 +856,30 @@ def render_all_sites_pdf(report, output_path, logo_path):
     # ======================================================
     # COVER
     # ======================================================
-    e.append(Paragraph("ALL SITES – MEGA INTELLIGENCE REPORT", styles["TITLE"]))
-    e.append(Paragraph(f"Total Sites: {es['total_sites']}", styles["B"]))
-    e.append(Paragraph(f"Total Vendors: {es['total_vendors']}", styles["B"]))
-    e.append(Paragraph(f"Total BTC Addresses: {es['total_btc_addresses']}", styles["B"]))
+    cover_page(
+        e,
+        logo_path='assets/cover_logo.png',
+        title="ALL SITES – MEGA<br/>INTELLIGENCE REPORT",
+        subtitle_lines=[
+            f"Total Sites: {es['total_sites']}",
+            f"Total Vendors: {es['total_vendors']}",
+            f"Total BTC Addresses: {es['total_btc_addresses']}"
+        ],
+        analyst="Abhishek P Nair"
+    )
 
-    for rf in es.get("risk_flags", []):
-        e.append(Paragraph(f"⚠ {rf}", styles["R"]))
 
-    e.append(PageBreak())
+    risk_blocks = [
+        Paragraph(f"⚠ {rf}", styles["R"])
+        for rf in es.get("risk_flags", [])
+    ]
+
+    add_section(
+        e,
+        title="Risk Indicators",
+        content_blocks=risk_blocks
+    )
+
 
     # ======================================================
     # CATEGORY DISTRIBUTION
@@ -772,7 +932,9 @@ def render_all_sites_pdf(report, output_path, logo_path):
 
     for v in report["entities"]["vendors"]:
         rows.append([
-            cell(v["vendor_id"][:12], "MONO"),
+            cell(
+                f"{v.get('vendor_name','Unknown')} ({v['vendor_id'][:8]})"
+            ),
             cell(str(v["risk_score"])),
             cell(str(v.get("site_count", 0))),
             cell(str(v.get("btc_count", 0)))
@@ -833,17 +995,29 @@ def render_category_intel_pdf(report, output_path, logo_path):
     integ = report["integrity"]
 
     # ---------------- COVER ----------------
-    elements.append(Paragraph("CATEGORY INTELLIGENCE REPORT", styles["TITLE"]))
-    elements.append(Paragraph(f"<b>Category:</b> {es['category']}", styles["B"]))
-    elements.append(Paragraph(
-        f"Sites: {es['site_count']} | Vendors: {es['vendor_count']} | BTC Addresses: {es['btc_address_count']}",
-        styles["B"]
-    ))
+    cover_page(
+        elements,
+        logo_path='assets/cover_logo.png',
+        title="CATEGORY INTELLIGENCE REPORT",
+        subtitle_lines=[
+            f"Category: {es['category']}",
+            f"Sites: {es['site_count']} | Vendors: {es['vendor_count']}"
+        ],
+        analyst="Abhishek P Nair"
+    )
 
-    for rf in es.get("risk_flags", []):
-        elements.append(Paragraph(f"⚠ {rf}", styles["R"]))
 
-    elements.append(PageBreak())
+    risk_blocks = [
+        Paragraph(f"⚠ {rf}", styles["R"])
+        for rf in es.get("risk_flags", [])
+    ]
+
+    add_section(
+        elements,
+        title="Risk Indicators",
+        content_blocks=risk_blocks
+    )
+
 
     # ---------------- SITES ----------------
     elements.append(Paragraph("Sites in Category", styles["H"]))
@@ -872,14 +1046,21 @@ def render_category_intel_pdf(report, output_path, logo_path):
     # ---------------- VENDORS ----------------
     elements.append(Paragraph("Associated Vendors", styles["H"]))
 
-    vend_rows = [["Vendor ID", "Risk", "First Seen", "Last Seen"]]
+    vend_rows = [[
+        cell("Vendor", "B"),
+        cell("Risk", "B"),
+        cell("First Seen", "B"),
+        cell("Last Seen", "B")
+    ]]
+
     for v in report["vendors"]:
         vend_rows.append([
-            v["vendor_id"],
-            str(v["risk_score"]),
-            _safe(v["first_seen"]),
-            _safe(v["last_seen"])
+            cell(f"{v.get('vendor_name','Unknown')} ({v['vendor_id'][:8]})"),
+            cell(str(v["risk_score"])),
+            cell(_safe(v["first_seen"])),
+            cell(_safe(v["last_seen"]))
         ])
+
 
     elements.append(make_table(vend_rows, [40*mm, 25*mm, 40*mm, 40*mm]))
     elements.append(PageBreak())
@@ -907,18 +1088,31 @@ def render_category_intel_pdf(report, output_path, logo_path):
     elements.append(PageBreak())
 
     # ---------------- GRAPH ----------------
+    graph_blocks = []
+
     graph = meta.get("graph_artifacts", {}).get("btc_transaction_graph")
-    if graph and os.path.exists(graph["file"]):
-        elements.append(Paragraph("Bitcoin Transaction Network", styles["H"]))
-        elements.append(Spacer(1, 10))
-        elements.append(
+    if graph and graph.get("file") and os.path.exists(graph["file"]):
+        graph_blocks.append(Spacer(1, 10))
+        graph_blocks.append(
             KeepTogether(
-                Image(graph["file"], width=160*mm, height=120*mm)
+                Image(
+                    graph["file"],
+                    width=160 * mm,
+                    height=120 * mm
+                )
             )
         )
-        elements.append(Spacer(1, 6))
-        elements.append(Paragraph(f"Graph SHA-256: {graph['sha256']}", styles["MONO"]))
-        elements.append(PageBreak())
+        graph_blocks.append(Spacer(1, 6))
+        graph_blocks.append(
+            Paragraph(f"Graph SHA-256: {graph['sha256']}", styles["MONO"])
+        )
+
+    add_section(
+        elements,
+        title="Bitcoin Transaction Network",
+        content_blocks=graph_blocks
+    )
+
 
     # ---------------- INTEGRITY ----------------
     elements.append(Paragraph("Integrity & Verification", styles["H"]))
