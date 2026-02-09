@@ -3,6 +3,7 @@ import hashlib
 from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 from langdetect import detect, LangDetectException
+from deep_translator import GoogleTranslator
 
 
 class MetadataExtractor:
@@ -28,6 +29,23 @@ class MetadataExtractor:
     @staticmethod
     def extract_pgp_fingerprint(pgp_block: str) -> str:
         return hashlib.sha1(pgp_block.encode()).hexdigest()
+
+    @staticmethod
+    def translate_to_english(text: str, lang: str) -> str:
+        """
+        Translate non-English text to English.
+        Safe fallback: return original text on failure.
+        """
+        if not text.strip() or lang in ("en", "unknown"):
+            return text
+
+        try:
+            return GoogleTranslator(
+                source=lang,
+                target="en"
+            ).translate(text)
+        except Exception:
+            return text
 
     @staticmethod
     def extract(page_id: str, html: bytes):
@@ -78,18 +96,24 @@ class MetadataExtractor:
         except LangDetectException:
             language = "unknown"
 
+        # -------- Translate if needed --------
+        translated_text = MetadataExtractor.translate_to_english(
+            text=text,
+            lang=language
+        )
+
         metadata_id = hashlib.sha256(
             f"{page_id}{datetime.now(timezone.utc).isoformat()}".encode()
         ).hexdigest()
 
         return {
+            # ---- DB schema aligned ----
             "metadata_id": metadata_id,
+            "page_id": page_id,
             "title": title,
             "meta_tags": meta_tags,
             "emails": emails,
-            "pgp_keys": pgp_keys,                       # ✅ restored
-            "pgp_fingerprints": pgp_fingerprints,       # ✅ correlation
-            "xmr_addresses": xmr_addresses,
-            "vendor_handles": vendor_handles,
+            "pgp_keys": pgp_keys,
             "language": language,
+            "translated_text": translated_text
         }

@@ -124,3 +124,16 @@
 2026-02-09 19:29:41 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
 2026-02-09 19:36:07 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
 2026-02-09 19:36:07 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 20:12:37 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 20:12:37 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-02-09 20:12:37 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 20:12:37 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-02-09 20:12:37 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-02-09 20:12:37 - app - INFO - [logger.py:97] - ============================================================
+2026-02-09 20:12:37 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-02-09 20:12:39 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 20:12:39 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 21:01:41 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 21:01:41 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 21:02:08 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
+2026-02-09 21:02:08 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=468 Links=500
