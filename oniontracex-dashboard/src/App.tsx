@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 import { 
-  Search, Globe, Users, FileText, Settings, Activity, 
-  Database, TrendingUp, AlertCircle, Download, Eye, Clock, 
-  Network, RefreshCw, Shield, Bitcoin, Server, BarChart3,
-  SearchCodeIcon
+  Search, Globe, Users, Settings, Activity, 
+  Database, TrendingUp, AlertCircle, Clock,
+  RefreshCw, Shield, Bitcoin, Server, BarChart3,
+  SearchCodeIcon, FileText
 } from 'lucide-react';
 
 // Import interfaces
 import {
   Stats, LivenessData, CategoryData, KeywordData, Site, SiteDetails,
-  Vendor, VendorNetwork, BitcoinData, Report, ReportConfig,
+  Vendor, VendorNetwork, BitcoinData,
   SystemHealth, CrawlerConfig
 } from './types';
 
@@ -19,6 +19,8 @@ import DashboardCharts from "./DashboardCharts";
 import SitesExplorer from "./SitesExplorer";
 import BitcoinAnalysis from "./BitcoinAnalysis";
 import VendorNetworkGraph from "./VendorNetworkGraph";
+import Reports from "./Reports";
+
 
 
 
@@ -107,43 +109,6 @@ const apiService = {
     return result.data;
   },
 
-  async generateReport(params: ReportConfig): Promise<{ reportId: string }> {
-    const response = await fetch(`${API_BASE_URL}/reports/generate`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params)
-    });
-    if (!response.ok) throw new Error('Failed to generate report');
-    const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'API request failed');
-    return result.data;
-  },
-
-  async fetchReports(): Promise<Report[]> {
-    const response = await fetch(`${API_BASE_URL}/reports`);
-    if (!response.ok) throw new Error('Failed to fetch reports');
-    const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'API request failed');
-    return result.data;
-  },
-
-  async downloadReport(reportId: string, format: string): Promise<Blob> {
-    const response = await fetch(`${API_BASE_URL}/reports/${reportId}/download?format=${format}`);
-    if (!response.ok) throw new Error('Failed to download report');
-    
-    // For CSV downloads, the backend returns the file directly, not JSON
-    if (format === 'csv') {
-      return response.blob();
-    }
-    
-    // For JSON, it returns a JSON response
-    const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'API request failed');
-    
-    // Convert JSON to blob for download
-    return new Blob([JSON.stringify(result.data, null, 2)], { type: 'application/json' });
-  },
-
   async fetchSystemHealth(): Promise<SystemHealth> {
     const response = await fetch(`${API_BASE_URL}/system/health`);
     if (!response.ok) throw new Error('Failed to fetch system health');
@@ -212,15 +177,6 @@ const OnionTraceX: React.FC = () => {
   // Bitcoin state
   const [btcData, setBtcData] = useState<BitcoinData | null>(null);
 
-  // Reports state
-  const [reports, setReports] = useState<Report[]>([]);
-  const [reportConfig, setReportConfig] = useState<ReportConfig>({
-    dateRange: '',
-    category: 'all',
-    includeMetadata: true,
-    includeVendors: true,
-    includeBitcoin: true
-  });
 
   // Settings state
   const [systemHealth, setSystemHealth] = useState<SystemHealth | null>(null);
@@ -410,20 +366,6 @@ const OnionTraceX: React.FC = () => {
     }
   };
 
-  // Load reports
-  const loadReports = async (): Promise<void> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const reportsRes = await apiService.fetchReports();
-      setReports(reportsRes);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
-      console.error('Error loading reports:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Load system health
   const loadSystemHealth = async (): Promise<void> => {
@@ -437,26 +379,6 @@ const OnionTraceX: React.FC = () => {
       console.error('Error loading system health:', err);
     } finally {
       setLoading(false);
-    }
-  };
-
-  // Generate report
-  const handleGenerateReport = async (format: string): Promise<void> => {
-    try {
-      const reportRes = await apiService.generateReport(reportConfig);
-      const blob = await apiService.downloadReport(reportRes.reportId, format);
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `report_${reportRes.reportId}.${format}`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-      await loadReports();
-    } catch (err) {
-      console.error('Error generating report:', err);
-      alert('Failed to generate report: ' + (err instanceof Error ? err.message : 'Unknown error'));
     }
   };
 
@@ -485,9 +407,6 @@ const OnionTraceX: React.FC = () => {
         break;
       case 'bitcoin':
         loadBitcoinData();
-        break;
-      case 'reports':
-        loadReports();
         break;
       case 'settings':
         loadSystemHealth();
@@ -630,217 +549,6 @@ const OnionTraceX: React.FC = () => {
     </div>
   );
 
-const renderReports = (): JSX.Element => (
-  <div className="space-y-6 h-full">
-    {/* Header */}
-    <div className="flex justify-between items-center">
-      <div>
-        <h2 className="text-2xl font-bold text-white">Intelligence Reports</h2>
-        <p className="text-gray-400">Generate and export comprehensive intelligence reports</p>
-      </div>
-      <button
-        onClick={loadReports}
-        disabled={loading}
-        className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg flex items-center gap-2 disabled:opacity-50 transition-colors"
-      >
-        <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
-        Refresh
-      </button>
-    </div>
-
-    {error && (
-      <div className="bg-red-900/50 border border-red-500 text-red-200 p-4 rounded-lg">
-        <div className="flex items-center gap-2">
-          <AlertCircle size={20} />
-          <span>Error: {error}</span>
-        </div>
-      </div>
-    )}
-
-    {/* Report Generator */}
-    <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50">
-      <div className="flex items-center gap-2 mb-6">
-        <FileText className="text-cyan-400" size={20} />
-        <h3 className="text-lg font-semibold text-cyan-400">Generate New Report</h3>
-      </div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div>
-          <label className="block text-gray-400 text-sm mb-2 font-medium">Date Range</label>
-          <select
-            value={reportConfig.dateRange}
-            onChange={(e) => setReportConfig({...reportConfig, dateRange: e.target.value})}
-            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-          >
-            <option value="">All Time</option>
-            <option value="7d">Last 7 Days</option>
-            <option value="30d">Last 30 Days</option>
-            <option value="90d">Last 90 Days</option>
-            <option value="1y">Last Year</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-gray-400 text-sm mb-2 font-medium">Category Filter</label>
-          <select
-            value={reportConfig.category}
-            onChange={(e) => setReportConfig({...reportConfig, category: e.target.value})}
-            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-          >
-            <option value="all">All Categories</option>
-            <option value="marketplace">Marketplaces</option>
-            <option value="forum">Forums</option>
-            <option value="scam">Scam Sites</option>
-            <option value="blog">Blogs</option>
-          </select>
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <label className="flex items-center gap-3 p-3 bg-gray-900/30 rounded-lg border border-gray-600 hover:border-cyan-500/30 transition-colors cursor-pointer">
-          <input
-            type="checkbox"
-            checked={reportConfig.includeMetadata}
-            onChange={(e) => setReportConfig({...reportConfig, includeMetadata: e.target.checked})}
-            className="w-4 h-4 text-cyan-500 bg-gray-700 border-gray-600 rounded focus:ring-cyan-500 focus:ring-2"
-          />
-          <div>
-            <span className="text-gray-300 font-medium">Site Metadata</span>
-            <p className="text-gray-500 text-xs">Include detailed site information</p>
-          </div>
-        </label>
-        
-        <label className="flex items-center gap-3 p-3 bg-gray-900/30 rounded-lg border border-gray-600 hover:border-cyan-500/30 transition-colors cursor-pointer">
-          <input
-            type="checkbox"
-            checked={reportConfig.includeVendors}
-            onChange={(e) => setReportConfig({...reportConfig, includeVendors: e.target.checked})}
-            className="w-4 h-4 text-cyan-500 bg-gray-700 border-gray-600 rounded focus:ring-cyan-500 focus:ring-2"
-          />
-          <div>
-            <span className="text-gray-300 font-medium">Vendor Data</span>
-            <p className="text-gray-500 text-xs">Include vendor clusters and networks</p>
-          </div>
-        </label>
-        
-        <label className="flex items-center gap-3 p-3 bg-gray-900/30 rounded-lg border border-gray-600 hover:border-cyan-500/30 transition-colors cursor-pointer">
-          <input
-            type="checkbox"
-            checked={reportConfig.includeBitcoin}
-            onChange={(e) => setReportConfig({...reportConfig, includeBitcoin: e.target.checked})}
-            className="w-4 h-4 text-cyan-500 bg-gray-700 border-gray-600 rounded focus:ring-cyan-500 focus:ring-2"
-          />
-          <div>
-            <span className="text-gray-300 font-medium">Bitcoin Analysis</span>
-            <p className="text-gray-500 text-xs">Include cryptocurrency tracking</p>
-          </div>
-        </label>
-      </div>
-      
-      <div className="flex flex-wrap gap-4">
-        <button
-          onClick={() => handleGenerateReport('pdf')}
-          className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg flex items-center gap-2 transition-colors shadow-lg shadow-red-500/10"
-        >
-          <FileText size={18} />
-          Export PDF Report
-        </button>
-        <button
-          onClick={() => handleGenerateReport('csv')}
-          className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg flex items-center gap-2 transition-colors shadow-lg shadow-green-500/10"
-        >
-          <Download size={18} />
-          Export CSV Data
-        </button>
-        <button
-          onClick={() => handleGenerateReport('json')}
-          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center gap-2 transition-colors shadow-lg shadow-blue-500/10"
-        >
-          <Database size={18} />
-          Export JSON Data
-        </button>
-      </div>
-    </div>
-
-    {/* Previous Reports */}
-    <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden">
-      <div className="p-6 border-b border-gray-700/50">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-cyan-400">Generated Reports</h3>
-          <span className="text-gray-400 text-sm">{reports.length} reports available</span>
-        </div>
-      </div>
-      
-      {reports.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-900/50">
-              <tr>
-                <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Report ID</th>
-                <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Generated</th>
-                <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Date Range</th>
-                <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Sites Included</th>
-                <th className="px-6 py-4 text-left text-cyan-400 font-semibold">File Size</th>
-                <th className="px-6 py-4 text-left text-cyan-400 font-semibold">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reports.map((report, index) => (
-                <tr 
-                  key={report.id} 
-                  className={`border-t border-gray-700/30 hover:bg-gray-700/30 transition-colors ${
-                    index % 2 === 0 ? 'bg-gray-800/20' : 'bg-gray-800/10'
-                  }`}
-                >
-                  <td className="px-6 py-4">
-                    <code className="text-gray-300 font-mono text-sm bg-gray-900/50 px-2 py-1 rounded">
-                      {report.id}
-                    </code>
-                  </td>
-                  <td className="px-6 py-4 text-gray-300">{report.generatedAt}</td>
-                  <td className="px-6 py-4">
-                    <span className="text-gray-300 bg-gray-700/50 px-2 py-1 rounded text-sm">
-                      {report.dateRange || 'All Time'}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-gray-300">{report.sitesCount.toLocaleString()}</td>
-                  <td className="px-6 py-4 text-gray-300">{report.fileSize}</td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button 
-                        className="text-cyan-400 hover:text-cyan-300 p-2 hover:bg-cyan-500/10 rounded-lg transition-colors"
-                        title="Preview Report"
-                      >
-                        <Eye size={18} />
-                      </button>
-                      <button 
-                        className="text-green-400 hover:text-green-300 p-2 hover:bg-green-500/10 rounded-lg transition-colors"
-                        title="Download Report"
-                      >
-                        <Download size={18} />
-                      </button>
-                      <button 
-                        className="text-red-400 hover:text-red-300 p-2 hover:bg-red-500/10 rounded-lg transition-colors"
-                        title="Delete Report"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <div className="p-12 text-center">
-          <FileText className="mx-auto mb-4 text-gray-500" size={48} />
-          <p className="text-gray-400 text-lg mb-2">No reports generated yet</p>
-          <p className="text-gray-500">Generate your first intelligence report using the form above</p>
-        </div>
-      )}
-    </div>
-  </div>
-);
 
 const renderSettings = (): JSX.Element => (
   <div className="space-y-6 h-full">
@@ -1156,7 +864,7 @@ const renderSettings = (): JSX.Element => (
           {activeSection === 'sites' && <SitesExplorer/>}
           {activeSection === "vendors" && <VendorNetworkGraph data={vendorGraphData} loading={loading} />}
           {activeSection === "bitcoin" && <BitcoinAnalysis />}
-          {activeSection === 'reports' && renderReports()}
+          {activeSection === 'reports' && <Reports />}
           {activeSection === 'settings' && renderSettings()}
         </main>
       </div>

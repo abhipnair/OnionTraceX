@@ -3,7 +3,7 @@
 #  Version: 1.2 (Optimized for Frontend Integration)
 # ======================================================
 
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, make_response, Response
 from flask_cors import CORS
 from datetime import datetime, timedelta
 import random
@@ -23,6 +23,20 @@ from Crawler.linkmanager import LinkManager
 from Crawler.seed import SeedCollector
 from Crawler.unified_crawler import UnifiedCrawler
 from Essentials.configs import *
+
+from Reports.queries import *
+from Reports.assembler import *
+from Reports.pdf_renderer import *
+import os
+import hashlib
+
+
+REPORT_EVIDENCE_DIR = "./evidence"
+REPORT_LOGO_PATH = "./assets/oniontracex_logo.png"
+
+os.makedirs(REPORT_EVIDENCE_DIR, exist_ok=True)
+
+
 
 
 
@@ -1061,33 +1075,639 @@ def system_info():
 
 
 
-@app.route('/api/reports', methods=['GET'])
-def get_reports():
-    """Return recent report summaries"""
-    reports = []
-    for i in range(10):
-        days_ago = i * 7
-        reports.append({
-            'id': f'report_{i:05d}',
-            'generatedAt': (datetime.now() - timedelta(days=days_ago)).strftime('%Y-%m-%d %H:%M:%S'),
-            'dateRange': f'Week of {(datetime.now() - timedelta(days=days_ago + 7)).strftime("%Y-%m-%d")}',
-            'sitesCount': random.randint(500, 8000),
-            'fileSize': f'{random.randint(5, 150)} MB',
-            'status': random.choice(['completed', 'processing', 'failed']),
-            'vendorCount': random.randint(50, 500),
-            'bitcoinAnalyzed': random.randint(100, 1000)
+@app.route("/api/reports", methods=["GET"])
+def list_reports():
+    async def runner():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn:
+            rows = await conn.fetch("""
+                SELECT
+                    report_id,
+                    report_type,
+                    site_id,
+                    generated_at
+                FROM Reports
+                ORDER BY generated_at DESC
+                LIMIT 50;
+            """)
+        return rows
+
+    rows = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+
+    return jsonify({
+        "success": True,
+        "data": [
+            {
+                "report_id": r["report_id"],
+                "report_type": r["report_type"],   # ✅ authoritative
+                "scope": (
+                    r["site_id"]
+                    if r["site_id"] else "GLOBAL"
+                ),
+                "generated_at": r["generated_at"].isoformat(),
+                "evidence_count": 1  # you can improve this later
+            }
+            for r in rows
+        ]
+    })
+
+
+@app.route("/api/reports/verify/pdf", methods=["POST"])
+def verify_report_pdf():
+    if "file" not in request.files:
+        return jsonify({"success": False, "error": "PDF file required"}), 400
+
+    pdf = request.files["file"]
+    pdf_bytes = pdf.read()
+
+    pdf_hash = hashlib.sha256(pdf_bytes).hexdigest()
+
+    async def runner():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn:
+            row = await conn.fetchrow("""
+                SELECT report_hash, generated_at
+                FROM Reports
+                WHERE report_hash = $1;
+            """, pdf_hash)
+
+        return row
+
+    row = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+
+    if not row:
+        return jsonify({
+            "success": True,
+            "status": "UNKNOWN",
+            "message": "Report not found in evidence database"
         })
 
     return jsonify({
-        'success': True,
-        'data': reports,
-        'pagination': {
-            'page': 1,
-            'page_size': len(reports),
-            'total': len(reports),
-            'pages': 1
-        }
+        "success": True,
+        "status": "VALID",
+        "report_hash": pdf_hash,
+        "generated_at": row["generated_at"].isoformat()
     })
+
+@app.route("/api/reports/<report_id>/download", methods=["GET"])
+def download_report(report_id):
+    async def runner():
+        async with db_pool.acquire() as conn:
+            row = await conn.fetchrow("""
+                SELECT report_file
+                FROM Reports
+                WHERE report_id = $1
+            """, report_id)
+            return row
+
+    row = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+
+    if not row:
+        return jsonify({"success": False, "error": "Report not found"}), 404
+
+    return Response(
+        row["report_file"],
+        mimetype="application/pdf",
+        headers={
+            "Content-Disposition": f"attachment; filename={report_id}.pdf"
+        }
+    )
+
+
+@app.route("/api/reports/<report_id>/view", methods=["GET"])
+def view_report(report_id):
+    async def runner():
+        async with db_pool.acquire() as conn:
+            row = await conn.fetchrow("""
+                SELECT report_file
+                FROM Reports
+                WHERE report_id = $1
+            """, report_id)
+            return row
+
+    row = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+
+    if not row:
+        return jsonify({"success": False, "error": "Report not found"}), 404
+
+    return Response(
+        row["report_file"],
+        mimetype="application/pdf",
+        headers={
+            "Content-Disposition": "inline; filename=report.pdf"
+        }
+    )
+
+
+@app.route("/api/reports/verify", methods=["POST"])
+def verify_report():
+    data = request.json
+
+    if not data or "json_hash" not in data or "signature" not in data:
+        return jsonify({"success": False, "error": "Invalid payload"}), 400
+
+    from Reports.crypto.verifier import verify_signature
+
+    valid = verify_signature(
+        data["json_hash"],
+        data["signature"]
+    )
+
+    return jsonify({
+        "success": True,
+        "status": "VALID" if valid else "TAMPERED"
+    })
+
+@app.route("/api/reports/site", methods=["POST"])
+def generate_site_dossier_report():
+    data = request.json or {}
+    site_id = data.get("site_id")
+
+    if not site_id:
+        return jsonify({
+            "success": False,
+            "error": "site_id is required"
+        }), 400
+
+    async def runner():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        # 1️⃣ Fetch evidence (LOCAL POOL USAGE)
+        async with db_pool.acquire() as conn:
+            raw = await fetch_site_dossier(db_pool, site_id)
+            if not raw:
+                return None
+
+        # 2️⃣ Assemble signed JSON
+        report_json = build_site_dossier(raw)
+
+        # 3️⃣ Render PDF
+        pdf_path = os.path.join(
+            REPORT_EVIDENCE_DIR,
+            f"SITE_DOSSIER_{site_id}.pdf"
+        )
+
+        render_site_dossier_pdf(
+            report=report_json,
+            output_path=pdf_path,
+            logo_path=REPORT_LOGO_PATH
+        )
+
+        with open(pdf_path, "rb") as f:
+            pdf_bytes = f.read()
+
+        # 4️⃣ Hash + store
+        report_hash = hashlib.sha256(pdf_bytes).hexdigest()
+        report_id = report_hash  # deterministic
+
+        async with db_pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO Reports (
+                    report_id,
+                    site_id,
+                    report_hash,
+                    report_file,
+                    generated_at,
+                    report_type
+                )
+                VALUES ($1, $2, $3, $4, $5, 'SITE DOSSIER')
+                ON CONFLICT (report_id) DO NOTHING;
+            """,
+            report_id,
+            site_id,
+            report_hash,
+            pdf_bytes,
+            datetime.now(timezone.utc)
+            )
+
+        return {
+            "report_id": report_id,
+            "report_hash": report_hash,
+            "integrity": report_json["integrity"],
+            "generated_at": datetime.now(timezone.utc).isoformat()
+        }
+
+    try:
+        result = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+
+        if not result:
+            return jsonify({
+                "success": False,
+                "error": "Site not found"
+            }), 404
+
+        info(f"📄 SITE_DOSSIER generated | site_id={site_id}")
+
+        return jsonify({
+            "success": True,
+            "data": result
+        })
+
+    except Exception as e:
+        error(f"SITE_DOSSIER generation failed: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@app.route("/api/reports/bitcoin", methods=["POST"])
+def generate_btc_address_report():
+    data = request.json or {}
+    address_id = data.get("address_id")
+
+    if not address_id:
+        return jsonify({
+            "success": False,
+            "error": "address_id is required"
+        }), 400
+
+    async def runner():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        # 1️⃣ Fetch BTC evidence (LOCAL POOL USAGE)
+        async with db_pool.acquire() as conn:
+            address = await fetch_btc_address_core(conn, address_id)
+            if not address:
+                return None
+
+            transactions = await fetch_btc_transactions(conn, address_id)
+            sites = await fetch_btc_linked_sites(conn, address_id)
+            vendors = await fetch_btc_vendor_artifacts(conn, address["address"])
+            edges = await fetch_btc_transaction_edges(conn, address["address"])
+
+        # 2️⃣ Build transaction graph
+        graph_path = os.path.join(
+            REPORT_EVIDENCE_DIR,
+            f"BTC_GRAPH_{address_id}.png"
+        )
+
+        graph_hash = draw_btc_transaction_graph(
+            edges=edges,
+            subject=address["address"],
+            output_path=graph_path
+        )
+
+        graph_artifact = {
+            "file": graph_path,
+            "sha256": graph_hash,
+            "generated_at": datetime.now(timezone.utc).isoformat()
+        }
+
+        # 3️⃣ Assemble signed JSON
+        report_json = build_btc_address_report({
+            "address": address,
+            "transactions": [
+                {
+                    "tx_id": t["tx_id"],
+                    "direction": t["direction"],
+                    "amount": float(t["amount"]),
+                    "timestamp": t["timestamp"].isoformat(),
+                    "fan_in": t["fan_in"],
+                    "fan_out": t["fan_out"]
+                }
+                for t in transactions
+            ],
+            "sites": [
+                {
+                    "site_id": s["site_id"],
+                    "url": s["url"],
+                    "first_seen": s["first_seen"].isoformat() if s["first_seen"] else None,
+                    "last_seen": s["last_seen"].isoformat() if s["last_seen"] else None
+                }
+                for s in sites
+            ],
+            "vendors": [
+                {
+                    "vendor_id": v["vendor_id"],
+                    "risk_score": v["risk_score"],
+                    "artifact_hash": v["artifact_hash"],
+                    "first_seen": v["first_seen"].isoformat() if v["first_seen"] else None,
+                    "last_seen": v["last_seen"].isoformat() if v["last_seen"] else None
+                }
+                for v in vendors
+            ],
+            "graph": graph_artifact
+        })
+
+        # 4️⃣ Render PDF
+        pdf_path = os.path.join(
+            REPORT_EVIDENCE_DIR,
+            f"BTC_ADDRESS_{address_id}.pdf"
+        )
+
+        render_btc_address_pdf(
+            report=report_json,
+            output_path=pdf_path,
+            logo_path=REPORT_LOGO_PATH
+        )
+
+        with open(pdf_path, "rb") as f:
+            pdf_bytes = f.read()
+
+        # 5️⃣ Hash + store
+        report_hash = hashlib.sha256(pdf_bytes).hexdigest()
+        report_id = report_hash
+
+        async with db_pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO Reports (
+                    report_id,
+                    site_id,
+                    report_hash,
+                    report_file,
+                    generated_at,
+                    report_type
+                )
+                VALUES ($1, NULL, $2, $3, $4, 'BTC ADDRESS REPORT')
+                ON CONFLICT (report_id) DO NOTHING;
+            """,
+            report_id,
+            report_hash,
+            pdf_bytes,
+            datetime.now(timezone.utc)
+            )
+
+        return {
+            "report_id": report_id,
+            "report_hash": report_hash,
+            "integrity": report_json["integrity"],
+            "graph_hash": graph_hash,
+            "generated_at": datetime.now(timezone.utc).isoformat()
+        }
+
+    try:
+        result = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+
+        if not result:
+            return jsonify({
+                "success": False,
+                "error": "Bitcoin address not found"
+            }), 404
+
+        info(f"📄 BTC_ADDRESS_REPORT generated | address_id={address_id}")
+
+        return jsonify({
+            "success": True,
+            "data": result
+        })
+
+    except Exception as e:
+        error(f"BTC_ADDRESS_REPORT generation failed: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+    
+@app.route("/api/reports/category", methods=["POST"])
+def generate_category_intel_report():
+    data = request.json or {}
+    category = data.get("category")
+
+    if not category:
+        return jsonify({"success": False, "error": "category required"}), 400
+
+    async def runner():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn:
+            sites = await fetch_category_sites(conn, category)
+            site_ids = [s["site_id"] for s in sites]
+
+            vendors = await fetch_category_vendors(conn, site_ids)
+            btc_addresses = await fetch_category_btc_addresses(conn, site_ids)
+
+            btc_list = [b["address"] for b in btc_addresses]
+            edges = await fetch_category_btc_edges(conn, btc_list)
+
+        graph_path = os.path.join(
+            REPORT_EVIDENCE_DIR,
+            f"CATEGORY_BTC_{category}.png"
+        )
+
+        graph_hash = draw_btc_transaction_graph(
+            edges=edges,
+            subject=f"CATEGORY:{category}",
+            output_path=graph_path
+        )
+
+        report_json = build_category_intel_report({
+            "category": category,
+            "sites": sites,
+            "vendors": vendors,
+            "btc_addresses": btc_addresses,
+            "edges": edges,
+            "graph": {
+                "file": graph_path,
+                "sha256": graph_hash
+            }
+        })
+
+        pdf_path = os.path.join(
+            REPORT_EVIDENCE_DIR,
+            f"CATEGORY_INTEL_{category}.pdf"
+        )
+
+        render_category_intel_pdf(
+            report=report_json,
+            output_path=pdf_path,
+            logo_path=REPORT_LOGO_PATH
+        )
+
+        with open(pdf_path, "rb") as f:
+            pdf_bytes = f.read()
+
+        report_hash = hashlib.sha256(pdf_bytes).hexdigest()
+
+        async with db_pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO Reports (
+                    report_id, site_id, report_hash, report_file, generated_at, report_type
+                ) VALUES ($1, NULL, $2, $3, $4, 'CATEGORY INTEL')
+                ON CONFLICT DO NOTHING;
+            """,
+            report_hash,
+            report_hash,
+            pdf_bytes,
+            datetime.now(timezone.utc))
+
+        return {
+            "report_id": report_hash,
+            "report_hash": report_hash,
+            "integrity": report_json["integrity"]
+        }
+
+    result = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+    if not result:
+        return jsonify({"success": False, "error": "No data for category"}), 404
+
+    return jsonify({"success": True, "data": result})
+
+
+@app.route("/api/reports/all", methods=["POST"])
+def generate_all_sites_report():
+
+    async def runner():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn:
+            sites = await fetch_all_sites(conn)
+            categories = await fetch_site_category_distribution(conn)
+            vendors = await fetch_all_vendors(conn)
+            btc_addresses = await fetch_all_btc_addresses(conn)
+            edges = await fetch_global_btc_edges(conn)
+
+        graph_path = os.path.join(
+            REPORT_EVIDENCE_DIR,
+            "ALL_SITES_BTC_GRAPH.png"
+        )
+
+        graph_hash = draw_btc_transaction_graph(
+            edges=edges,
+            subject="ALL_SITES",
+            output_path=graph_path
+        )
+
+        report_json = build_all_sites_report({
+            "sites": sites,
+            "categories": categories,
+            "vendors": vendors,
+            "btc_addresses": btc_addresses,
+            "edges": edges,
+            "graph": {
+                "file": graph_path,
+                "sha256": graph_hash
+            }
+        })
+
+        pdf_path = os.path.join(
+            REPORT_EVIDENCE_DIR,
+            "ALL_SITES_INTELLIGENCE.pdf"
+        )
+
+        render_all_sites_pdf(
+            report=report_json,
+            output_path=pdf_path,
+            logo_path=REPORT_LOGO_PATH
+        )
+
+        with open(pdf_path, "rb") as f:
+            pdf_bytes = f.read()
+
+        report_hash = hashlib.sha256(pdf_bytes).hexdigest()
+
+        async with db_pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO Reports (
+                    report_id, site_id, report_hash, report_file, generated_at, report_type
+                ) VALUES ($1, NULL, $2, $3, $4, 'ALL SITES')
+                ON CONFLICT DO NOTHING;
+            """,
+            report_hash,
+            report_hash,
+            pdf_bytes,
+            datetime.now(timezone.utc))
+
+        return {
+            "report_id": report_hash,
+            "report_hash": report_hash,
+            "integrity": report_json["integrity"]
+        }
+
+    result = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+
+    return jsonify({"success": True, "data": result})
+
+
+@app.route("/api/reports/vendor", methods=["POST"])
+def generate_vendor_profile_report():
+    data = request.json or {}
+    vendor_id = data.get("vendor_id")
+
+    if not vendor_id:
+        return jsonify({"success": False, "error": "vendor_id required"}), 400
+
+    async def runner():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn:
+            vendor = await fetch_vendor_core(conn, vendor_id)
+            if not vendor:
+                return None
+
+            artifacts = await fetch_vendor_artifacts(conn, vendor_id)
+            sites = await fetch_vendor_sites(conn, vendor_id)
+            btc_addresses = await fetch_vendor_btc_addresses(conn, vendor_id)
+
+            btc_list = [b["address"] for b in btc_addresses]
+            edges = await fetch_vendor_btc_edges(conn, btc_list)
+
+        report_json = build_vendor_profile_report({
+            "vendor": vendor,
+            "artifacts": artifacts,
+            "sites": sites,
+            "btc_addresses": btc_addresses,
+            "edges": edges
+        })
+
+        pdf_path = os.path.join(
+            REPORT_EVIDENCE_DIR,
+            f"VENDOR_PROFILE_{vendor_id}.pdf"
+        )
+
+        render_vendor_profile_pdf(
+            report=report_json,
+            output_path=pdf_path,
+            logo_path=REPORT_LOGO_PATH
+        )
+
+        with open(pdf_path, "rb") as f:
+            pdf_bytes = f.read()
+
+        report_hash = hashlib.sha256(pdf_bytes).hexdigest()
+
+        async with db_pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO Reports (
+                    report_id, site_id, report_hash, report_file, generated_at, report_type
+                ) VALUES ($1, NULL, $2, $3, $4, 'VENDOR PROFILE')
+                ON CONFLICT DO NOTHING;
+            """,
+            report_hash,
+            report_hash,
+            pdf_bytes,
+            datetime.now(timezone.utc))
+
+        return {
+            "report_id": report_hash,
+            "report_hash": report_hash,
+            "integrity": report_json["integrity"]
+        }
+
+    result = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+    if not result:
+        return jsonify({"success": False, "error": "Vendor not found"}), 404
+
+    return jsonify({"success": True, "data": result})
+
+
+
 
 @app.route("/api/vendors/overview", methods=["GET"])
 def vendors_overview():

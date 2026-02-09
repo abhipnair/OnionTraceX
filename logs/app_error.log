@@ -1,6 +1,6 @@
-2026-02-05 09:03:21 - app - ERROR - [logger.py:103] - ❌ Phase-3 error: column "vendor_name" of relation "vendors" does not exist
-2026-02-05 09:04:27 - app - ERROR - [logger.py:103] - ❌ Phase-3 error: invalid input for query argument $3: datetime.datetime(2026, 2, 5, 3, 34, 27,... (can't subtract offset-naive and offset-aware datetimes)
-2026-02-05 09:09:06 - app - ERROR - [logger.py:103] - ❌ Phase-3 error: null value in column "artifact_hash" of relation "vendorartifacts" violates not-null constraint
-DETAIL:  Failing row contains (2801fc89e53295bcd01485c1bad5bad8e958e5998f4c8d36de6a406caa042214, 4591bb5fc69e0a2637064956a20ebb445e0eaea3474eae2b095986850d9042fb, btc, bc1q8pauq94acjfxzxl6xc7rvtxx8kavdgxctkhuzn, null, 90, ddfe6c297d228d956bbc7ffe8991b6da4910ffcb937023ab076d6b498c2ee101, 2fa17d0f319289f800498f6150bc8ceacf27fb72b1bfde5ffcf0dbd01716318c, 2026-02-05 09:09:06.978366+05:30, 2026-02-05 09:09:06.978366+05:30).
-2026-02-05 09:15:45 - app - ERROR - [logger.py:103] - ❌ Phase-3 error: null value in column "artifact_hash" of relation "vendorartifacts" violates not-null constraint
-DETAIL:  Failing row contains (193a6a6b99a4c60a7e87708bb808868b1f40d2b4a3dd0b6b9f53776c9ef1f77e, 4591bb5fc69e0a2637064956a20ebb445e0eaea3474eae2b095986850d9042fb, email, ProfitMoney@cock.li, null, 50, ddfe6c297d228d956bbc7ffe8991b6da4910ffcb937023ab076d6b498c2ee101, 2fa17d0f319289f800498f6150bc8ceacf27fb72b1bfde5ffcf0dbd01716318c, 2026-02-05 09:15:45.593614+05:30, 2026-02-05 09:15:45.593614+05:30).
+2026-02-08 20:35:05 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: column "tx_analysed" does not exist
+HINT:  Perhaps you meant to reference the column "bitcoinaddresses.tx_analyzed".
+2026-02-08 20:39:14 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: column "tx_analysed" does not exist
+HINT:  Perhaps you meant to reference the column "bitcoinaddresses.tx_analyzed".
+2026-02-08 20:40:42 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: render_site_dossier_pdf() got an unexpected keyword argument 'output'
+2026-02-08 21:04:13 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: 'metadata'

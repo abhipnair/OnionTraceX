@@ -1,0 +1,184 @@
+model:
+  id: s2w-ai/DarkBERT
+  name: DarkBERT
+  version: v1
+
+thresholds:
+  accept: 0.55
+
+labels:
+
+  ransomware:
+    - ransomware
+    - locker
+    - affiliate
+    - payload
+    - decryptor
+    - ransom
+    - leak site
+    - data leak
+    - extortion
+    - encryption
+    - victim list
+    - negotiation
+    - tor chat
+    - payment portal
+    - onion mirror
+
+  drugs:
+    - lsd
+    - mdma
+    - ecstasy
+    - cocaine
+    - heroin
+    - fentanyl
+    - weed
+    - cannabis
+    - marijuana
+    - hash
+    - shrooms
+    - psychedelic
+    - pills
+    - blotter
+    - escrow
+    - shipping
+    - stealth shipping
+    - vacuum sealed
+    - tracking number
+    - vendor bond
+
+  hacking:
+    - exploit
+    - zero-day
+    - 0day
+    - ddos
+    - malware
+    - botnet
+    - rootkit
+    - backdoor
+    - crypter
+    - stealer
+    - keylogger
+    - loader
+    - rce
+    - privilege escalation
+    - shell access
+    - pentest
+    - cracked tools
+    - leaked tools
+
+  fraud:
+    - carding
+    - dumps
+    - cvv
+    - fullz
+    - paypal logs
+    - bank logs
+    - wire fraud
+    - money mule
+    - western union
+    - prepaid cards
+    - gift cards
+    - fraud guide
+    - scam method
+    - refund fraud
+    - identity theft
+    - social engineering
+
+  marketplace:
+    - vendor
+    - vendors
+    - escrow
+    - multisig
+    - listings
+    - product listings
+    - add to cart
+    - checkout
+    - marketplace
+    - market rules
+    - dispute
+    - feedback
+    - rating
+    - reputation
+    - bond required
+    - vendor application
+    - buyer protection
+
+  weapons:
+    - firearms
+    - guns
+    - pistol
+    - rifle
+    - ammo
+    - ammunition
+    - suppressor
+    - silencer
+    - ghost gun
+    - 3d printed gun
+    - weapon parts
+    - explosives
+
+  counterfeit:
+    - counterfeit
+    - fake documents
+    - fake passport
+    - fake id
+    - forged
+    - replica
+    - clone cards
+    - counterfeit currency
+    - fake bills
+    - template
+    - hologram
+
+  services:
+    - hacking service
+    - ddos service
+    - booter
+    - stresser
+    - hire a hacker
+    - assassination
+    - hitman
+    - dox
+    - swatting
+    - spam service
+    - email bombing
+
+  financial:
+    - bitcoin
+    - btc
+    - monero
+    - xmr
+    - wallet
+    - crypto payment
+    - crypto mixer
+    - tumbling
+    - mixer
+    - escrow wallet
+    - deposit address
+    - payment confirmation
+
+  forums:
+    - forum
+    - board
+    - threads
+    - posts
+    - reply
+    - moderator
+    - admin
+    - rules
+    - announcements
+    - sticky thread
+    - user rank
+    - reputation points
+
+  adult:
+    - porn
+    - cp
+    - child abuse
+    - illegal content
+    - sexvideo
+    - trafficking
+    - escort
+    - cam service
+    - abuse material
