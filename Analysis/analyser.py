@@ -63,6 +63,14 @@ class PageAnalyzer:
         # ---------------- Metadata ----------------
         meta = MetadataExtractor.extract(page_id, raw_html)
 
+        # ✅ Defensive defaults
+        pgp_keys = meta.get("pgp_keys", [])
+        pgp_fingerprints = meta.get("pgp_fingerprints", [])
+        xmr_addresses = meta.get("xmr_addresses", [])
+        vendor_handles = meta.get("vendor_handles", [])
+        emails = meta.get("emails", [])
+        meta_tags = meta.get("meta_tags", {})
+
         async with self.pool.acquire() as conn:
             await conn.execute(
                 """
@@ -86,15 +94,16 @@ class PageAnalyzer:
                 """,
                 meta["metadata_id"],
                 page_id,
-                meta["title"],
-                json.dumps(meta["meta_tags"]),
-                json.dumps(meta["emails"]),
-                json.dumps(meta["pgp_keys"]),       
-                json.dumps(meta["pgp_fingerprints"]),  
-                json.dumps(meta["xmr_addresses"]),
-                json.dumps(meta["vendor_handles"]),
-                meta["language"]
+                meta.get("title"),
+                json.dumps(meta_tags),
+                json.dumps(emails),
+                json.dumps(pgp_keys),
+                json.dumps(pgp_fingerprints),
+                json.dumps(xmr_addresses),
+                json.dumps(vendor_handles),
+                meta.get("language")
             )
+
 
 
         # ---------------- Bitcoin Addresses (UNCHANGED) ----------------

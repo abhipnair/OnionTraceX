@@ -1,30 +1,691 @@
-2026-02-09 20:37:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://qibpmewsqcci657q5gbs2cogo3jmymp2pcrdu5tv5v5ppygoctutluid.onion/ | Host unreachable
-2026-02-09 20:39:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pehvizmkzfzhhwu4v5suzt35ksnstdsobuwjs7xzq4nqvmgw2wjl6tqd.onion/ | Host unreachable
-2026-02-09 20:43:21 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://goodw24xc5xstlhgi3k6byyuagutvnlzv6sdcxm7x7iymjhxkbzyagad.onion/ | Host unreachable
-2026-02-09 20:44:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3hoqqrwr3fnk32rkbrui2ir7ahfrwjgdzhk5i4twrvcoiv46nst5weyd.onion/ | Host unreachable
-2026-02-09 20:45:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2aoiednvwdnc4w2r32yoydojuu7a4jc6dtiu7bnxikhlirvjm7jxevid.onion/ | Server disconnected
-2026-02-09 20:49:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rmoneyq6xjku2o4rcfca3o4fdyxx4vkplz5tvjswgcpuhz2sni2e3ayd.onion/ | Server disconnected
-2026-02-09 20:50:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ekcmmvn4jbivk53jwixd3jdoncxwdrir4fhxx3ytqk32y46r6m75gryd.onion/ | General SOCKS server failure
-2026-02-09 20:50:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://digdeeptl4vegzckwgxt3pzwhatzn5phko7bu3mzs7my4ihkgeicivid.onion/ | Server disconnected
-2026-02-09 20:51:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4zgb7gf6p4d7ku6b27fiv3sn2htbjdjxy2y7yn2ywocepttjfrr4eeqd.onion/ | Host unreachable
-2026-02-09 20:54:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://good27dvx3qzar6n4ooxbt2crmsgkgwxhbe6atljlx7bp5fsztgj5xqd.onion/ | Host unreachable
-2026-02-09 20:54:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://goodgwy22x73odc2to2cl2xhjquskjo65fqepox77yzgl3hsu76bh3ad.onion/ | Host unreachable
-2026-02-09 20:55:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://goodcwt7ichy4d4pgxsjudj676lv5ne6zuq6ern4hgucn2yvslsc4rid.onion/ | Host unreachable
-2026-02-09 20:57:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://27ezycbepl3hfy5evofi4ctoj3n7b3pwovtnxozazu7xlvsehlvriyad.onion/ | Server disconnected
-2026-02-09 20:57:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wclixmz7tlmdvq44efhpxtsfi2jw6tehq5twwmkyecrrawasmixkc6qd.onion/ | Host unreachable
-2026-02-09 20:58:05 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://deeeepv4bfndyatwkdzeciebqcwwlvgqa6mofdtsvwpon4elfut7lfqd.onion/ | Server disconnected
-2026-02-09 20:58:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2poprhfuiuikurhwhwr5aeavl53siqzfitkade2nubvhbvjha3odd6yd.onion/ | Host unreachable
-2026-02-09 20:58:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4f7bazxd2ih53rbflpqvt62wv7eo2uztfwxlifrmwvkyneipvvsmj2id.onion/ | Host unreachable
-2026-02-09 21:01:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for mailto:/ | mailto:/
-2026-02-09 21:01:54 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://xyaukzqqcdkop4ui.onion/ | General SOCKS server failure
-2026-02-09 21:01:54 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://g43ms43rmvelf5v6.onion/ | General SOCKS server failure
-2026-02-09 21:02:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://oqbtxa3tywo54vva22qicioq7j45gqoalc4iwdv4izw57wnkm6s4oeqd.onion/ | Host unreachable
-2026-02-09 21:04:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://h63rtg7uetpfgdmubwzqtfyvjxiksgy6cgec5hdqnun2nc7scm7di5id.onion/ | Host unreachable
-2026-02-09 21:04:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fou5aa6i7qccz4kgf25w7xmqffkdl3fzgoza3g5vg2uyth5ir55phmyd.onion/ | Host unreachable
-2026-02-09 21:06:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://22222ejcfuf6sfwrrj7fdqrue5p3o6shdq3nl42jnaurd7obyveamhad.onion/ | Host unreachable
-2026-02-09 21:06:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://apexizhvctxtrsqcz2dybpnvib2s3567djjbyd7ayehzzbsey2doj2yd.onion/ | Host unreachable
-2026-02-09 21:07:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://at2fsdqday33lygvxguod7cr63btsgszkvjaas6xb5fhtw2viy3jrqqd.onion/ | Host unreachable
-2026-02-09 21:07:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://7mnxfnf6uz7ynh64zrtwobnni4jpm55nrjjiajmyprao4uwfwjejupad.onion/ | Host unreachable
-2026-02-09 21:07:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://darkxea62ub3sv4joo5jahql7twujm6yyoic6dfaojrstc7yg7vtiuad.onion/ | Host unreachable
-2026-02-09 21:07:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pornjefux7uklqah63xywsoc5xltydqaov6iej6i7y33k4dwi7lppnad.onion/ | Host unreachable
-2026-02-09 21:08:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fo2rwcycbjigzgflfpdisbcetffkbstqtdp3lr47cff5z2tgzvdq3eyd.onion/ | Host unreachable
+2026-03-15 18:40:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fkyvwwq7u55tfiy4.onion/ | General SOCKS server failure
+2026-03-15 18:42:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://yoaqaryln7ncuvmz.onion/ | General SOCKS server failure
+2026-03-15 18:42:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dmlinkbiixl5rwsfiz2mxfcepjciblt6uz2pxufnpwe5ekmvmchjtyyd.onion/ | Host unreachable
+2026-03-15 18:42:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://torc7raoaedbc2yz2dgcpwqcbi3oy43wnsawvwuameuzsuf4a3v4phqd.onion/ | Host unreachable
+2026-03-15 18:43:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://mrbjk7aez3hhzk7ctgro5rtmtriktfigazmu4eaxr2j52glmpai5k6ad.onion/ | Host unreachable
+2026-03-15 18:44:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://btcxi6ka4wp7tuk2njhfox2yffddimzsasmmvpcny3qeh2zyx3tnvfqd.onion/ | Host unreachable
+2026-03-15 18:44:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://goodcwt7ichy4d4pgxsjudj676lv5ne6zuq6ern4hgucn2yvslsc4rid.onion/ | Host unreachable
+2026-03-15 18:45:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://goodgggrfh77qxfxwuezw2pk6xpmkfgsaojgqcfi4wswdq7idrqc6fad.onion/ | Host unreachable
+2026-03-15 18:45:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://odew4pcwdo7q6a73d36xmvvfuebsetdygzcalvkc22mkm52jhk3iutyd.onion/ | Host unreachable
+2026-03-15 18:47:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rmoneyq6xjku2o4rcfca3o4fdyxx4vkplz5tvjswgcpuhz2sni2e3ayd.onion/ | Server disconnected
+2026-03-15 18:48:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://mxraaml2ybke5g5q2gwhubtvg5pgbldjyecpbp4s5nfus4ssurdux2yd.onion/ | Host unreachable
+2026-03-15 18:49:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://u4kqm63c3ulwqcx5ahdmggzxi74qs425lntlsvifyfkrjvqks3oql5yd.onion/ | Host unreachable
+2026-03-15 18:49:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://realdkt273i2dlpin76mzqk7wrl2gqydm7zub7vcp4besenntwecekqd.onion/ | Host unreachable
+2026-03-15 18:50:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://money76mmbh7dnuq6en3b6d7hmvm4fuolkser2ui7u46ib2utrjnw4ad.onion/ | Host unreachable
+2026-03-15 18:50:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://vrn2tar23stdu6sh4damfesvk7mbgn7z5rflfvhbkprzyyjrwrqxxwyd.onion/ | Host unreachable
+2026-03-15 18:51:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://phntmfcldup2e2rmpzlkjqgp67gzpzaojg67jp33c2dlmdjdpmpeeoqd.onion/ | Host unreachable
+2026-03-15 18:51:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bazar4dp2sf4yu72oysilzaomrgjvkpjjjcnfxdwmkmcoyyh4nh3vhyd.onion/ | Host unreachable
+2026-03-15 18:52:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://nefi2nv6jioxjcj63wkdmw6woo3djwllc2s2aabvcybo3apal6x77wad.onion/ | Host unreachable
+2026-03-15 18:52:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://moneyxbv35r5pg42ddyytr5wlsvkdurbczg5qufffp6cu5kij34h4fqd.onion/ | Host unreachable
+2026-03-15 18:53:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3lawhsxothflh2vywfhtvafmkuzsti2jjo3j5uesglvelg2jbg4tjcad.onion/ | Host unreachable
+2026-03-15 18:54:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2aoiednvwdnc4w2r32yoydojuu7a4jc6dtiu7bnxikhlirvjm7jxevid.onion/ | Host unreachable
+2026-03-15 18:55:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tor64s4nbhhwt6lda3j6lixrkaghz3ivm3o5mcbfolkbhyt4cmicioyd.onion/ | Host unreachable
+2026-03-15 18:56:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://drugey77ff24c3p7lqglddisyayicgbgf4hbz4sw3iovqn42agl6f7id.onion/ | Host unreachable
+2026-03-15 18:56:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://vuizrjnx6u76x7eau4qc2olyindjj36wdmh3yf7cmq2eg37agmjmmfqd.onion/ | Host unreachable
+2026-03-15 18:57:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://deepsmrip5zfek23mjhhyjuk43q332ljk4r64gov6qrpxz3doge3nfyd.onion/ | Host unreachable
+2026-03-15 18:57:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://obsid7fdhmxih6ypy6sa6djlu5gj6hoc4bnbozf3lfp4q4xhyh2znryd.onion/ | Host unreachable
+2026-03-15 18:58:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://zn53ya2lbajqnkpxv6gdrucva3licbz33fmjerg3m46m2gizzqz2x2yd.onion/ | Host unreachable
+2026-03-15 18:58:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xftx6fpqeqg2ayoawg5ioziz4pmxe3jivoagywrkrwmafde6yrnp62yd.onion/ | Host unreachable
+2026-03-15 18:58:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://good27dvx3qzar6n4ooxbt2crmsgkgwxhbe6atljlx7bp5fsztgj5xqd.onion/ | Host unreachable
+2026-03-15 18:58:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://deepcbfr7x33k3osipefxvch4bitwxrpk5pkmbyereutdyddptnmkeqd.onion/ | Host unreachable
+2026-03-15 18:59:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://27ezycbepl3hfy5evofi4ctoj3n7b3pwovtnxozazu7xlvsehlvriyad.onion/ | Server disconnected
+2026-03-15 18:59:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://torcavzqsudnbkq3hu5ob7oac4wftdq6x2hyz7mmm5xajdbku2nfuqqd.onion/ | Host unreachable
+2026-03-15 19:00:53 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wyckikqx745u4npccawzflwhkm33uwvl6czfaqvm5yz2w3yshcuugtid.onion/ | Host unreachable
+2026-03-15 19:00:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://torakckxqrrl6u5s7p5xkdbnlm6cm34qpbpnlro43bliiaai7ugbanyd.onion/ | Host unreachable
+2026-03-15 19:02:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://w5vz5fc4ijv5et2v.onion/ | General SOCKS server failure
+2026-03-15 19:03:14 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://shadowmacphgmha42ff2ap5ry4qd2m362l6i3tsgiob5gg6tatgrw7ad.onion/ | Host unreachable
+2026-03-15 19:03:19 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://triadpxxohnsqycypcwfutocpggwab5icem4bkhdbwnglwj6ewoxvnqd.onion/ | Host unreachable
+2026-03-15 19:04:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://kingdomocblsgfoqsbse42vmehw2gmbno5r5wi5zduog4ukdm72ku5yd.onion/ | Host unreachable
+2026-03-15 19:04:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://goodgwy22x73odc2to2cl2xhjquskjo65fqepox77yzgl3hsu76bh3ad.onion/ | Host unreachable
+2026-03-15 19:04:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bitcoinpvcaacv6wgvwqpw35gufypz2ynbnak24vsoylghayrw7v5wid.onion/ | Host unreachable
+2026-03-15 19:05:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xwnocztikxwixhaqwbw6hoxulfhbwnyr5ywp2pi3taerynbe4ctk5cyd.onion/ | Host unreachable
+2026-03-15 19:05:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://sjpglmishoubmbxzop3t7cwmck6vphskdkmxvwcpxfpjpz4e7yhb5pid.onion/ | Server disconnected
+2026-03-15 19:05:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://realrehfsv5h6qyz2ifyiw2noyfixiqlkeek57dayotvcqxb3g6lf5qd.onion/ | Host unreachable
+2026-03-15 19:07:15 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://trustsgmrlnx73z32yrochegfio7ev347e4kmavho3jj6vggmg67tfad.onion/ | Host unreachable
+2026-03-15 19:08:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://underinjwzibnk4rhim6g7dbmmailbziqeayvkb3bfz2trnyb7iwtjyd.onion/ | Host unreachable
+2026-03-15 19:08:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://secup2v5al3lh7ob7i3m6ztamynt25xmcx2pqdnj4punvcy7wjrwwpad.onion/ | Host unreachable
+2026-03-15 19:09:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lp7lxv6tkk4zepitwmf2uo3pzypvmwgglrzhdofekjswjpday7qemgqd.onion/ | Host unreachable
+2026-03-15 19:10:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://keyshop7hu52kkhbjifqq42opytm4wlvlswywc6ccsw4glrbrbpaxyyd.onion/ | Host unreachable
+2026-03-15 19:11:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://7prpenn4taqvacsy7z6fbh5gsl6wwckvg6v2pmscco3zfx5eri6s7fqd.onion/ | Host unreachable
+2026-03-15 19:11:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://jaslzi3nsom7amtlzb575turfv2tytgv2v7j3ywgg5vso5citxmbwdid.onion/ | Host unreachable
+2026-03-15 19:12:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://realxxwrxfbsfru6mcr7wmzktcdaxfxsvft55yv6q7krgiivmj4vbyad.onion/ | Host unreachable
+2026-03-15 19:12:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://m7riqp33ecrbyey6xe64wnm437w4okcnfzxuefvycwiq5woichcs3xad.onion/ | Host unreachable
+2026-03-15 19:12:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://s4k4ceiapwwgcm3mkb6e4diqecpo7kvdnfr5gg7sph7jjppqkvwwqtyd.onion/ | Connection refused by destination host
+2026-03-15 19:13:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://jaz45aabn5vkemy4jkg4mi4syheisqn2wn2n4fsuitpccdackjwxplad.onion/ | Connection refused by destination host
+2026-03-15 19:15:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://darkhubevczmxyljfv2p422p4xjr2npb2t7rxcfcz45l2oeq3bhoxbqd.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1029)
+2026-03-15 19:15:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rainb7y3rdcwymvkrfa3nbxzu6biwwxfadoir3ahgusraiyn4k7ahmyd.onion/ | Host unreachable
+2026-03-15 19:15:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bybpj3223i6s7fa62367tce5325rkpjaxbiq3bzz3zbnk2r3rd7znbad.onion/ | Host unreachable
+2026-03-15 19:15:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2ay4g7x2k23tpwpln5njpnmgmzw5zau75einz2upfzeyanq72qddcvad.onion/ | Host unreachable
+2026-03-15 19:15:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://imperiagyuyeusw5lg6koiltvawuu4qukqnn5rrsn3uvedlk722w6lad.onion/ | Host unreachable
+2026-03-15 19:15:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://torbuy4iw7eghmdkpllz2tjvphtsey6a47mn2mjsmcii4vlv3wr2csqd.onion/ | Server disconnected
+2026-03-15 19:16:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4mq25riycimyo6uygeghqxblwiykswzvtugyqit3lyci2o6s5q2cacqd.onion/ | Host unreachable
+2026-03-15 19:16:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://r5kebdzvm5iuqvpclip6765xdq3f66lan7nysukrz6s57fkamczrqiid.onion/ | Host unreachable
+2026-03-15 19:16:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://mixbit43zdwkkwzsm3anlw5m6rsv4txxbkk2ekpv7csqmdwdrv7e2qad.onion/ | Host unreachable
+2026-03-15 19:17:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hottwgtkrithyd3uhsaf6tnl7cvi5h2et7j2kjmm746ugr3qldswudqd.onion/ | Host unreachable
+2026-03-15 19:17:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ddarkyjieiauardrgkl7mh32ew4vgw55rmp5afmkm2xpt6ox5t4vh2ad.onion/ | Host unreachable
+2026-03-15 19:18:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://kingvvyvpv73fzc6ck3444jlxmo2svjpw2vakp5ayo255tibe2llvnid.onion/ | General SOCKS server failure
+2026-03-15 19:18:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://privkty6dr2xnx6tu76s4h7int4wxblcrdteekjhvlcay4gs4cd3ghid.onion/ | Host unreachable
+2026-03-15 19:18:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3m4l5lj6ieqmipuyptlu4sndnr235i6kkjddha5n53nn3o5oftz33fad.onion/ | Host unreachable
+2026-03-15 19:19:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hellccam72ck3wajux74nordnnx6aoj5odun2bqnt6vggfz5nca4noyd.onion/ | General SOCKS server failure
+2026-03-15 19:20:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://gytn7xygdcznevrky46yoqamo2leowakwadkk36ukn4oh5ln2g7rmzqd.onion/ | Host unreachable
+2026-03-15 19:20:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://eleciptjjylfpyia5euu3bouuwct34znpqh5xh4lgutdgcrg3aazy2id.onion/ | General SOCKS server failure
+2026-03-15 19:20:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://mixxb5sz67ovz4qsqexawkwlbkli5ylvt2mde4emkn63cfxqtltxr3id.onion/ | General SOCKS server failure
+2026-03-15 19:21:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2k6bq7kabospx34ztpzvd7rj4o3hgts6l5jqwkn7q6cbq3ui3ak4ozad.onion/ | Host unreachable
+2026-03-15 19:21:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://borp2ggcrfzhheho2ysverkd3xen6tnrjd42ovpvlslkjmyqmnpbtyid.onion/ | Host unreachable
+2026-03-15 19:21:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rainbowgeomrg2lukkiwjcrae366oixxjwjtjulhktm3ookw433k7aad.onion/ | Host unreachable
+2026-03-15 19:21:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://7e3idkbne5jwqje2xy4o3c4yhlmtvxjejhcobibtkfvd5znelvquaaid.onion/ | Host unreachable
+2026-03-15 19:22:06 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://btcstrszsbmwmc64fqw3d7ftomkicyrzb2fkslj3m6hurpuqdfxpqtqd.onion/ | Host unreachable
+2026-03-15 19:22:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rm2ibijhdqmoxbhhrja2h6m7sop4jxsms6cahvogv5wrckt7qddwmcid.onion/ | Host unreachable
+2026-03-15 19:22:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://identoryg7dx5344amd2lvdz3tbyssw3wmjflktietzg7s7tdb6smyyd.onion/ | Host unreachable
+2026-03-15 19:22:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://drugalcay2rkclrtjsdzinba7ahpovl5ay5nlf53qtynwbfs7d6gstyd.onion/ | Host unreachable
+2026-03-15 19:23:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://chanelkk337yqaou4zrutxprrodvu6t7pburehryosyzczxmk4yzzsad.onion/ | Host unreachable
+2026-03-15 19:23:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://txo7voksrqulpzqycx2vxmfhc3cbdfsx6mjack5jzhmqtqix7ftd3fyd.onion/ | Host unreachable
+2026-03-15 19:24:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://realpn5uychamakmjvnoumavfdxy7hcg7r5jmxgi6hjpj3vygvxbvgad.onion/ | Host unreachable
+2026-03-15 19:24:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://goodw24xc5xstlhgi3k6byyuagutvnlzv6sdcxm7x7iymjhxkbzyagad.onion/ | Host unreachable
+2026-03-15 19:24:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://e6quqfmbjmyww5hg5xuf3onc2fk4pnx5yd66vc4avytbt2gzbjaicbyd.onion/ | General SOCKS server failure
+2026-03-15 19:24:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://idl5fcirrau4e2brsybrox4yecnglbuh3qpsu2eghjjtggustdskinqd.onion/ | Host unreachable
+2026-03-15 19:24:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://clbxfwgpds74dnga5vxxisxgkyftipeapf4b5t762jcg6qw7qsv4enqd.onion/ | General SOCKS server failure
+2026-03-15 19:24:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://mescrowbshprfzgg.onion/ | General SOCKS server failure
+2026-03-15 19:24:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lvgbfosuvxnr7nmsldwq5cqofb5ome6urft3kbyyvtlokfikleb2v2qd.onion/ | General SOCKS server failure
+2026-03-15 19:24:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://oho627pordzvrfdvrvo5r5c72rbe5n3mpmnfg5kugbnx6gf7vg4qwbad.onion/ | General SOCKS server failure
+2026-03-15 19:24:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://worldehc62cgugrgj7oc76tcna45fme47oqjrei4d4aa7xorw7fyvcyd.onion/ | Host unreachable
+2026-03-15 19:25:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://gq3tr3morrg475tlcx7mtzj273i7r2es32yyv5uuavlyhuh6dlz3tdyd.onion/ | Host unreachable
+2026-03-15 19:25:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://qxpta72ntfvjeqw44unuer6oaoojlsoaqmycwxs6hxu2jewci2yorlid.onion/ | Host unreachable
+2026-03-15 19:25:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://imperialsttg3tgonmwkm7m4comur5dnmlbcurjbs62isqtjgn3nh6ad.onion/ | Host unreachable
+2026-03-15 19:25:19 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://escrow4rfs3z34nvd5bjqmtqz6ohsngt2ntuw3aqp6gwavr7dfl4wuad.onion/ | Host unreachable
+2026-03-15 19:25:21 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://escrow4ywsfqnccvrikzdkk7dky35inn7uxb3qhid5uvcklsocwdvhid.onion/ | Host unreachable
+2026-03-15 19:25:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hqcarderxnmfndxk.onion/ | General SOCKS server failure
+2026-03-15 19:25:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rosnerqw5bcwfpfb.onion/ | General SOCKS server failure
+2026-03-15 19:25:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3wngpa22ipg3qcsl5aoucynwcqgcwl4kidel3hmaq7wpntkagqeargdd.onion/ | General SOCKS server failure
+2026-03-15 19:25:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://eykrh66azndn5w6ctmawdkb3y54sqph7ltan2acfsxu3uaifjcrojoad.onion/ | General SOCKS server failure
+2026-03-15 19:25:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://6yid7vhjltxgefhm.onion/ | General SOCKS server failure
+2026-03-15 19:25:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://qdxwfhfgcbtaisc7aczwpxwy2dgsg6ese3la4levcvfm25l2mk2mzwqd.onion/ | General SOCKS server failure
+2026-03-15 19:25:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://w5wwdtcj7lsfv42n6hayktundnxdct4nxr4bg6rx5tk54v5dvqs5sdad.onion/ | General SOCKS server failure
+2026-03-15 19:25:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://22hi74skzotdnilaywczvjvopf3vwx2rqypyyldp7ubkqei2tvdvvgyd.onion/ | Host unreachable
+2026-03-15 19:25:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://netauthqcz3okfdytspqzb3bsylu2vfkplrrg2yc7brm7ms7jh3ftrad.onion/ | Host unreachable
+2026-03-15 19:25:41 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://vema5v2iidjtj74gk6po4bjn6kfwglcqo4fkyg6xy62dgfpf4nkdfnyd.onion/ | Host unreachable
+2026-03-15 19:25:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://h56izbbvplxoedu7rnqyzgqkkxrriqhoq6kl4g3xx2mjwauxdpyuhlqd.onion/ | Host unreachable
+2026-03-15 19:25:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pppppppppnuuh5amu6ez7lfgjod2b54c4sgh25aygj56xq4d2zvuv5ad.onion/ | Host unreachable
+2026-03-15 19:25:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://z5ya2sm4iz4cabtjtjn7xzyc35bqbz2lpey2bkppkincrz6gp3lp6eqd.onion/ | General SOCKS server failure
+2026-03-15 19:25:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fcard5m4hhzj2va46h4tjudjqlmz3ejunpiv6p5pzoh5i2xvvr5vnbqd.onion/ | Server disconnected
+2026-03-15 19:25:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lmoneywwwhlqfdgyu4g4bhjb4xdio6v5l5zojmyarqokp3swpxmyczid.onion/ | Host unreachable
+2026-03-15 19:25:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2k3wty376idyonjt.onion/ | General SOCKS server failure
+2026-03-15 19:25:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://utvj32vgoylscdz6lpr4oczmymq5to6at3kslcxg5zoo2v2c4pa6mvyd.onion/ | General SOCKS server failure
+2026-03-15 19:25:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://debankckcgq2exv5.onion/ | General SOCKS server failure
+2026-03-15 19:25:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://jlshyuiizag3m4hp.onion/ | General SOCKS server failure
+2026-03-15 19:25:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://iqosv7ozbt23jfbv22annsw6bqsvcjncmpmqtbfjy6d5s4e66qku3sad.onion/ | Host unreachable
+2026-03-15 19:25:53 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dbay4btfm54y3e3i4genrwd6tnt5rsyhla3j3ml5rwaqre7k37hglcid.onion/ | Host unreachable
+2026-03-15 19:25:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://easy77cc24wyace52gocsef4bwjkqdtyjz46vguhz7c7g2a2zlsa43qd.onion/ | Host unreachable
+2026-03-15 19:25:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pfungcd4cdsdeczlehj2qzsk6om3dc7rsss7uz52ighzcxjhmo3hmkad.onion/ | General SOCKS server failure
+2026-03-15 19:25:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://eclf63ldnu6onh7nt55cffbxpg2ogzlsxhggq5eejnhdvgpxh3xdhuid.onion/ | Host unreachable
+2026-03-15 19:26:00 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://zdme6u4fe42xqkv3dgvc6p4djjdqyajhgsa5baceu46jhvzqob777did.onion/ | Host unreachable
+2026-03-15 19:26:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tbhddvjv2tp7s475w5g6s4ie7ifh6vb7nghki66bzuimtwmwskq5eoqd.onion/ | General SOCKS server failure
+2026-03-15 19:26:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dcm6xhlrfyaek4si.onion/ | General SOCKS server failure
+2026-03-15 19:26:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rv7tisdkrlo4cxf3domuo4pxpuklqtd3oblfoxtotjghgsi5mffyt6id.onion/ | General SOCKS server failure
+2026-03-15 19:26:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dreamrvfuqrpzn4q.onion/ | General SOCKS server failure
+2026-03-15 19:26:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://eushopsprwnxudic.onion/ | General SOCKS server failure
+2026-03-15 19:26:05 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rkaq3ccrkrpdmqnb652svp7hgdiczmcaza2pcdlxhqh5wnqrc6nw5bid.onion/ | Host unreachable
+2026-03-15 19:26:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cbtzjyzkpdj6tjw3fjy7klqvkjb4majkkn2gt73hgbvqsgunaaudkpqd.onion/ | Host unreachable
+2026-03-15 19:26:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://35drizy63xx73u64viqcwombuyyfxzqyfdex5ubwsqnmkgpqo637dhad.onion/ | Host unreachable
+2026-03-15 19:26:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://6usarih2lzaypegmabr3j2spxzphdeunav45q3ctextl4ugclxexzdad.onion/ | Host unreachable
+2026-03-15 19:26:14 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://avn3xbtzud7bp75pjl42px6xkpj5vyiymnnz4htonlzcnm2uwcfcflyd.onion/ | Host unreachable
+2026-03-15 19:26:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2lg5dkqutiudz566brwa7nbc7afwg5vmzfygbxtc6qij2ahoaigg2gqd.onion/ | Host unreachable
+2026-03-15 19:26:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pg4gwyfjvn3oeevsupjge6jkzyvyzricb5dwfg2f3vvozldw3temuqad.onion/ | Host unreachable
+2026-03-15 19:26:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ccqvendwbimh6jlzbkrr75wl7kno3nd36wvalk3vefoysy2a4r6zb4yd.onion/ | Host unreachable
+2026-03-15 19:26:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://voww4t3kpku6ak73z6cocpummzjchaxrbrnfjpv4xaj5unxyaqxmumid.onion/ | Host unreachable
+2026-03-15 19:26:41 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://32k52cdgtzv4o46wqs7jqufyicdpbisxptwl7uieydl7muygu76yprid.onion/ | General SOCKS server failure
+2026-03-15 19:26:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fusionvlc7cvltmy.onion/ | General SOCKS server failure
+2026-03-15 19:26:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://i4niz4z3nhqd2j2tl4iqzjyf3k543wljhzrqyv34r7hqmpbmlisaohqd.onion/ | Host unreachable
+2026-03-15 19:26:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://i6jpz2b54me4qsclqakanlbdcupc5ry5z5vnd7lbwxst6xv7kngo5fyd.onion/ | Host unreachable
+2026-03-15 19:26:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://p7rl6pdh6yclvuf2huhyyrkerod7ixsf42muher3plhj76erjaipy5ad.onion/ | Host unreachable
+2026-03-15 19:26:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://doplbqohmtiozaeae5bxdzjnjvbuajty3wx3z6tyqrmcrm74z6udmkqd.onion/ | Host unreachable
+2026-03-15 19:26:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://inyeh4id24ymdsw5mrsccghaqdzejgcrsiqch57lgemc35ck3b2d7lad.onion/ | General SOCKS server failure
+2026-03-15 19:26:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://escrowjjqflrrlqjglnwkag6gwy3yndehibad44ntifarjqdffgfu2id.onion/ | Host unreachable
+2026-03-15 19:26:54 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ccshophv5gxsge6o.onion/ | General SOCKS server failure
+2026-03-15 19:26:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://35gwwop72yphq5l6xz7jx2kqjmavx6us6x35zqbcnuu2czewuam2hrqd.onion/ | General SOCKS server failure
+2026-03-15 19:26:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://zvvtba2a37mcydnntjkzy26lrv3y5elfyotr4glujkaaanyz5a4uerqd.onion/ | Host unreachable
+2026-03-15 19:26:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wfhk7qy6ycihylvls7xrmlyp3elin3k6ezyee4ovp3oj2wudrhmhgwid.onion/ | Host unreachable
+2026-03-15 19:27:00 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bitkeywichmyd2fdlktesaqofxtt7wsufsz2dgkyxn7alrxmnj7e4wid.onion/ | Host unreachable
+2026-03-15 19:27:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://aubvriwvkq3zbatoqppuzgvpkcyworntmvw3fze6z4giabd5xxjskgid.onion/ | Host unreachable
+2026-03-15 19:27:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://easy3i6x4qqfomutiehzbxzwhp74s3ziykhwuk2bgf5k22qpa7rtm2ad.onion/ | Host unreachable
+2026-03-15 19:27:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://qeybpwjb7qn2ws2dein5zvsqgxral3shzsobgypzom4oihqfdlvl4uid.onion/ | Host unreachable
+2026-03-15 19:27:05 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ccbay4wqgbxa2igl.onion/ | General SOCKS server failure
+2026-03-15 19:27:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://z5ast425du3kkf5jvb54rvqmhynv2qfscfscfwov2ofwnncni5u7lvad.onion/ | Host unreachable
+2026-03-15 19:27:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://loobucksf7ufp24phhel6nawyzf5ncvle7gcwewmib5x7txqtt3c7rqd.onion/ | Host unreachable
+2026-03-15 19:27:19 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://kkq25b72gv2qjtde4ga2b2rho6g6nmma3y32lxowlaaknhomalzx2fid.onion/ | General SOCKS server failure
+2026-03-15 19:27:19 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://whje5cahjivo6s4ox36xrpea5gavgd45uekgaxlkocjlcxcwkedn2lad.onion/ | Host unreachable
+2026-03-15 19:27:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://buyreal2xipzjhjfhyztle35dknfexgqrpq4dmzvkc575kzi3vr6bmid.onion/ | Host unreachable
+2026-03-15 19:27:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://iphonekw6oeshw6fkio4tnjb7tw6h7d7i3h73imobzlubqmc34quyxid.onion/ | Host unreachable
+2026-03-15 19:27:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://mzeh627q7bmzsoxozampnsstkfnby2zvm3y73qcsy43n3eaveehqjoyd.onion/ | Host unreachable
+2026-03-15 19:27:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://weedpysa7je6nhwy2iepqet4umtccigqvurp3syrfnjwp3wuwkdnread.onion/ | Host unreachable
+2026-03-15 19:27:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://impergsnbnuvakck3htjq5dcjx2j7okpyabryuuk7fpvrhspizcn2rqd.onion/ | Host unreachable
+2026-03-15 19:27:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://drugsednqhasbyoyg2oekzbnllbujro54zrogqbf3p6e7qflxti5eeqd.onion/ | Host unreachable
+2026-03-15 19:27:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hbkxrww7iiwtr6j3mvxhchaz42fkt3dq7g3aa44ip25pc62s3rh5uvad.onion/ | Host unreachable
+2026-03-15 19:27:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dreamuu7hyw75p2qf5w24cibi3akvdrrpdeeukadbypc6kbdumpod3id.onion/ | Host unreachable
+2026-03-15 19:27:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ctksd26msu6dsygtxahjogcqcflutsxrbu6r6vmgfhfcedhaviy7r7yd.onion/ | Host unreachable
+2026-03-15 19:27:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ey5vnaqs6xyr4ifbyqd7tj7gojldb2euwndivu52ltfx5bpkc7sh5eyd.onion/ | General SOCKS server failure
+2026-03-15 19:27:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://safepayjlz76pnix.onion/ | General SOCKS server failure
+2026-03-15 19:27:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ccbay5gv4az6ewgv.onion/ | General SOCKS server failure
+2026-03-15 19:27:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://iof5lzfolmwa756kiki3mvoy2ivwd6o3gypn5g7j7geoo4raefua4zqd.onion/ | General SOCKS server failure
+2026-03-15 19:28:05 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://innoxnxnihwnd52wlhojo6nne4goad7u7a2qixs7g3hrxkmgkyvviuad.onion/ | Host unreachable
+2026-03-15 19:28:06 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://trustmdsuask3i5isnbvxv4n6qtpx2iflbbbsuf25txkft3i7a4jk6yd.onion/ | Host unreachable
+2026-03-15 19:28:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://htqhl25peesc3lrm.onion/ | General SOCKS server failure
+2026-03-15 19:28:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cznfdaeaqujhfz33ki4evpaz7a3vy7qgapdbjejrvgursnu27x4gxoid.onion/ | Host unreachable
+2026-03-15 19:28:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3pphd5c4ffuxqvxjtde5xxdjlmvz55frubj2lpqqm2s5xthdzwxfcyid.onion/ | Host unreachable
+2026-03-15 19:28:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://5ryuwdqvqv5mhy57sb2gnfrxlpebezy65ck3gqnwvoqbznixigy5qyid.onion/ | Host unreachable
+2026-03-15 19:28:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4yjes6zfucnh7vcj.onion/ | General SOCKS server failure
+2026-03-15 19:28:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://krushux2j2feimt6.onion/ | General SOCKS server failure
+2026-03-15 19:28:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fxezagimtio6hvqeq5se2imn7p66z2h74xdjyg4bsgtxoqkahagv4wyd.onion/ | Host unreachable
+2026-03-15 19:28:14 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tei5mg2z36lyq7jd.onion/ | General SOCKS server failure
+2026-03-15 19:28:14 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fusifrndcjrcewvm.onion/ | General SOCKS server failure
+2026-03-15 19:28:15 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://zx2cvtq34d6ftehxmwzf33qklo4rrbvr2eldcqmwtutffa7jaynb6fad.onion/ | General SOCKS server failure
+2026-03-15 19:28:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hackedabm6ejvmh7xiiqdq3ptflorhdvjurhheqbovlu64xi3zbrlpad.onion/ | Host unreachable
+2026-03-15 19:28:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ejcfqvftvxlyhrsloz4k2qqku2di2kvshl645o7jdoyv3co6fn6cxiyd.onion/ | Host unreachable
+2026-03-15 19:28:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fa7kzaxbnxhpnzesjepkc3wo3ca4uq4o3jnqmscjxci5qp7wxflfypad.onion/ | Host unreachable
+2026-03-15 19:28:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cnzmmoxryhacvkmv5eatphwm2wbvzn2jh45n2apgazqzfndmnq5q33ad.onion/ | Host unreachable
+2026-03-15 19:28:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://multyattycifyg66tczxlnzm722wklvs54r5rtwxge6tb4lagdx7sgqd.onion/ | Host unreachable
+2026-03-15 19:28:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wnfnquf7ffoe75ad3u7ix4bdmig7fqgr3desr7zq7zn32asjpwddq6id.onion/ | Host unreachable
+2026-03-15 19:28:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wannab666qqm2nhtkqmwwps3x2wu2bv33ayvmf4jyb6g3ibmitdzkcyd.onion/ | Host unreachable
+2026-03-15 19:28:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://olknlw3zybrtfonomv72prkx3zfjxq5vihpw7mzhmu5l3srtdw5btfqd.onion/ | Host unreachable
+2026-03-15 19:28:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4jbc254b7izc5dtgpxxjoqmhtdsiugngzkjkfopbkfjlu4xqw6zed5qd.onion/ | Host unreachable
+2026-03-15 19:28:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ku4x5rmzzoxfh4swoccj47ydqt4lsv5bno2ljzsju6n7ehayjq3cajyd.onion/ | Host unreachable
+2026-03-15 19:28:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ymix2fioqsehk7c2icpdpwk5ke3qsocgihkjxdzoi4h52sj6sfn2fwid.onion/ | Host unreachable
+2026-03-15 19:28:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://vbfdaifjmi2oauuvwuyjdwgyoo665psqix37odwd6j75vhqfe7rdk2ad.onion/ | Host unreachable
+2026-03-15 19:29:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rjye7v2fnxe5ou6o.onion/ | General SOCKS server failure
+2026-03-15 19:29:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://qdidi2sbjwlcmxt3jvpbcqexkbq5i67qke5hg4m5lacxqbuhjhszluqd.onion/ | General SOCKS server failure
+2026-03-15 19:29:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://kaedxm5lp3fp35mtnwapn6gkdln4434i3pk2rdg4a6eluksra2q4gaqd.onion/ | General SOCKS server failure
+2026-03-15 19:29:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hh64masnumoqgpmgv7q7vendivzmnaygnczxmr57b4cbe6rkl7zkxead.onion/ | General SOCKS server failure
+2026-03-15 19:29:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4lq4prlyxiifarmj.onion/ | General SOCKS server failure
+2026-03-15 19:29:05 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://olmqwvyercj7pbsmgubgifhzv2chgarwoazhreqgv5h3sbmbruo3foyd.onion/ | General SOCKS server failure
+2026-03-15 19:29:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4zakxcucbgd6wvtblnqgihioqwdey22qucjpeithmkg2omut3mmedqid.onion/ | Host unreachable
+2026-03-15 19:29:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ktihkgxldg7irzulc2aa2fs4xgebjfbbohhjjh4lbefelohdzdf24cyd.onion/ | Host unreachable
+2026-03-15 19:29:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ksoft2umx6b3cledfyhhme5vdiqgvhiugyhhzzonqdc6okagxhljmiqd.onion/ | Host unreachable
+2026-03-15 19:29:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cashgod2w7hzaeihf2d2bwd7xwtsjtbczbusbsyzqoqymks2g5l46eyd.onion/ | Host unreachable
+2026-03-15 19:29:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://s7ccy6bman4zb6lh.onion/ | General SOCKS server failure
+2026-03-15 19:29:13 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://sdq24wxaubadzzbre7kug6z3jgau3oe5n5mdhgobftetcmfqeunmocqd.onion/ | General SOCKS server failure
+2026-03-15 19:29:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3egipr75y5hdefjua2vyqjuezh4g4oien2cggmplkoflc6cktedmomad.onion/ | Host unreachable
+2026-03-15 19:29:20 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://gc4youec2ulsdkbs.onion/ | General SOCKS server failure
+2026-03-15 19:29:21 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ou5z3z6ehfuj4d2hz7cyo2ec2jbww62dwhruaox22h73hxenamkiczyd.onion/ | Host unreachable
+2026-03-15 19:29:21 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pswk3hepf443ynzwuf7e4vxrdrpolrkxbp57q4zbljbco3tvfd7t7fid.onion/ | Host unreachable
+2026-03-15 19:29:22 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://q23fkzwg67z6y2ixllpzspa6fpuhstdjghza3yd3ah62jwu26iszooad.onion/ | General SOCKS server failure
+2026-03-15 19:29:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fit3thui7rw263htdkfwz4kw6cvxpmt2akcswbatksc5svdreajn6rid.onion/ | Host unreachable
+2026-03-15 19:29:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://vu2fo5ps5pij4ds6vxi67x7j4kfykkaqvrvzabrddq4jzwdqice24cid.onion/ | Host unreachable
+2026-03-15 19:29:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2byheqhe7buirvylepmbj73zfh2gx4alxjtwar56yvzo7jfs3ewhj2yd.onion/ | General SOCKS server failure
+2026-03-15 19:29:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dwwscsu2ha72pkq57ptzavvfp4hpihxahj342wlknl7dhd7noptbadqd.onion/ | Host unreachable
+2026-03-15 19:29:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bmxb34y5pzorv7jcaafqbkqnnymutznyhie6hlcatd4ekuc5d7h73kid.onion/ | Host unreachable
+2026-03-15 19:29:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rczm14qtvhfxlwck4jlmky6aa4a7vdbqy3a3ndowv25z5n3wxqweqfyd.onion/ | General SOCKS server failure
+2026-03-15 19:29:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2222ppclgy2amp23.onion/ | General SOCKS server failure
+2026-03-15 19:29:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://edlcw4btkia7ndahjr4mndvkpb3xkfh6vzujwuksewaqvsqzr3ca3xqd.onion/ | General SOCKS server failure
+2026-03-15 19:29:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://azworldjqhsr4pd5.onion/ | General SOCKS server failure
+2026-03-15 19:29:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ccbay2jxd5dcobl2.onion/ | General SOCKS server failure
+2026-03-15 19:29:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://amazonv6v4q25koqozui2daubqeb3hr57vqaa2ieoq67umpstqqklhad.onion/ | Host unreachable
+2026-03-15 19:29:41 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://duckwm3krjkdpb7wbkgbra5bu7ilwr2wj5zjp6pym7clfprumwdluhid.onion/ | Server disconnected
+2026-03-15 19:29:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://oeoeqcixmyt7ddmvvt6cufjoqjrkdblhmiecfc7seehq5scs37tcwuqd.onion/ | Host unreachable
+2026-03-15 19:29:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://moneye5g34sxtlo3jd2aft6hdphk2dtgvkwnk5taabfrqu75tutmynad.onion/ | Host unreachable
+2026-03-15 19:29:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tbx3wt4fkwqr67xzuahvmuolqjsnqxvylz76kfeshtasqal3qzbe4cid.onion/ | Host unreachable
+2026-03-15 19:29:53 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://gunshopv3hmqzvxfivnp62iq3vehjmert7faw5e6p7hf4rmpte24znid.onion/ | Host unreachable
+2026-03-15 19:29:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://222222222xn2ozdb2mjnkjrvcopf5thb6la6yj24jvyjqrbohx5kccid.onion/ | Host unreachable
+2026-03-15 19:29:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://epaaksshb3mw46jrkeltbifjcqd5fpuiet2ckrmx3n75ybrmfth47had.onion/ | General SOCKS server failure
+2026-03-15 19:29:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://srtwui3x6xvgmwtu6xfgjqa35orqxi4obtw6o7gspfubruqnmi54m3qd.onion/ | General SOCKS server failure
+2026-03-15 19:29:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3yyflh7ozywtt3nibno7csjyzrscbtszwgacq6tjpr4y76oprtfua3yd.onion/ | General SOCKS server failure
+2026-03-15 19:30:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://gunsiqvaicyzyq7xqm2c3xshl6pjegtxjf3m3ldms2fo52lqvrmvbyyd.onion/ | Host unreachable
+2026-03-15 19:30:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3zx4rwy3izy2zhywz2vm5krc2zqmrahc7sv7ps2ekqvfxv62skueruid.onion/ | Host unreachable
+2026-03-15 19:30:13 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://drzvwu6ljvqkpecivnz7rx2fldetutzrp23lxs5rs522iudywcsedjqd.onion/ | Host unreachable
+2026-03-15 19:30:15 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://applemskx6ax774zqwzbnhkevsywm4jfbwlmxzv35zaymvcxula7wiad.onion/ | Host unreachable
+2026-03-15 19:30:15 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://creditkoydvwwq2vydjfrcijdf3hia5p6xuegiyo6jyitrixfsz2d6yd.onion/ | Host unreachable
+2026-03-15 19:30:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://amgic2ym32odxor2.onion/ | General SOCKS server failure
+2026-03-15 19:30:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://zl345vnuausuuasttlvnaqmucy5wvtu4bybxbwqbzczccmi6i362etad.onion/ | General SOCKS server failure
+2026-03-15 19:30:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://shop3afn4vo2zffl56hgraf2si6q2qg63xmckcaraglsjelubtpd4wad.onion/ | Host unreachable
+2026-03-15 19:30:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hiddenz7c5ilffe3hq2qawguqnmffg7awyuiqmernrnvxvixyogt7dqd.onion/ | Host unreachable
+2026-03-15 19:30:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wumsyv4676p4gdrofwz5w3a74aajexxq4kss2wx42umymdy5uxxranyd.onion/ | Host unreachable
+2026-03-15 19:30:20 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://t4lazvddnibc32bzlgscgl33cftvsq4wagvwongxtrywake47u45hxqd.onion/ | Host unreachable
+2026-03-15 19:30:26 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cryptozbfnwrkdivpa7ujs2u7f2ale5ggf2nzoymstldpsqwkwtykwid.onion/ | Host unreachable
+2026-03-15 19:30:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ixbc4issuwfvbv455sbw4zflne5qs3gx2eelapidqegcal6eiujcotqd.onion/ | General SOCKS server failure
+2026-03-15 19:30:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ktvmazvbbr2eqyhc6fe2zkze34xhl3j7uc5n4zv6ybwbo5oqlxhclxqd.onion/ | General SOCKS server failure
+2026-03-15 19:30:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://6yyssrb4r6vw64nk7evs7g3m3htzdcpj6iicxmx3diwg2ix5lhohrbad.onion/ | Host unreachable
+2026-03-15 19:30:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://etzbbneh5ioctmev5tkwonaukgrypleohng2uuo6w4cvd2lm7vljavid.onion/ | Host unreachable
+2026-03-15 19:30:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://76em3dh3dguz4jzrmmzkpyd2x2nh5reysd4r4uqeu6dne6d3lfpbqcyd.onion/ | General SOCKS server failure
+2026-03-15 19:30:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://24lyo1tmebwfls5wfz5ytdusl2aslttek63f7sbgbdwlatigyt77aeid.onion/ | General SOCKS server failure
+2026-03-15 19:30:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wth474sv6ct4glwiowjipvr6ydeg6tbxlenxqibe5vno7ivmeqlumnid.onion/ | Host unreachable
+2026-03-15 19:30:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://mlmm3n32ypoxqfi4dvlmlfgolbwfrnhwwvzicmtw6g2jcohflhyzngqd.onion/ | General SOCKS server failure
+2026-03-15 19:30:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bithacklfxiag2kysa7inceduv3eijqmcbms26w25cmgwuwga4ucbaqd.onion/ | Host unreachable
+2026-03-15 19:30:40 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3xbspe3skkv5oj4nqfjti6og7ak5z34izqsdsi6hgc3hro7t345l3vyd.onion/ | Host unreachable
+2026-03-15 19:30:40 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://t6bitngq2lk45vwvy45zluwne4dzq4qhdybgztrdkho5xpkuru644fqd.onion/ | Host unreachable
+2026-03-15 19:30:41 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rpauube5f4nfk2zlhgzw2c4fd5oyeme6wltwwqzei5x4w7sjvridixad.onion/ | General SOCKS server failure
+2026-03-15 19:30:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://blackma6xtzkajcy2eahws4q65ayhnsa6kghu6oa6sci2ul47fq66jqd.onion/ | Host unreachable
+2026-03-15 19:30:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://7afbko7mx7o654pbwbwydsiaukzp6wodzb54nf6tkz2h3nmnfa3bszid.onion/ | Host unreachable
+2026-03-15 19:30:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://7b23kxazftg6dcokcw7bt26hrc5mpvkjqkolv2n6g4pev5zfzwiexead.onion/ | General SOCKS server failure
+2026-03-15 19:30:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ercz7jfdxunysc6qvsplekaekp4hhdy2rf7bikoawqzxr62wddnmxwad.onion/ | Host unreachable
+2026-03-15 19:30:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ak47biwqhn2q7fonbxv4ndgfse5p54v3niadel5aqp2fez3ebmy2p6qd.onion/ | Host unreachable
+2026-03-15 19:30:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pumpdumppqgxwu4k.onion/ | General SOCKS server failure
+2026-03-15 19:30:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xduacuj2tz4z23l6.onion/ | General SOCKS server failure
+2026-03-15 19:30:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://efb6om7tze6aab25.onion/ | General SOCKS server failure
+2026-03-15 19:30:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bfhvaajiqhw7wtp5zdvommkgwpsl46ybbyrddpqyujwpxu3aqbghdeqd.onion/ | Host unreachable
+2026-03-15 19:30:53 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://gcvu7dpgcvorlt3yw3os5koopwabvwycjz3ay4odaiinaezwfm6fsayd.onion/ | Host unreachable
+2026-03-15 19:30:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rfhu3iww5h53rvrddc3rquymgu2nh4o57ub5rn4dw6gs4ncwvz3h5pid.onion/ | Host unreachable
+2026-03-15 19:30:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://streetnjwjc67frqcaliknmcefcucr2gh7wc27ex53en6dteuuuww3yd.onion/ | Host unreachable
+2026-03-15 19:31:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://allbits7fuboct7q6dzht5yfwwdwigmesy45fctinesvxwgithpn2fyd.onion/ | Host unreachable
+2026-03-15 19:31:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lmo27zk7tvtdbomydg4fetmd4dzqu6xkpoqfubjrjag6rgsethzmo7id.onion/ | Host unreachable
+2026-03-15 19:31:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://npkyquz767hnd65qkxqynkvynknft7quk4zwt2tz7b3yztywkxqaaaad.onion/ | Host unreachable
+2026-03-15 19:31:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://n1mihgtekvqkqvshh6zjxbyc6kzwdsbvwihmredugnzi2dtxknwf7had.onion/ | General SOCKS server failure
+2026-03-15 19:31:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://multidxltunesmv6.onion/ | General SOCKS server failure
+2026-03-15 19:31:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hth7cziuzf7e3ykzxahqxkizktsova7jodfqpj6p7bhfprtqot2xhaad.onion/ | General SOCKS server failure
+2026-03-15 19:31:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2uc2cldthdocmlfw4o2vc6dn52imefc2v3hlq6vnfhgz56yulhnf3gyd.onion/ | General SOCKS server failure
+2026-03-15 19:31:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://7uxohh5bat7kouex.onion/ | General SOCKS server failure
+2026-03-15 19:31:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://fiw27htrk5av3bnhfjtl23dn62fa6e3rwlhtvkimthy46jbuxuy3jdyd.onion/ | Host unreachable
+2026-03-15 19:31:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://scash7dlpeejgs3gkh6ko6mc7lwcgq6swhpplbky5ulccdarpt5fyxad.onion/ | Host unreachable
+2026-03-15 19:31:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://salecl36zy7kdxaz42tvnfo5g3kdvmncdgdbw3ov3yr7cwooy6qzuhqd.onion/ | Server disconnected
+2026-03-15 19:31:26 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://moneytkfgglev7nr.onion/ | General SOCKS server failure
+2026-03-15 19:31:26 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://shop6bpuax4uk53slpyt56bhl43f2cefpcejwyrbtvcfugujldt3eyqd.onion/ | Host unreachable
+2026-03-15 19:31:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hh42ujayvk3tw7kqegndv2c526phuni7ljbqy2ljpb6vhnvzugez7cyd.onion/ | General SOCKS server failure
+2026-03-15 19:31:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ccbay3yanmktpr3s.onion/ | General SOCKS server failure
+2026-03-15 19:31:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://uquroyobsaquslaunwkz6bmc3wutpzvwe7mv62xeq64645a57bugnsyd.onion/ | Server disconnected
+2026-03-15 19:31:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cannabmuc64fbglolpkvnmqynsx226pg27rgimfe3gye3emgtgodohqd.onion/ | Host unreachable
+2026-03-15 19:31:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://sfbhotkfzpfbdwncpzk4v7cjwt74hlw5o5zfhav4gt4njyunjwflu2qd.onion/ | Host unreachable
+2026-03-15 19:31:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3cash3sze3jcvvox.onion/ | General SOCKS server failure
+2026-03-15 19:31:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://y5os5goi5jdys2mmhwb2omcyki6mld2uaoe3h5pwhdmsxio64kucgfid.onion/ | General SOCKS server failure
+2026-03-15 19:31:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://63autj2bzi3aeeycu6hgbnn6mlmas2lgs6n62xkpr23uiw4cktte4byd.onion/ | Host unreachable
+2026-03-15 19:31:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://gtl3bpvdnzijqmna2sd25ktixabzt7pval6fpkd2ur6vpov52zzv74yd.onion/ | Server disconnected
+2026-03-15 19:31:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hiddenuip5qlthdkbeqrpcfja4k5qr5urordvm4sm3gnz6wcy7yo5qqd.onion/ | Host unreachable
+2026-03-15 19:31:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://iobkoixofmiyhz77uvpzi2smcwg3xmjahkvw45xcoop4g4tzyftzyuyd.onion/ | Host unreachable
+2026-03-15 19:31:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://u2izrmre7yqzhv5gr3tbbsoyriwoxmc77rfieuz7xdjzjpvk37bhahqd.onion/ | Host unreachable
+2026-03-15 19:31:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://y3uqa5umvziqedr6ox3io7qx4o5kf635s5qnhdbmzi2ws3s5eaitwvid.onion/ | Host unreachable
+2026-03-15 19:31:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bjhjtivcu43ndzdryschq4j3p3ipum72y7goyewxrneqc35n5ajx46qd.onion/ | Host unreachable
+2026-03-15 19:32:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4gj66ltkilkyutyw.onion/ | General SOCKS server failure
+2026-03-15 19:32:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dwforumsmrcqdnt3.onion/ | General SOCKS server failure
+2026-03-15 19:32:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://notevilmtxf25uw7tskqxj6njlpebyrmlrerfv5hc4tuq7c7hilbyiqd.onion/ | Host unreachable
+2026-03-15 19:32:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lg7iwjj3ajzz2cmd.onion/ | General SOCKS server failure
+2026-03-15 19:32:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://zjmls4urccc5wxc64ilbv4oqarjab6pbanvmhd2qqt6p7fgqrjjnryqd.onion/ | Host unreachable
+2026-03-15 19:33:13 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://digdig2nugjpszzmqe5ep2bk7lqfpdlyrkojsx2j6kzalnrqtwedr3id.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1029)
+2026-03-15 19:33:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://guideeedvgbpkthetphncab5aqj7dp5t74y7vxsoonnvmaeamq74vuqd.onion/ | Host unreachable
+2026-03-15 19:33:26 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://uz5teca64yvzfax2o5eey3v6pkyo6kusajtgkalys7r74ij7pilqj7i6.onion/ | General SOCKS server failure
+2026-03-15 19:33:26 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xpresphar4nehfab.onion/ | General SOCKS server failure
+2026-03-15 19:33:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://64yvzfax2o5eey3v6pkyo6kusajtgkalys7r74ij7pilqj7i6.onion/ | General SOCKS server failure
+2026-03-15 19:33:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://p45teca64yvzfax2o5ey3v6pkyo6kusajtgkalys7r74ij7pilqj4pp.onion/ | General SOCKS server failure
+2026-03-15 19:33:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://uz5teca64yvzfax2o5eey3v6pkyo6kusajtgkalys7r74ij7pilqj4pp.onion/ | General SOCKS server failure
+2026-03-15 19:33:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://uz5teca64yvzfax2o5eey3v6pkyo6kusajtgkalys7r74ij7lqj4pp.onion/ | General SOCKS server failure
+2026-03-15 19:33:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://owdr5uwzhf3ay7yct4loa6b67autgqbihtvk2lhnapypucyd.onion/ | General SOCKS server failure
+2026-03-15 19:33:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://empiremktxgjovhm.onion/ | General SOCKS server failure
+2026-03-15 19:33:40 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pitchprash4aqilfr7sbmuwve3pnkpylqwxjbj2q5o4szcfeea6d27yd.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1029)
+2026-03-15 19:33:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1029)
+2026-03-15 19:34:22 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://p53lf57qovyuvwsc6xnrppyply3vtqm7l6pcobkmyqsiofyeznfu5uqd.onion/ | Host unreachable
+2026-03-15 19:34:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://libraryfyuybp7oyidyya3ah5xvwgyx6weauoini7zyz555litmmumad.onion/ | Host unreachable
+2026-03-15 19:34:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dumpliwoard5qsrrsroni7bdiishealhky4snigbzfmzcquwo3kml4id.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1029)
+2026-03-15 19:34:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pornhubvybmsymdol4iibwgwtkpwmeyd6luq2gxajgjzfjvotyt5zhyd.onion/ | Host unreachable
+2026-03-15 19:35:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://abacusall6l52n5gp357vpv4yjjvh6ewg65pjbfvacyqcldux66btlqd.onion/ | Host unreachable
+2026-03-15 19:35:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://digdig2nugjpszzmqe5ep2bk7lqfpdlyrkojsx2j6kzalnrqtwedr3id.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1029)
+2026-03-15 19:35:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://recon222tttn4ob7ujdhbn3s4gjre7netvzybuvbq2bcqwltkiqinhad.onion/ | Host unreachable
+2026-03-15 19:35:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4usoivrpy52lmc4mgn2h34cmfiltslesthr56yttv2pxudd3dapqciyd.onion/ | Host unreachable
+2026-03-15 19:35:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://abacuskzoo7wrfmpqiqscoiljfjap42rzjkfygp5vm3gtlu5tanhbjad.onion/ | Host unreachable
+2026-03-15 19:35:53 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://incognitox3vs5grdnmh52k35m64vib5fsbdrxzilujjptiqzeyrxhid.onion/ | Host unreachable
+2026-03-15 19:35:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://g66ol3eb5ujdckzqqfmjsbpdjufmjd5nsgdipvxmsh7rckzlhywlzlqd.onion/ | Host unreachable
+2026-03-15 19:36:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://kyei4lm4lguw7b5n3cergaixwohe2itgx42s3k25ojhvlnybklvkosad.onion/ | Host unreachable
+2026-03-15 19:36:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ydj4j7t242576mt2yjz63diu7mxbco2b7pdyc2srzh6ap74lqc7zawad.onion/ | Host unreachable
+2026-03-15 19:36:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bohemiaobbpsjvkexpdpnekqai2ebi32xgr6sbhdpapipv547rm6jhad.onion/ | Host unreachable
+2026-03-15 19:36:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://qdyakadgrj73zeyv45aff6n4s2see565vdbfkfe7u54qmdmerzpisoqd.onion/ | Host unreachable
+2026-03-15 19:36:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://yhqkfdtvzmx2bcpv7mnpgnp76fdnp4yuks6gwf5fyasm3zbuag3p32qd.onion/ | Host unreachable
+2026-03-15 19:36:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://booksubt62eeiyrb.onion/ | General SOCKS server failure
+2026-03-15 19:37:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://e7o2gvdeok5fy2msxknuunvdih7zfupevhaav62ezbbjzegiunppxgid.onion/ | Host unreachable
+2026-03-15 19:37:53 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://j7ugxrsi4cx5tduw53hkosrz3igc3hrrzgciaqfkdgqt2736cwvs7rad.onion/ | Host unreachable
+2026-03-15 19:38:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://walletdhjtlu7wkzwhlkgdtl45glxx3olfwywpt7cv33q67aotajdmad.onion/ | Host unreachable
+2026-03-15 19:38:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://o2tu5zjxjlibrary.onion/ | General SOCKS server failure
+2026-03-15 19:38:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://btcx6jx725buaw2fahc4i5s5dq4oiorjzmr64henpwsrlzdqpkiv7wqd.onion/ | Host unreachable
+2026-03-15 19:39:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://tortimes.com/ | Host unreachable
+2026-03-15 19:39:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://www.nytimesn7cgmftshazwhfgzm37qxb44r64ytbb2dj3x62d2lljsciiyd.onion/ | Host unreachable
+2026-03-15 19:39:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://twitter.com/ | 400, message='Got more than 8190 bytes (8860) when reading Header value is too long.', url='https://twitter.com/'
+2026-03-15 19:39:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for mailto:/ | mailto:/
+2026-03-15 19:39:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for whatsapp://send/ | whatsapp://send/
+2026-03-15 19:40:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://torscamismihh6gxwzf4wmbnosvzfzs546tlvgj5macmi2evtfxh5nid.onion/ | Host unreachable
+2026-03-15 19:40:06 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://vi7zl3oabdanlzsd43stadkbiggmbaxl6hlcbph23exzg5lsvqeuivid.onion/ | Host unreachable
+2026-03-15 19:41:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://vxxca6ydhe3acv6h.onion/ | General SOCKS server failure
+2026-03-15 19:42:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://uoaflwg3cofltal6p4albmauqg3u4uzvchhsfaugozbjdphpobs4xad.onion/ | General SOCKS server failure
+2026-03-15 19:42:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://td5njykkpjh2grqn.onion/ | General SOCKS server failure
+2026-03-15 19:42:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://walmartccseyggl3yae66vr4vomhtkyowayzqnikajljjt3ioap3bvyd.onion/ | 0, message='', url='http://walmartccseyggl3yae66vr4vomhtkyowayzqnikajljjt3ioap3bvyd.onion/'
+2026-03-15 19:44:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://meter3n3kza44zufqlctjtxogclda7cq2efifgyeq3mep3xndlnkrhad.onion/ | Host unreachable
+2026-03-15 19:45:00 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://vey3myj5j7shnqjprxkwughds54jxbz5ko6mjp6tfwrumfaf7issrwad.onion/ | Host unreachable
+2026-03-15 19:45:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ppbzd5bw6rctocbwvoslmtf5mlff77zyioyyoylsfrqn3ctvdaqhz5id.onion/ | Host unreachable
+2026-03-15 19:45:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://oqampqzctgkbq2yizpqdxlywidwgplilk3ccbhcxqm7gf6erafpkpjad.onion/ | Server disconnected
+2026-03-15 19:45:13 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://reycdxyc24gf7jrnwutzdn3smmweizedy7uojsa7ols6sflwu25ijoyd.onion/ | Server disconnected
+2026-03-15 19:45:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://bar47oupp7kn2idtplbngebrtlhurfp5p4irvwngdkj2ynkc46jqihad.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1029)
+2026-03-15 19:45:21 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://oraclexmrtcipbjbdflgtbsvjfkzllbiscf2rsqur2nxbskyjs3qaoyd.onion/ | Host unreachable
+2026-03-15 19:45:22 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dreamv2jji6uyejnk367mbrazxvlunhy74hixknqxybxznhx7kjewzid.onion/ | Host unreachable
+2026-03-15 19:45:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://catharibrmbuat2is36fef24gqf3rzcmkdy6llybjyxzrqthzx7o3oyd.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1029)
+2026-03-15 19:45:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://heliosxxuk3hnmokdmwgmm5qh3rhgz2lvwa5f6mfviasyurtadjqenyd.onion/ | Host unreachable
+2026-03-15 19:45:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://libertyklimuepdewpamrqtciexnrucs3zfninpuurs6evwbqcbkmfyd.onion/ | Host unreachable
+2026-03-15 19:45:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://palace5xpbcazinwvmxsjzpbhqjtid46woy3m4oep3ppc6i7fqb6v3id.onion/ | Host unreachable
+2026-03-15 19:46:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://darktrainwk2fnbw2vufvadkgcjruenklsqcs4tqcvfwwjkgomcsihad.onion/ | Host unreachable
+2026-03-15 19:46:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wiki2zkamfya6mnyvk4aom4yjyi2kwsz7et3e4wnikcrypqv63rsskid.onion/ | Host unreachable
+2026-03-15 19:46:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://q3o3hdjbf6vwxdnpskyhxw7w7rnmnfhz2szbuala4q24x6csbp7adiad.onion/ | Server disconnected
+2026-03-15 19:46:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xq5hcm32m7ipdqt2ydqj6cc7lpj3lw3iwqnxiak2juynysoevjmancad.onion/ | Server disconnected
+2026-03-15 19:46:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://dumpliwoard5qsrrsroni7bdiishealhky4snigbzfmzcquwo3kml4id.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1029)
+2026-03-15 19:46:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pydnejfsjngfddo2fsurm43ws76ambu3vuhrnnj3n2vd6psf4gwa26qd.onion/ | Host unreachable
+2026-03-15 19:46:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://domain3dxpsv3dmbf5xgfncn3272giigja4623ihf6wsx462bqsv6iyd.onion/ | Host unreachable
+2026-03-15 19:46:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ydoc33j5oz3uythdwlm3a4euk3bnzpkudonqkppcd6kubs5fgie73tad.onion/ | Host unreachable
+2026-03-15 19:46:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://domainsjpl5ocfddimqwkzwmpn5mrsxqytmqzqoavpz46y7vcqworiad.onion/ | Host unreachable
+2026-03-15 19:46:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xya363jdvqmf2gcyvdvqzmbvyerelwyfwwtbqwwtkrw526cc72mhqrad.onion/ | Host unreachable
+2026-03-15 19:47:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://uptimeq5rnratet3znu4xwpbcjrtyj2k5qulaiwjh76d6xcllt3mwyid.onion/ | 400, message="Data after `Connection: close`:\n\n  b'HTTP/1.1 200 OK'\n     ^", url='http://uptimeq5rnratet3znu4xwpbcjrtyj2k5qulaiwjh76d6xcllt3mwyid.onion/'
+2026-03-15 19:48:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://5f2jwwojzi5fljxqqmityqlses3leqchjapgmdawc2n3i3tgmmleuuyd.onion/ | Server disconnected
+2026-03-15 19:48:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pshoxn3ddxqamfkibizbzhfltixkl24es756sqklsnpfkvlclmsoeoyd.onion/ | Server disconnected
+2026-03-15 19:48:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tmnguwi25tpvx6lhsmmnxwqvkntepyqtaz3adhcezudl74ae7oclc7id.onion/ | Host unreachable
+2026-03-15 19:48:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xkdtd7fb2r6wxbyilkmpim3dbbuuwarukw3k5gldhlrjal6xkj2wsxid.onion/ | Host unreachable
+2026-03-15 19:49:20 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4uiu6dsqxuhq23haxue2wdsw5twkhltt6jgyynthfkdcv26dawf3adyd.onion/ | Host unreachable
+2026-03-15 19:49:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://firearm7msqidztqlgpngdoorsapdvoe6flvdgbkzj6by6vbygseplid.onion/ | Host unreachable
+2026-03-15 19:49:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://e7hfgibcqc5zmjpy23jee7y3pydknqt7ak7y7lwkhkr72z6pg7hd2yad.onion/ | Host unreachable
+2026-03-15 19:50:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion/ | Server disconnected
+2026-03-15 19:50:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tor2door4qtuyoubkbjldsqrg4aexrm5y7cb5yjov7euz2hdg7dq55qd.onion/ | Host unreachable
+2026-03-15 19:50:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bohemia524v4ssr5zwbnspsnuyjt3xecabbath267m7k7563kah7rzyd.onion/ | Host unreachable
+2026-03-15 19:51:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://helixp2algkyxnxj3aerkmg5rmnom2swneyxtuzibq2heqd54ja43jid.onion/ | Host unreachable
+2026-03-15 19:51:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://eludemailxhnqzfmxehy3bk5guyhlxbunfyhkcksv4gvx6d3wcf6smad.onion/ | Host unreachable
+2026-03-15 19:51:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ezdhgsy2aw7zg54z6dqsutrduhl22moami5zv2zt6urr6vub7gs6wfad.onion/ | Connection refused by destination host
+2026-03-15 19:51:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://prjd5pmbug2cnfs67s3y65ods27vamswdaw2lnwf45ys3pjl55h2gwqd.onion/ | Connection refused by destination host
+2026-03-15 19:51:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://7eoz4h2nvw4zlr7gvlbutinqqpm546f5egswax54az6lt2u7e3t6d7yd.onion/ | Host unreachable
+2026-03-15 19:51:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wu5rl7yvzz7iggw5g3yrt3ppehkzw2nceq5i33gxlvd33lozbq35yiad.onion/ | Host unreachable
+2026-03-15 19:51:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hologram6d4agtfbwkdtruigzo3l6wztcz5rg27rmh54qatyinqmzgid.onion/ | Host unreachable
+2026-03-15 19:51:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://stealth5wfeiuvmtgd2s3m2nx2bb3ywdo2yiklof77xf6emkwjqo53yd.onion/ | Host unreachable
+2026-03-15 19:51:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ljrtvkbgrzwr3y4yrp3ufehnskcenyfnq2z7c2mog3ue5piryilnb4qd.onion/ | Host unreachable
+2026-03-15 19:52:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://e4bqnvfdasnx4plk.onion:6667/ | irc://e4bqnvfdasnx4plk.onion:6667/
+2026-03-15 19:52:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://z7uo4qztub5rn4jl.onion:6667/ | irc://z7uo4qztub5rn4jl.onion:6667/
+2026-03-15 19:52:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://frxleqtzgvwkv7oz.onion:6667/ | irc://frxleqtzgvwkv7oz.onion:6667/
+2026-03-15 19:52:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://ronsor37xl7tqn7p.onion:6667/ | irc://ronsor37xl7tqn7p.onion:6667/
+2026-03-15 19:52:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for ircs://w4a6ssearu46yphm.onion:6697/ | ircs://w4a6ssearu46yphm.onion:6697/
+2026-03-15 19:52:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for xmpp://7hbyqvu5zdvyjopuho7vxdrzernk7bj76wpev7v4w4wp2nsl5hqg6qyd.onion/ | xmpp://7hbyqvu5zdvyjopuho7vxdrzernk7bj76wpev7v4w4wp2nsl5hqg6qyd.onion/
+2026-03-15 19:53:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://kitsune6uv4dtdve.onion:6667/ | irc://kitsune6uv4dtdve.onion:6667/
+2026-03-15 19:53:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://g7pz322wcy6jnn4r.onion/ | General SOCKS server failure
+2026-03-15 19:53:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://qnwpupud3hyir6qp.onion:6697/ | irc://qnwpupud3hyir6qp.onion:6697/
+2026-03-15 19:53:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://galaxy3yrfbwlwo72q3v2wlyjinqr2vejgpkxb22ll5pcpuaxlnqjiid.onion/ | Host unreachable
+2026-03-15 19:53:21 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://nazgul3zxuzvrgg6.onion:6667/ | irc://nazgul3zxuzvrgg6.onion:6667/
+2026-03-15 19:53:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://swissbaync5d7ykaz7dh7v4qjrb4gmen5aj3bogxrcgbb43ij34bjuyd.onion/ | Host unreachable
+2026-03-15 19:53:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://naturetome2v7rpsvy4ba3cve35y6llpfcpomvj4bwbrgz472e47bjyd.onion/ | Host unreachable
+2026-03-15 19:53:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://vgg6whpouebbcx7w.onion:6667/ | irc://vgg6whpouebbcx7w.onion:6667/
+2026-03-15 19:53:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://qmifwf762qftydprw2adbg7hs2mkunac5xrz3cb5busaflji3rja5lid.onion/ | Host unreachable
+2026-03-15 19:53:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://sector2nyjrxphgrj3cvnueanomz4trvgyxofvu3cexltoxuegtlmzid.onion/ | Host unreachable
+2026-03-15 19:53:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://kxmrdbwcqbgyokjbiv7droplwhxvli3s7yv5xddxgrtajdpdebgzzzqd.onion/ | Host unreachable
+2026-03-15 19:53:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://caseslrwwcr744frvczmogqpa5jxfl6qhx3fxi2ne5pnro4yvsevhzid.onion/ | Host unreachable
+2026-03-15 19:53:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://trollodrome2.torpress2sarn7xw.onion/ | General SOCKS server failure
+2026-03-15 19:53:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3vmmhpy7723gkeohqalch5ycesyjl7atnol5jdiqbb55a5be7bcmtrid.onion/ | Host unreachable
+2026-03-15 19:53:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://d6d5ezly35m544pgqreuagrf6zlsktejp5z267negfe72exkngkzfpyd.onion/ | Host unreachable
+2026-03-15 19:53:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://5ety7tpkim5me6eszuwcje7bmy25pbtrjtue7zkqqgziljwqy3rrikqd.onion/ | Host unreachable
+2026-03-15 19:53:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tgtwiba5y3i3vh4n3a55utgpabwu5wx26eqqbgwrxd6gmc73rbxdclad.onion/ | Host unreachable
+2026-03-15 19:53:40 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for gopher://jewjewkeei4o4bvn.onion/ | gopher://jewjewkeei4o4bvn.onion/
+2026-03-15 19:53:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://f3mryj3e2uw2zrv3zv6up6maqosgzn27frz7xodvpl7pkestoyigtkad.onion/ | Host unreachable
+2026-03-15 19:53:43 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4wfsdhkbrdt6jwlozcmw2lzthoghgdrt3pty2vfre2ysdguvpazwfjad.onion/ | Host unreachable
+2026-03-15 19:53:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://passfoxyz6w6x6rk2j7kmvrlpa5o7n25mwe7wu6pr6v3lb62tzkqgcad.onion/ | General SOCKS server failure
+2026-03-15 19:53:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://o2cgnt55iwlishovskr6xovntd4o67loqmwh4g24bdg7qh3gmtydmxyd.onion/ | Host unreachable
+2026-03-15 19:53:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://eupra3pj6ykvqvtr74aalae7msnq6mewfwaohkqq3qdbnxsevnmhjlid.onion/ | Host unreachable
+2026-03-15 19:53:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://clszzn47y57uwkrgnfc7wllalvodopzqrp4spb6zbz2t3ulxngcfqsad.onion/ | Host unreachable
+2026-03-15 19:54:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://2hktdmgt6bg2hjuc.onion:6667/ | irc://2hktdmgt6bg2hjuc.onion:6667/
+2026-03-15 19:54:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://iljqpkgabg4hrchbozwovffyk7fobpovfudsdmdjinehzihjn2uggmad.onion/ | irc://iljqpkgabg4hrchbozwovffyk7fobpovfudsdmdjinehzihjn2uggmad.onion/
+2026-03-15 19:54:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://majorbdz7hyq7rocc4sxrapgdx5wrlzrqkdkwepak4akg5rrzubtebyd.onion/ | Host unreachable
+2026-03-15 19:54:15 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ylmjp76zk4ndvgpncbtgzrfsrzpblvlzgtuoduqgygwdlexou64iwfqd.onion/ | Host unreachable
+2026-03-15 19:54:20 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://37lnq2veifl4kar7.onion:6667/ | irc://37lnq2veifl4kar7.onion:6667/
+2026-03-15 19:54:22 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4g47cxugkohbweao2x66nnxxfoe3k7gdfzxej537nhdbwr522sbjxeqd.onion/ | Host unreachable
+2026-03-15 19:54:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rospraa4xvtuscgl357uxizzvhgpjetxnri4gi5qzggvmaoeu6witiid.onion/ | Host unreachable
+2026-03-15 19:54:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://netauthlixnkiat36qeh25w5t6ljyqwug3me6nprebo4s74lzvm3p3id.onion/ | Server disconnected
+2026-03-15 19:54:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://twitter3e4tixl4xyajtrzo62zg5vztmjuricljdp2c5kshju4avyoid.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1029)
+2026-03-15 19:54:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://lolikaastbgo5dtk.onion:6667/ | irc://lolikaastbgo5dtk.onion:6667/
+2026-03-15 19:54:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://zqktlwi4fecvo6ri.onion/ | General SOCKS server failure
+2026-03-15 19:54:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://www.sawa6ewxbjpj2ljny6nct4po2qbpl435buxvv5sczfinybklzycjvvyd.onion/ | Host unreachable
+2026-03-15 19:54:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://leaklook7mhf6yfp6oyoyoe6rk7gmpuv2wdk5hgwhtu2ym5f4zvit7yd.onion/ | Host unreachable
+2026-03-15 19:54:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2schvlwr4u3bji4zx27zgflwemrs2kn4stewc7xacqzn5qqvh7nf5nad.onion/ | Host unreachable
+2026-03-15 19:54:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ffzonepk5v476zc7cvpamt6qvhq3z7xixnu5lb35v627vxqz6sms7yyd.onion/ | Host unreachable
+2026-03-15 19:54:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://r4f5fajp2oiuhjqyass3nogu55sivxnc42fnwankiynf6o5jpno6exad.onion/ | Server disconnected
+2026-03-15 19:54:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://vola7ileiax4ueow.onion/ | General SOCKS server failure
+2026-03-15 19:54:54 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wpzzhvw6q32pneau3rzsa5h7tzl7fgswya3cgtmu5rpesd725bii3cad.onion/ | Host unreachable
+2026-03-15 19:54:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://deepirc23ukiben3.onion:6667/ | irc://deepirc23ukiben3.onion:6667/
+2026-03-15 19:54:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ckahyzrwglnbgrsehevnugp37nmynopnebvftmjvsxi54fsuqt4nogad.onion/ | Host unreachable
+2026-03-15 19:55:00 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ctemplarpizuduxk3fkwrieizstx33kg5chlvrh37nz73pv5smsvl6ad.onion/ | Host unreachable
+2026-03-15 19:55:00 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://nsocnzzkb27qbd2u5dcwglqn6d5epkbxvn4z73eq6xtubzn52n5juyad.onion/ | Host unreachable
+2026-03-15 19:55:05 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://onlq3bfusx3ftakfb7gpk2a2vncgdw5okzxntipfivdo2yswackkccid.onion/ | Host unreachable
+2026-03-15 19:55:06 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://blackhost7pws76u6vohksdahnm6adf7riukgcmahrwt43wv2drvyxid.onion/ | Host unreachable
+2026-03-15 19:55:20 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://onionirccaaakegi.onion:6667/ | irc://onionirccaaakegi.onion:6667/
+2026-03-15 19:55:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hostmate2s6cudoclklceo6u2jjjilgdz2rfx5r2xuezr26kx2jgl5ad.onion/ | Host unreachable
+2026-03-15 19:55:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tdx37ew3oke5rxn3yi5r5665ka7ozvehnd4xmnjxxdvqorias2nyl4qd.onion/ | Host unreachable
+2026-03-15 19:55:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://artistzubelolngubx6pmd6w2xacl3yj7jllxjdnrhh7assk7ioevjad.onion/ | Host unreachable
+2026-03-15 19:55:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://vgh6tbfjk65zj5ep.onion:6667/ | irc://vgh6tbfjk65zj5ep.onion:6667/
+2026-03-15 19:55:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://j6l3wwvrusgfslvlkz6u74byfua4j7mietelurm6uwurtmhxodv6mtqd.onion/ | Host unreachable
+2026-03-15 19:55:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://aldenp5fkdeagzwb7j4snypyxm76tucru2bm2b4bwdfd76k2dfti4tad.onion/ | Host unreachable
+2026-03-15 19:55:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for ircs://lolikaastbgo5dtk.onion:6697/ | ircs://lolikaastbgo5dtk.onion:6697/
+2026-03-15 19:55:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://sms4sat6y7lkq4vscloomatwyj33cfeddukkvujo2hkdqtmyi465spid.onion/ | Host unreachable
+2026-03-15 19:55:36 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for xmpp:/ | xmpp:/
+2026-03-15 19:55:41 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lu4aakwcq2b5dgqufc464fireyxvjb7o2rcwmojtjwuxlmwcyi345gyd.onion/ | Host unreachable
+2026-03-15 19:55:41 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://prepiitrg6np4tggcag4dk4juqvppsqitsvnwuobouwkwl2drlsex5qd.onion/ | Host unreachable
+2026-03-15 19:55:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://itapxk4hwi3k5ktj.onion:6667/ | irc://itapxk4hwi3k5ktj.onion:6667/
+2026-03-15 19:55:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wbi67emmdx6i6rcr6nnk3hco3nrvdc2juxrbvomvt6nze5afjz6pgtad.onion/ | Host unreachable
+2026-03-15 19:55:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://owlzyj4to3l5daq6edgsgp5z4lh4tzlnms4z6jv6xdtkily77j4b3byd.onion/ | Host unreachable
+2026-03-15 19:55:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://jkie5viyrmymttownlksylz5vipyxxvs6qgy2yybgbssoiuf7a7klpqd.onion/ | General SOCKS server failure
+2026-03-15 19:55:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://superkuhf6grlngvhaelkgaem6i4phmzd7rekeguphwbplhk3fanpjqd.onion/ | Host unreachable
+2026-03-15 19:56:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://belarusup5vmywbr2fqh7ttl3xh4nla2hi2v6lfq23ltxc5jh4qea2yd.onion/ | Host unreachable
+2026-03-15 19:56:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cgjzkysxa4ru5rhrtr6rafckhexbisbtxwg2fg743cjumioysmirhdad.onion/ | Host unreachable
+2026-03-15 19:56:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://icarus2yms7lbd33rlmfois75eeicqbn5nh7dnzvnf23bg2jwv4eilad.onion/ | Host unreachable
+2026-03-15 19:56:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ejaculatelqqkdhpjvjzhjpuldfuup2q37cfgmf6eknikq5xkliep4yd.onion/ | Host unreachable
+2026-03-15 19:56:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tormailpout6wplxlrkkhjj2ra7bmqaij5iptdmhhnnep3r6f27m2yid.onion/ | Host unreachable
+2026-03-15 19:56:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://76i2c3hn55fcj5nut3tqlboqqbbh23zvphv7lefk3vftpx6wketlanyd.onion/ | Host unreachable
+2026-03-15 19:56:15 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://btcexpz7xlwrqknqw6p3bok6shf73qtkd6zxct4x4qta2ktvh7ntprad.onion/ | Host unreachable
+2026-03-15 19:56:15 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hhldo3tnt5solzj2bwfvh7xm4slk2forpjwjyemhcfrlob5gq75gioid.onion/ | Host unreachable
+2026-03-15 19:56:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for ircs://kitsune6uv4dtdve.onion:9999/ | ircs://kitsune6uv4dtdve.onion:9999/
+2026-03-15 19:56:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4tdb2oju6nrrp77en6opmyfucvycs22y5ohuizfgjvbyjqjovltooyyd.onion/ | Host unreachable
+2026-03-15 19:56:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://www.elsahabg5h6nmfqogrwkyh4a2hq3vyxyaqeuyx2lshkm7liytcw5d6yd.onion/ | Host unreachable
+2026-03-15 19:56:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ax3zoslh2ujdq3joyibdn657mhjfxjm637vxiix7iilxnfbsabces4qd.onion/ | Host unreachable
+2026-03-15 19:56:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://silkroad6ownowfk.onion/ | General SOCKS server failure
+2026-03-15 19:56:40 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://z6ycoocwa5kzs22kut3dr7j5xvrs76i4n2fdunpen2gxhc6cyewlmjqd.onion/ | Host unreachable
+2026-03-15 19:56:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bmgunsyop5qa34nzrayd6shsovsukwbbscyo2hbu3ri7b2ghw6sjgrad.onion/ | Server disconnected
+2026-03-15 19:56:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pv6vfjj67wb4kooyq265z7fi4qi2lsa7m6e5wzzh7ahd42c7vpywn4id.onion/ | Host unreachable
+2026-03-15 19:56:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hostqfzelpvo643zinnyfwlwv2ujdvadxh24qjlc4up242peackq5pid.onion/ | Host unreachable
+2026-03-15 19:56:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cxaizvfj7atrpsuu57pqv3i4zjchntglma2x7ppqle5vf3nwaqmxyyid.onion/ | Host unreachable
+2026-03-15 19:56:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cumshitudpemjs4exlopowrjlxj4gw7z3tvelx3wxkbqyihxkulyvpid.onion/ | Host unreachable
+2026-03-15 19:56:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://wllef6hh2mt6uoi4.onion:6667/ | irc://wllef6hh2mt6uoi4.onion:6667/
+2026-03-15 19:56:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://libertyy56ecbupa.onion/ | General SOCKS server failure
+2026-03-15 19:56:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://ogn5vbujhrvbihko.onion:6667/ | irc://ogn5vbujhrvbihko.onion:6667/
+2026-03-15 19:56:54 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://libertygb2nyeyay.onion:5281/ | General SOCKS server failure
+2026-03-15 19:57:00 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://crrqkbf5yhx3yz7cf5wa25bw74nuzks5fr6lb76ctmrbgv7jtp2e33ad.onion/ | Host unreachable
+2026-03-15 19:57:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://onionirczesfffux.onion:6667/ | irc://onionirczesfffux.onion:6667/
+2026-03-15 19:57:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://7waci3lpg2exi5njh47eabg6ssdq6dbcpdd3jroomh2jfkx64rigppyd.onion/ | Host unreachable
+2026-03-15 19:57:05 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://cfyfz6afpgfeirst.onion:6667/ | irc://cfyfz6afpgfeirst.onion:6667/
+2026-03-15 19:57:05 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rsupcow4waqatza2blj4lnqkwprbvdt2bcfv7qiavlnk7hs43elgpeid.onion/ | Host unreachable
+2026-03-15 19:57:06 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://tns7i5gucaaussz4.onion:6667/ | irc://tns7i5gucaaussz4.onion:6667/
+2026-03-15 19:57:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cboxkuuxrtulkkxhod2pxo3la25tztcp4cdjmc75wc5airqqliq2srad.onion/ | Host unreachable
+2026-03-15 19:57:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://2kcreatydoneqybu.onion/ | General SOCKS server failure
+2026-03-15 19:57:14 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://chatjnv7sshcuz6a.onion:6667/ | irc://chatjnv7sshcuz6a.onion:6667/
+2026-03-15 19:57:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xs4y22l6fxcoapcu4qurmbr2ne6l5mfynmo3kkvth4cuvhrjrtgcrmqd.onion/ | Host unreachable
+2026-03-15 19:57:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://papyrefb3jewa7fdbakdomx2pj576w7u25fk3kjk6gyyuofz5awcu4id.onion/ | Host unreachable
+2026-03-15 19:58:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://oh6ev55uo4cmgh4w.onion:6667/ | irc://oh6ev55uo4cmgh4w.onion:6667/
+2026-03-15 19:58:06 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://www.irfaa7fwuwkxzhugg4qj4k6gk7agdycknmy4gnryt67djku5unnjvwqd.onion/ | Host unreachable
+2026-03-15 19:58:06 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://queenca6q2msuakzse7dymq5uw2gvigflouwb76a5nxsgpz2zsaf5tad.onion/ | Host unreachable
+2026-03-15 19:58:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lkqx6qn7whctpdjhcoohpoyi6ahtrveuii7kq2m647ssvo5skqp7ioad.onion/ | Host unreachable
+2026-03-15 19:58:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://usggwz6vwth276fdyccskoba5u2jis5ugv2ew2fy2blowgf2dv73axad.onion/ | Host unreachable
+2026-03-15 19:58:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://74d4eshogf7wae6bpfiymdhvrdowsvkvjobu75xon5pgyncn6s2vp2id.onion/ | Host unreachable
+2026-03-15 19:58:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://27m3p2uv7igmj6kvd4ql3cct5h3sdwrsajovkkndeufumzyfhlfev4qd.onion/ | Host unreachable
+2026-03-15 19:58:19 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://f2vfjp3jc37gxgn4hum4uf2bhi2w3kp4jbzdwegrn6bvtezbhminobid.onion/ | Host unreachable
+2026-03-15 19:58:22 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://jamie3vkiwibfiwucd6vxijskbhpjdyajmzeor4mc4i7yopvpo4p7cyd.onion/ | Host unreachable
+2026-03-15 19:58:24 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://josephdepqbvoq7tm7uvynwmsji4354zmd3yp3rrtc245rilvq4ixayd.onion/ | Server disconnected
+2026-03-15 19:58:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://www.alhurradmzetclrmc32ljtoo3vcmh3zq7fyzhjz3edhsl6uihwy5trid.onion/ | Host unreachable
+2026-03-15 19:58:40 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://g7l35kk2ysi7ggon.onion/ | General SOCKS server failure
+2026-03-15 19:58:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://sizeofaex6zgovemvemn2g3jfmgujievmxxxbcgnbrnmgcjcjpiiprqd.onion/ | Host unreachable
+2026-03-15 19:58:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://galaxy3bhpzxecbywoa2j4tg43muepnhfalars4cce3fcx46qlc6t3id.onion/ | Host unreachable
+2026-03-15 19:58:54 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://darkzzx4avcsuofgfez5zq75cqc4mprjvfqywo45dfcaxrwqg6qrlfid.onion/ | Host unreachable
+2026-03-15 19:58:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ubrspc3z5xuzh2iss4xuacpjdqj24orwnuye5hk23cpykd3mcujvygqd.onion/ | Host unreachable
+2026-03-15 19:58:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://66fweqwmqobgkzshkibab53qk3kmqy62mo5jkiohrth2nzied43cu4qd.onion/ | Host unreachable
+2026-03-15 19:58:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4wbwa6vcpvcr3vvf4qkhppgy56urmjcj2vagu2iqgp3z656xcmfdbiqd.onion/ | Host unreachable
+2026-03-15 19:59:05 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://danbal6a2lkho4arcx2dpa6ykg6fyvukeoqowjlgs3uzmt6wrz4s54id.onion/ | Host unreachable
+2026-03-15 19:59:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ylwbs62zfllr4hhailwwysq2erzoxqcwqhfokkzimi73c2n4fp3mspad.onion/ | Host unreachable
+2026-03-15 19:59:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for ircs://lolikaastbgo5dtk.onion:9999/ | ircs://lolikaastbgo5dtk.onion:9999/
+2026-03-15 19:59:35 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://e2ymwjy6mzy4hx3t.onion:6669/ | irc://e2ymwjy6mzy4hx3t.onion:6669/
+2026-03-15 19:59:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://http:/ | Host unreachable
+2026-03-15 19:59:41 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://fucktoy75jx3524x.onion:6667/ | irc://fucktoy75jx3524x.onion:6667/
+2026-03-15 19:59:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ddosxlvzzow7scc7egy75gpke54hgbg2frahxzaw6qq5osnzm7wistid.onion/ | Host unreachable
+2026-03-15 19:59:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://svobod7mjzb3hwxhgcnx7ui2ffd4p5zulftzkzdlmpaztuuoxnlpwhyd.onion/ | Host unreachable
+2026-03-15 19:59:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://intor3nu3dvbsxr2iyzmyfsjnr3mt6fv3a7gt7ji6pnycxc4rpiet3qd.onion/ | Host unreachable
+2026-03-15 19:59:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://financo6ytrzaoqg.onion/ | General SOCKS server failure
+2026-03-15 19:59:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ovgl57qc3a5abwqgdhdtssvmydr6f6mjz6ey23thwy63pmbxqmi45iid.onion/ | Host unreachable
+2026-03-15 20:00:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pastebin2ehip2krvuz7zd5mli4t6zti3vbt4yiaxn3vqq3bxx65aqqd.onion/ | Host unreachable
+2026-03-15 20:00:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://potatoynwcg34xyodol6p6hvi5e4xelxdeowsl5t2daxywepub32y7yd.onion/ | Host unreachable
+2026-03-15 20:00:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://jatqcuw3s2earcfzphl224ua3i7j2n76vid4vegguiaaavr5z46q4aad.onion/ | Host unreachable
+2026-03-15 20:00:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://leloupwtyyv3zizf3je5zvdmexlpqlfdk2it5b4uzawgsp2ck3oy4wad.onion/ | Host unreachable
+2026-03-15 20:00:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dic5v3rpphxnlvtudevxnodwz3hlr2xulddymfzehknju4s66qxpsrid.onion/ | Host unreachable
+2026-03-15 20:00:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://srvguru7bjzzjba7xy2hnx2ju4k77qy4eum2h3tgudwc3j2zof4aggyd.onion/ | Connection refused by destination host
+2026-03-15 20:00:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://agnuezlvxprtgow6gbcwnii5j3xczqs2pqh2xrxb2qahmzs6mr75nnid.onion/ | Host unreachable
+2026-03-15 20:00:14 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ybti.psyciumunsqarzsehz5xlgsi2mg4dkvntwf5bwj5kwbcbazwiuhna2ad.onion/ | Host unreachable
+2026-03-15 20:00:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://llqiiswupgezsco4ux47cco3bxsaihbss5c3piefv6bhvpgfofyk7kad.onion/ | Connection refused by destination host
+2026-03-15 20:00:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://dlegal66uj5u2dvcbrev7vv6fjtwnd4moqu7j6jnd42rmbypv3coigyd.onion/ | General SOCKS server failure
+2026-03-15 20:00:26 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://severr375roaznysslbu4joiu2snztzwucsm46gghi34xglhh5w4cmyd.onion/ | Host unreachable
+2026-03-15 20:00:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://trtgarpwmcv6lbtzfdtdoqb5lpxni3pkekb4vecmdwf4kjjoplbvdkyd.onion/ | Host unreachable
+2026-03-15 20:00:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://anonyradixhkgh5myfrkarggfnmdzzhhcgoy2v66uf7sml27to5n2tid.onion/ | Host unreachable
+2026-03-15 20:00:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://naturelwg7o3bhnhwcmn6svzoekxkl3pv365krgmdpckonf5xvarlkid.onion/ | Host unreachable
+2026-03-15 20:00:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ua76ydxg47fmmanmaxnq45rgkd24exbdppo3vtugy7vg4jy37i43aead.onion/ | Host unreachable
+2026-03-15 20:00:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cyjabr4pfzupo7pg.onion/ | General SOCKS server failure
+2026-03-15 20:00:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://ronindchpf2qcdpgzgrcjwyvaoyppo57izgca6fdzbmast5xaeouiyqd.onion/ | [Errno 1] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'ronindchpf2qcdpgzgrcjwyvaoyppo57izgca6fdzbmast5xaeouiyqd.onion'. (_ssl.c:1029)
+2026-03-15 20:00:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4ktz77nd2rn7gcsm.onion/ | General SOCKS server failure
+2026-03-15 20:00:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://drc5nsfrndvr4zro5tpz3iwk5omrwpszq75upbxrmkfkpny5yrt4gfyd.onion/ | Host unreachable
+2026-03-15 20:00:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://libertygb2nyeyay.onion/ | General SOCKS server failure
+2026-03-15 20:01:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tempmail4gi5qfqzjs2bxo3wf6eurpelxmior6ohzq5vw7aeay67wiyd.onion/ | Host unreachable
+2026-03-15 20:01:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hyjgsnkanan2wsrksd53na4xigtxhlz57estwqtptzhpa53rxz53pqad.onion/ | Server disconnected
+2026-03-15 20:01:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://jewjewkeei4o4bvn.onion/ | General SOCKS server failure
+2026-03-15 20:01:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bpynhpfpdydv6axdm2xeu6y6cbzed73aztxdjyq5gygblzt6v2zjegid.onion/ | Host unreachable
+2026-03-15 20:01:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lhyytrv3v7m3upeevqtgvan7hlcfklc5qxumsamopyut723uz6cpwqid.onion/ | Host unreachable
+2026-03-15 20:01:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://kitsune6uv4dtdve.onion:7777/ | irc://kitsune6uv4dtdve.onion:7777/
+2026-03-15 20:01:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://blkhatjxlrvc5aevqzz5t6kxldayog6jlx5h7glnu44euzongl4fh5ad.onion/ | Host unreachable
+2026-03-15 20:01:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cbsrdi4vw4orqehzp2f4a4z36pmqbr2jsbf3piofifncqdnbx6movryd.onion/ | Host unreachable
+2026-03-15 20:01:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cryptor744w6rl53zcydeqd6s5qi74zbeioicycjccbdxk77qnbaxlqd.onion/ | Host unreachable
+2026-03-15 20:01:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://e4bqnvfdasnx4plk.onion:9999/ | irc://e4bqnvfdasnx4plk.onion:9999/
+2026-03-15 20:01:22 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://igdnewsy3xy4bzfy6odv7zvssekg4k6u62at6kqq6xwxc7avevhiscyd.onion/ | Host unreachable
+2026-03-15 20:01:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://irc2p5zrbdk25rdy.onion:6667/ | irc://irc2p5zrbdk25rdy.onion:6667/
+2026-03-15 20:01:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://digidowhttlezhil6i7dpajfzku2duuzkyu4aork3wcqvrdyglcsrxyd.onion/ | Host unreachable
+2026-03-15 20:01:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://oju4yn237c6hjh42qothvpreqecnqjhtvh4sgn3fqmsdvhu5d5tyspid.onion/ | Host unreachable
+2026-03-15 20:01:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xkp3bueakhnea3hw4t4izybudyysnoc4jt746z7555mpv2w4p73ihhyd.onion/ | Host unreachable
+2026-03-15 20:01:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://aaaaaxx74hbzeibageieowryhsqvimbdiitfkfe47tvgawkwkjh3coqd.onion/ | Host unreachable
+2026-03-15 20:01:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://3u43xzqqujuj5auwgvtvmirt23itxrlcqb3y6ednfdda5byvz7pbjzid.onion/ | Host unreachable
+2026-03-15 20:01:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4p6i33oqj6wgvzgzczyqlueav3tz456rdu632xzyxbnhq4gpsriirtqd.onion/ | Connection refused by destination host
+2026-03-15 20:01:54 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://elef7kcrczguvamt.onion:6667/ | irc://elef7kcrczguvamt.onion:6667/
+2026-03-15 20:01:59 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rlp5gt4d7dtkok3yaogocbcvrs2tdligjrxipsamztjq4wwpxzjeuxqd.onion/ | Host unreachable
+2026-03-15 20:02:00 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://dbwuevvmqlhzz2p6.onion:6667/ | irc://dbwuevvmqlhzz2p6.onion:6667/
+2026-03-15 20:02:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for ircs://chatjnv7sshcuz6a.onion:6697/ | ircs://chatjnv7sshcuz6a.onion:6697/
+2026-03-15 20:02:06 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ipah3djxlaro6o2h4lm3qwctcl42shj52q2ybvhiezratxndkeg7ozad.onion/ | Host unreachable
+2026-03-15 20:02:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://nazgul3zxuzvrgg6.onion/ | General SOCKS server failure
+2026-03-15 20:02:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://l4wvhvf666nifnpg.onion:6667/ | irc://l4wvhvf666nifnpg.onion:6667/
+2026-03-15 20:02:08 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ctmrktxxkrmu23xdvadockv2rjrou7daomrejw2iaczrw7yvc5lhttqd.onion/ | Host unreachable
+2026-03-15 20:02:09 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ianxz6zefk72ulzz.onion/ | General SOCKS server failure
+2026-03-15 20:02:15 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cyruservvvklto2l.onion/ | General SOCKS server failure
+2026-03-15 20:02:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rksnetorofbj675vpfif3kocq5qqnjdcx7ed35yqhlhh6wcx4h2thpyd.onion/ | Host unreachable
+2026-03-15 20:02:19 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://sendanonczrjgi3ly72a57oeuhgbeibiqhz6yqtmira5e6ahfkdg4hqd.onion/ | Host unreachable
+2026-03-15 20:02:25 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lpiyu33yusoalp5kh3f4hak2so2sjjvjw5ykyvu2dulzosgvuffq6sad.onion/ | Host unreachable
+2026-03-15 20:02:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://onionirc2udqrqpo.onion:6667/ | irc://onionirc2udqrqpo.onion:6667/
+2026-03-15 20:02:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4ktz77nd2rn7gcsm.onion:9090/ | General SOCKS server failure
+2026-03-15 20:02:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://crqkllx7afomrokwx6f2sjcnl2do2i3i77hjjb4eqetlgq3cths3o6ad.onion/ | Host unreachable
+2026-03-15 20:02:37 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dujlqs6icpu4embrig5bpjh6ctmdm42tyodhsr6c7oxklft6itdtrlid.onion/ | Host unreachable
+2026-03-15 20:02:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xmessaghho7dmx665f2gyw3ualaik6npmhjtr5f2tbqycvv5oiqrgqid.onion/ | Host unreachable
+2026-03-15 20:02:40 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://trollohihybrlnzd36fgdnyumjfc6yvdn6xt5gsgvtnjtgmoesbmkmyd.onion/ | Host unreachable
+2026-03-15 20:02:54 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://taswebqlseworuhc.onion/ | General SOCKS server failure
+2026-03-15 20:03:20 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://cgl7owaxduu2eupi.onion:6667/ | irc://cgl7owaxduu2eupi.onion:6667/
+2026-03-15 20:03:21 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for ircs://kitsune6uv4dtdve.onion:6697/ | ircs://kitsune6uv4dtdve.onion:6697/
+2026-03-15 20:03:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ibi5rzamejc2zzdh.onion/ | General SOCKS server failure
+2026-03-15 20:03:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for ircs://nakufgztylanf4mw.onion:9999/ | ircs://nakufgztylanf4mw.onion:9999/
+2026-03-15 20:03:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://3pedopedqayeyvhp.onion:6667/ | irc://3pedopedqayeyvhp.onion:6667/
+2026-03-15 20:03:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for ircs://ronsor37xl7tqn7p.onion:6697/ | ircs://ronsor37xl7tqn7p.onion:6697/
+2026-03-15 20:04:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://frchano4z7wr37nlzogiboypoc7hvwrtskkexk2chtjmbioysevmetad.onion/ | Host unreachable
+2026-03-15 20:04:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://jewjewkeei4o4bvn.onion:6667/ | irc://jewjewkeei4o4bvn.onion:6667/
+2026-03-15 20:04:02 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://y2u2kktykfwba7offqeynxsthsbaiznnmysew2so34fxgh6moss5taqd.onion/ | Host unreachable
+2026-03-15 20:04:11 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://isj37ite2gkabzeth6oxosh7zehpqnf5aedp3j2ccp2ewxglmr6bwrad.onion/ | Host unreachable
+2026-03-15 20:04:15 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bxewpsswttslepw27w2hhxhlizwm7l7y54x3jw5cfrb64hb6lgc557ad.onion/ | Host unreachable
+2026-03-15 20:04:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://leconseildelavouivre.torpress2sarn7xw.onion/ | General SOCKS server failure
+2026-03-15 20:04:19 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rougmnvswfsmd4dq.onion/ | General SOCKS server failure
+2026-03-15 20:04:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://w53qxqs27amlrwnm.onion:6667/ | irc://w53qxqs27amlrwnm.onion:6667/
+2026-03-15 20:04:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dcrdata5oppwcotlxkrlsp6afncnxvw54sw6jqftc4bjytm4rn27j3ad.onion/ | Host unreachable
+2026-03-15 20:04:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://nick6gsepvtmkcpibpid6dqtqroxt62u6ab4ep65vxrenffruumj6jad.onion/ | Host unreachable
+2026-03-15 20:04:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://7bw24ll47y7aohhkrfdq2wydg3zvuecvjo63muycjzlbaqlihuogqvyd.onion/ | Connection refused by destination host
+2026-03-15 20:04:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://2dmrunyyp6bp53th.onion:6667/ | irc://2dmrunyyp6bp53th.onion:6667/
+2026-03-15 20:04:42 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://ncq3izrg3nlu2iilpi4unvug5hvbpg5ju4hzngvfbey7fzw6lajc7aad.onion/ | irc://ncq3izrg3nlu2iilpi4unvug5hvbpg5ju4hzngvfbey7fzw6lajc7aad.onion/
+2026-03-15 20:04:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://prfuture5p7idhn3iibthoi7witoc232wxw2hiovbtddblhmvyhgs4qd.onion/ | Host unreachable
+2026-03-15 20:04:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hp3fgghdt2qwnltz5iotm35gsgtcdc5ytaegmqg72aedqultms6bzlad.onion/ | Host unreachable
+2026-03-15 20:04:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://rutordeepkpafpudl22pbbhzm4llbgncunvgcc66kax55sc4mp4kxcid.onion/ | Host unreachable
+2026-03-15 20:04:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://llpwcbhwnjxdkeqdvfhud5657v6yx5msx7bngkfkbzz6p2nqh32eljid.onion/ | Host unreachable
+2026-03-15 20:04:50 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://p53lf57qovyuvwsc6xnrppyply3vtqm7l6pcobkmyqsiofyeznfu5uqd.onion/ | Host unreachable
+2026-03-15 20:04:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://p567hbjdstqvg7xw.onion:6667/ | irc://p567hbjdstqvg7xw.onion:6667/
+2026-03-15 20:04:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for ircs://jdobmyzmx4bh7n25.onion:6697/ | ircs://jdobmyzmx4bh7n25.onion:6697/
+2026-03-15 20:04:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://lolikaastbgo5dtk.onion:7777/ | irc://lolikaastbgo5dtk.onion:7777/
+2026-03-15 20:04:55 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://p4fsi4ockecnea7l.onion:6667/ | irc://p4fsi4ockecnea7l.onion:6667/
+2026-03-15 20:04:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://e5jexrkaliwdiczfuzcl46nuqurfwmf3p3qvggpuni6bq3cxfdroliad.onion/ | General SOCKS server failure
+2026-03-15 20:05:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xh6liiypqffzwnu5734ucwps37tn2g6npthvugz3gdoqpikujju525yd.onion/ | Host unreachable
+2026-03-15 20:05:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for irc://vgg6whpouebbcx7w.onion:6697/ | irc://vgg6whpouebbcx7w.onion:6697/
+2026-03-15 20:05:06 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://gge37trm7ia25brj425ri7e2pmugincsm6c2aiaa5wv6tmlztdffd3ad.onion/ | Host unreachable
+2026-03-15 20:05:10 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://spxjxepg6wcdao4on5ncejbwbjv2uehfje3cnmlyrpccrlqskgvm65id.onion/ | Host unreachable
+2026-03-15 20:05:12 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://z7qmjytz7idy5h4vituirkwt4jfmt6mdvtrnjg4phgkyrnsltaa63zad.onion/ | Host unreachable
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pwjxmvlir72hep5u.onion/ | General SOCKS server failure
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xqz3u5drneuzhaeo.onion/ | General SOCKS server failure
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dts563ge5y7c2ika.onion/ | General SOCKS server failure
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://negimarxzov6ca4c.onion/ | General SOCKS server failure
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://akmb7t5w56jcfgwf.onion/ | General SOCKS server failure
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://nwycvxnxqrpidnru.onion/ | General SOCKS server failure
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://clockwise3rldkgu.onion/ | General SOCKS server failure
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://libraryhvopfiqnp.onion/ | General SOCKS server failure
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://4zeottxi5qmnnjhd.onion/ | General SOCKS server failure
+2026-03-15 20:05:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://libraryqtlpitkix.onion/ | General SOCKS server failure
+2026-03-15 20:05:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://xsin4xbme24aatvk.onion/ | General SOCKS server failure
+2026-03-15 20:05:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://papyretelis2tfcl.onion/ | General SOCKS server failure
+2026-03-15 20:05:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ybgzjsde7sc6dqrt.onion/ | General SOCKS server failure
+2026-03-15 20:05:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://duskgxobans5g5jn.onion/ | General SOCKS server failure
+2026-03-15 20:05:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://52wdeibt3ivmcapq.onion/ | General SOCKS server failure
+2026-03-15 20:05:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://papyrmcskjqoxiap.onion/ | General SOCKS server failure
+2026-03-15 20:05:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://sblibky6zuxhlwc7.onion/ | General SOCKS server failure
+2026-03-15 20:05:47 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://am4wu5zoroirxitl.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://femlibhxoplb4opf.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://c3jemx2ube5v5zpg.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://eqzxv6schfhf44xw.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hinduismr3lkph62.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pyl7a4ccwgpxm6rd.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://kpynyvym6xqi7wz2.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://assmkedzgorodn7o.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tns7i5gucaaussz4.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://qx7j2selmom4ioxf.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://teir4baj5mpvkg5n.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://6sgjmi53igmg7fm7.onion/ | General SOCKS server failure
+2026-03-15 20:05:48 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://a5ec6f6zcxtudtch.onion/ | General SOCKS server failure
+2026-03-15 20:05:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://zsolxunfmbfuq7wf.onion/ | General SOCKS server failure
+2026-03-15 20:05:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://n4ez7vf37i2yvz5g.onion/ | General SOCKS server failure
+2026-03-15 20:05:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://n7l53ojkyhglsjrh.onion/ | General SOCKS server failure
+2026-03-15 20:05:51 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://http:/ | Host unreachable
+2026-03-15 20:06:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://blenderwal4qsydi.onion/ | General SOCKS server failure
+2026-03-15 20:06:44 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://blenderiocpxfema.onion/ | General SOCKS server failure
+2026-03-15 20:07:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://blenderiopnzbuvtva6d2ddiedrbf6fbekh5axomzho6wrulowcludad.onion/ | Host unreachable
+2026-03-15 20:09:54 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://jnig5ssutodqz5zlczvj6zpm5h7iglhoo2nieomtwxc3luqahkhemvid.onion/ | Host unreachable
+2026-03-15 20:10:56 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bxp6oh6lpmj3dzxwr5wjeezr5xlsm4cum5mbuzv3diw2ykpzqutmlcad.onion/ | Host unreachable
+2026-03-15 20:11:04 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wikipym7vxjo6qj4ebz34blgmzn3h5i577qr2svjeyimx3ciaor7eqqd.onion/ | Host unreachable
+2026-03-15 20:11:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dublikateyrxbx2wzsoi6bkfp3pso5npxgqqklkjt22rbbmo5vmpxzad.onion/ | Host unreachable
+2026-03-15 20:11:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bfvfwpxss6uhdqfleabxez2nuvfkkmcgbqlsa2636iixeur6s3qvxyyd.onion/ | Host unreachable
+2026-03-15 20:11:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wc5hnu33r6qsrchnq66ump2rqm5c6pzxqvgmq4vw4n5wbevknsm6apid.onion/ | Host unreachable
+2026-03-15 20:11:58 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bqen7tyqb5lpevqw6f4xhoil4be5aswkqcuudhjnr7p2euj7bia3nbad.onion/ | Host unreachable
+2026-03-15 20:12:00 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://nexus555cee4hmu5yimuzlvx3cjr2b7wacvzfv5bj4ht53i2jeegxlyd.onion/ | Host unreachable
+2026-03-15 20:12:01 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ahz7d4vp3gyvb4ueifwlgalfesneptnkzshhgxjg7q66ewq6pvb7psad.onion/ | Host unreachable
+2026-03-15 20:12:03 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bljwfs77zzhzgqzi5mnmfcfr2gzu274qwq5dmhcruhq27vvawp7q3xqd.onion/ | Host unreachable
+2026-03-15 20:12:07 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://airdfdl7mgxr4bni5ya3szvh5eitxhui646i3n25kpfux7zvyiy7tfad.onion/ | Host unreachable
+2026-03-15 20:12:14 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hdtq44qld4dgbfmsclhw4fubm6d7maihjdkbavbr2dnegtrr27ts3xqd.onion/ | Host unreachable
+2026-03-15 20:12:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://46e36bvia4zypgsad5em3wmxhhrpfx5hc5weeejccmdvxax63zdtglid.onion/ | Host unreachable
+2026-03-15 20:12:18 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wnzyarndfjcprkgtf3e5ayt2k3jrhykj43x33de4wdtva3kso6fkiyqd.onion/ | Host unreachable
+2026-03-15 20:12:22 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://kv5en2f3vzlypxvfq63fluitwoli5fjlzg7l2osusijzh2nvfqpnuryd.onion/ | Host unreachable
+2026-03-15 20:12:22 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ieeponbcvk5na2snqtdhn6icp4e6rlqbwhrjwxxbd7jkynanogyqfyad.onion/ | Host unreachable
+2026-03-15 20:12:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://hidhiveezqdqgrhr5gbyzcesy6qpkihjnxiut6mhjewjxn7loj3npryd.onion/ | Host unreachable
+2026-03-15 20:12:32 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://applesustgvvgmzyt5jhhu3t4cm6ze7bio3y46orblllji377ggj7lid.onion/ | Host unreachable
+2026-03-15 20:12:34 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://tolilie7inicdrswew2i56uldopzn46pqo3wpdzieakyjdcs4wtwqvid.onion/ | Host unreachable
+2026-03-15 20:12:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cashmoneyt5asaa2xzu4tatvp2nzx6xqfj4fnmxsnv7quhntdvxhxcid.onion/ | Host unreachable
+2026-03-15 20:12:41 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://nctpcxloaiqyrdcp4ywzgqhbz7qjzhwhaq6haxfdhojoqbtle2oscwqd.onion/ | Host unreachable
+2026-03-15 20:12:45 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://cash2tuoojo7obvukrnep2q64fbhrwqlrhgylp6fgvldsuq5mb35veqd.onion/ | Host unreachable
+2026-03-15 20:12:46 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://lcaj3n7optcaw6p5ey3szrcvythj7pkm3ww7cplibf5ixa7lhlu2loyd.onion/ | Host unreachable
+2026-03-15 20:12:49 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://torlib7fmhyvfv2k7s77xigdds3rosio6k6bxnn256xmtzlbgyizduqd.onion/ | Host unreachable
+2026-03-15 20:12:52 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://wiki56a4vmv4h7d7ailqtniavvjy3g5c2nmrnz3gitynevulhca537id.onion/ | Host unreachable
+2026-03-15 20:13:16 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://6bdg5y5ap3cqpe6va3kghvsdu6le7s3rcfp4sknjhz4lqrohjh5ygrqd.onion/ | Host unreachable
+2026-03-15 20:13:17 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://kfj2ujjnrvtgnip2xcpvgi6nagws5yk7oalpj4sl35u4jd47tcclvcid.onion/ | Host unreachable
+2026-03-15 20:13:23 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ap3pxwidolo6c5n4yuw7gvnrr6zirdftxn6rhtokourdjj2x5cne36qd.onion/ | Host unreachable
+2026-03-15 20:13:26 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://p23gulsmmneshdxabrbt3j2enmf2h4suynuujimjqjlklo4pprx6flid.onion/ | Host unreachable
+2026-03-15 20:13:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://darklibi5kpaugvdvkie4rjo6ryeooynr3tiwuzsy7pxsjcccox73gid.onion/ | Host unreachable
+2026-03-15 20:13:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ub6bby4x2djuerj4i2cbxnzmef566zgb2f7x6iqnu6dzwznxw2tscmqd.onion/ | Host unreachable
+2026-03-15 20:13:30 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://linkssfpaeihh6nkzf373e45avva6x7kjkiqnceomh275motaxoc3ead.onion/ | Host unreachable
+2026-03-15 20:13:38 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ushsnbu64i6opxzqkeosesb5g6oiy7djjwidn6zntekutpxb4ukqixid.onion/ | Host unreachable
+2026-03-15 20:13:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://ondexcylc2qrovrn44eyrksxmssncvyailvov5pi7pfh4aj7zjxkx3qd.onion/ | Host unreachable
+2026-03-15 20:13:40 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://k4n47oypms24lbkmae5hxffdad2dfgadlf2xbr5r5z354cdevxpsapid.onion/ | Host unreachable
+2026-03-15 20:13:57 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://toponiidccupouhks7uqj4tcow6spdxyqhgeic6q5acgdnvmkeojsvyd.onion/ | Host unreachable
+2026-03-15 20:14:26 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://njallajk6oxftya3mdopax5qic4nlkvfe4bav6yvtijtfvlc2c2ehmqd.onion/ | Connection refused by destination host
+2026-03-15 20:14:27 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://dreadya4o4deroiq47duancumhjpuwu2ab2wdpvay6wvvflyhfiy6sid.onion/ | Connection refused by destination host
+2026-03-15 20:14:28 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://bbcnew75o3n2cevyy2ittcksh4n6adruehpwqvz2zrdcvihg3resc6id.onion/ | Connection refused by destination host
+2026-03-15 20:14:29 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://www.bbcnew75o3n2cevyy2ittcksh4n6adruehpwqvz2zrdcvihg3resc6id.onion/ | Connection refused by destination host
+2026-03-15 20:14:31 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for https://protonj5j4ziligthohasbhk4hkwtanmdh376b55qvzvookwtuijv3qd.onion/ | Connection refused by destination host
+2026-03-15 20:14:33 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://protonj5j4ziligthohasbhk4hkwtanmdh376b55qvzvookwtuijv3qd.onion/ | Connection refused by destination host
+2026-03-15 20:14:39 - SiteLivenessTracker - ERROR - [logger.py:103] - Connection error for http://pitchpy2cb47k2l6e3p6mjmwmwutuxry57th4atnt76hq257jdvw5iad.onion/ | Connection refused by destination host

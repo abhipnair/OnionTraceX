@@ -1,0 +1,9 @@
+2026-03-15 03:17:12 - app - ERROR - [logger.py:103] - Unexpected error for http://zgi374vs44ngq54uwqm6axtwfuq3h7y4e5a2z6ncpa6gfaqywno3dvyd.onion/: TTL expired
+2026-03-15 18:49:07 - app - ERROR - [logger.py:103] - Unexpected error for http://dqpmknrtcuq3ksxid2f7okjm2gle52d4cwhx6f3znd2p2z7fejq7giqd.onion/: Host unreachable
+2026-03-15 19:14:51 - app - ERROR - [logger.py:103] - Unexpected error for http://7prpenn4taqvacsy7z6fbh5gsl6wwckvg6v2pmscco3zfx5eri6s7fqd.onion/: Host unreachable
+2026-03-15 20:04:34 - app - ERROR - [logger.py:103] - Unexpected error for http://jaslzi3nsom7amtlzb575turfv2tytgv2v7j3ywgg5vso5citxmbwdid.onion/: Host unreachable
+2026-03-15 20:21:01 - app - ERROR - [logger.py:103] - Unexpected error for http://realxxwrxfbsfru6mcr7wmzktcdaxfxsvft55yv6q7krgiivmj4vbyad.onion/: Host unreachable
+2026-03-15 20:37:19 - app - ERROR - [logger.py:103] - Unexpected error for http://m7riqp33ecrbyey6xe64wnm437w4okcnfzxuefvycwiq5woichcs3xad.onion/: Host unreachable
+2026-03-15 21:00:31 - app - ERROR - [logger.py:103] - Unexpected error for http://s4k4ceiapwwgcm3mkb6e4diqecpo7kvdnfr5gg7sph7jjppqkvwwqtyd.onion/: Connection refused by destination host
+2026-03-15 21:06:47 - app - ERROR - [logger.py:103] - Unexpected error for http://jaz45aabn5vkemy4jkg4mi4syheisqn2wn2n4fsuitpccdackjwxplad.onion/: Connection refused by destination host
+2026-03-15 21:07:04 - app - ERROR - [logger.py:103] - Unexpected error for http://imperqpbjdxqyu6txcuhvlj3vgw3yy4fbj24akr5ru52bxbws3wfduid.onion/: General SOCKS server failure

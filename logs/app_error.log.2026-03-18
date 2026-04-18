@@ -1,0 +1,16 @@
+2026-03-18 08:44:53 - app - ERROR - [logger.py:103] - Unexpected error for http://7ovgli6rv7xthdiwddpsiqx45j76p5gr3dguhyl34ezdikbvear7h4ad.onion/: Host unreachable
+2026-03-18 08:54:47 - app - ERROR - [logger.py:103] - Unexpected error for http://a62uy5n5theofy7abal73al5j25jtheap2rzek2omxc2pgu2mlywqaqd.onion/: Host unreachable
+2026-03-18 09:27:34 - app - ERROR - [logger.py:103] - Unexpected error for https://skhroneuxrnchfz3wifchkju6spd3nx4krqe6zbx65hsax7qsbubb4qd.onion: Connection refused by destination host
+2026-03-18 10:31:24 - app - ERROR - [logger.py:103] - Unexpected error for http://blogercwwyjli57yf2ljvcstg5e6bdpjtfkyjvv4rm6huc22iryihrid.onion/: Host unreachable
+2026-03-18 13:18:02 - app - ERROR - [logger.py:103] - Unexpected error for http://66gws5jrvgn5inp6bnejc67ullzq4kdufucwkazfrcu77gk6xikmetad.onion/: Host unreachable
+2026-03-18 13:19:11 - app - ERROR - [logger.py:103] - Unexpected error for http://ll4det7fie4vg5mpljkfuxkclydr3fowsqss3csgset43oygrn4eckid.onion/: Host unreachable
+2026-03-18 14:15:13 - app - ERROR - [logger.py:103] - Unexpected error for https://xmxmrjoqo63c5notr2ds2t3pdpsg4ysqqe6e6uu2pycecmjs4ekzpmyd.onion: Connection refused by destination host
+2026-03-18 14:18:45 - app - ERROR - [logger.py:103] - Unexpected error for http://kybermen3kskkxnaattjzr37pljzhglgqskr7ijopvueiwm3rt3mbyqd.onion/archive: Connection refused by destination host
+2026-03-18 14:19:05 - app - ERROR - [logger.py:103] - Unexpected error for http://kybermen3kskkxnaattjzr37pljzhglgqskr7ijopvueiwm3rt3mbyqd.onion/helfen: Connection refused by destination host
+2026-03-18 14:19:36 - app - ERROR - [logger.py:103] - Unexpected error for http://kybermen3kskkxnaattjzr37pljzhglgqskr7ijopvueiwm3rt3mbyqd.onion/presse: Connection refused by destination host
+2026-03-18 14:19:48 - app - ERROR - [logger.py:103] - Unexpected error for http://kybermen3kskkxnaattjzr37pljzhglgqskr7ijopvueiwm3rt3mbyqd.onion/tag: Connection refused by destination host
+2026-03-18 14:19:58 - app - ERROR - [logger.py:103] - Unexpected error for http://kybermen3kskkxnaattjzr37pljzhglgqskr7ijopvueiwm3rt3mbyqd.onion/kontakt: Connection refused by destination host
+2026-03-18 14:20:04 - app - ERROR - [logger.py:103] - Unexpected error for http://kybermen3kskkxnaattjzr37pljzhglgqskr7ijopvueiwm3rt3mbyqd.onion/download: Connection refused by destination host
+2026-03-18 14:35:01 - app - ERROR - [logger.py:103] - Unexpected error for http://u6zzccpjvw5g4p45o4npo3w252yg724fpcugppom6nptiu4xtkvt63yd.onion/buy-adderall-buy-adderall-xr-capsules-buy-amphetamine: General SOCKS server failure
+2026-03-18 14:43:13 - app - ERROR - [logger.py:103] - Unexpected error for http://5ksn5isnizbptkjclba7d76abxljqvdbptn6zazqaj3lgaqhnhn7c2ad.onion/: Host unreachable
+2026-03-18 14:51:04 - app - ERROR - [logger.py:103] - Unexpected error for http://narcooqom5mfevbeb6gck5tg5y2g2f5grywcu7cp4b3bvsmlvph66wqd.onion/: Host unreachable

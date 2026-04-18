@@ -1,14 +1,22 @@
 @import "tailwindcss";
 
-/* Remove default margins and set full height */
-html, body, #root {
+/* ===============================
+   Global Layout Reset
+================================ */
+
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
 }
 
-/* Custom scrollbar for dark theme */
+/* ===============================
+   Custom Scrollbar (Dark UI)
+================================ */
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -24,4 +32,44 @@ html, body, #root {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #6b7280;
+}
+
+/* ===============================
+   System Dashboard Components
+================================ */
+
+.health-card {
+  @apply bg-gray-900/50 p-5 rounded-xl border border-gray-700 flex flex-col gap-2;
+}
+
+.health-card .icon {
+  @apply text-cyan-400;
+}
+
+.health-card .label {
+  @apply text-gray-400 text-sm;
+}
+
+.health-card .metric {
+  @apply text-gray-400 text-sm;
+}
+
+.resource-card {
+  @apply bg-gray-900/50 p-5 rounded-xl border border-gray-700 space-y-3;
+}
+
+.resource-title {
+  @apply text-gray-400 text-sm uppercase tracking-wide;
+}
+
+.info-card {
+  @apply bg-gray-900/50 p-4 rounded-lg border border-gray-700;
+}
+
+.info-card span {
+  @apply text-gray-400;
+}
+
+.info-card strong {
+  @apply text-white block mt-1;
 }

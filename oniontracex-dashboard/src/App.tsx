@@ -11,7 +11,6 @@ import {
 import {
   Stats, LivenessData, CategoryData, KeywordData, Site, SiteDetails,
   Vendor, VendorNetwork, BitcoinData,
-  SystemHealth, CrawlerConfig
 } from './types';
 
 import CrawlerControlPanel from "./CrawlerControlPanel";
@@ -20,7 +19,7 @@ import SitesExplorer from "./SitesExplorer";
 import BitcoinAnalysis from "./BitcoinAnalysis";
 import VendorNetworkGraph from "./VendorNetworkGraph";
 import Reports from "./Reports";
-
+import SystemSettings from "./SystemSettings";
 
 
 
@@ -109,24 +108,24 @@ const apiService = {
     return result.data;
   },
 
-  async fetchSystemHealth(): Promise<SystemHealth> {
-    const response = await fetch(`${API_BASE_URL}/system/health`);
-    if (!response.ok) throw new Error('Failed to fetch system health');
-    const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'API request failed');
-    return result.data;
-  },
+  // async fetchSystemHealth(): Promise<SystemHealth> {
+  //   const response = await fetch(`${API_BASE_URL}/system/health`);
+  //   if (!response.ok) throw new Error('Failed to fetch system health');
+  //   const result = await response.json();
+  //   if (!result.success) throw new Error(result.error || 'API request failed');
+  //   return result.data;
+  // },
 
-  async updateCrawlerConfig(config: CrawlerConfig): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/system/config`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(config)
-    });
-    if (!response.ok) throw new Error('Failed to update config');
-    const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'API request failed');
-  }
+  // async updateCrawlerConfig(config: CrawlerConfig): Promise<void> {
+  //   const response = await fetch(`${API_BASE_URL}/system/config`, {
+  //     method: 'PUT',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(config)
+  //   });
+  //   if (!response.ok) throw new Error('Failed to update config');
+  //   const result = await response.json();
+  //   if (!result.success) throw new Error(result.error || 'API request failed');
+  // }
 };
 
 // Navigation item type
@@ -177,14 +176,6 @@ const OnionTraceX: React.FC = () => {
   // Bitcoin state
   const [btcData, setBtcData] = useState<BitcoinData | null>(null);
 
-
-  // Settings state
-  const [systemHealth, setSystemHealth] = useState<SystemHealth | null>(null);
-  const [crawlerConfig, setCrawlerConfig] = useState<CrawlerConfig>({
-    crawlRate: 30,
-    circuitRotation: 10,
-    timeout: 30
-  });
 
   
 
@@ -367,31 +358,6 @@ const OnionTraceX: React.FC = () => {
   };
 
 
-  // Load system health
-  const loadSystemHealth = async (): Promise<void> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const healthRes = await apiService.fetchSystemHealth();
-      setSystemHealth(healthRes);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
-      console.error('Error loading system health:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Update crawler config
-  const handleUpdateConfig = async (): Promise<void> => {
-    try {
-      await apiService.updateCrawlerConfig(crawlerConfig);
-      alert('Configuration updated successfully');
-    } catch (err) {
-      console.error('Error updating config:', err);
-      alert('Failed to update configuration: ' + (err instanceof Error ? err.message : 'Unknown error'));
-    }
-  };
 
   // Load data based on active section
   useEffect(() => {
@@ -407,9 +373,6 @@ const OnionTraceX: React.FC = () => {
         break;
       case 'bitcoin':
         loadBitcoinData();
-        break;
-      case 'settings':
-        loadSystemHealth();
         break;
     }
   }, [activeSection]);
@@ -550,209 +513,6 @@ const OnionTraceX: React.FC = () => {
   );
 
 
-const renderSettings = (): JSX.Element => (
-  <div className="space-y-6 h-full">
-    {/* Header */}
-    <div className="flex justify-between items-center">
-      <div>
-        <h2 className="text-2xl font-bold text-white">System Settings</h2>
-        <p className="text-gray-400">System configuration and monitoring</p>
-      </div>
-      <button
-        onClick={loadSystemHealth}
-        disabled={loading}
-        className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg flex items-center gap-2 disabled:opacity-50 transition-colors"
-      >
-        <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
-        Refresh Status
-      </button>
-    </div>
-
-    {error && (
-      <div className="bg-red-900/50 border border-red-500 text-red-200 p-4 rounded-lg">
-        <div className="flex items-center gap-2">
-          <AlertCircle size={20} />
-          <span>Error: {error}</span>
-        </div>
-      </div>
-    )}
-
-    {/* System Health */}
-    {systemHealth && (
-      <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50">
-        <div className="flex items-center gap-2 mb-6">
-          <Activity className="text-cyan-400" size={20} />
-          <h3 className="text-lg font-semibold text-cyan-400">System Health</h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-gradient-to-br from-green-900/30 to-green-800/20 p-4 rounded-lg border border-green-500/20">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-gray-400 font-medium">Database</span>
-              <span className={`px-2 py-1 rounded text-xs font-semibold ${
-                systemHealth.database === 'healthy' ? 'bg-green-900/50 text-green-300 border border-green-500/30' :
-                'bg-red-900/50 text-red-300 border border-red-500/30'
-              }`}>
-                {systemHealth.database}
-              </span>
-            </div>
-            <p className="text-sm text-gray-400">Connections: <span className="text-gray-300">{systemHealth.dbConnections}</span></p>
-          </div>
-          
-          <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/20 p-4 rounded-lg border border-blue-500/20">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-gray-400 font-medium">Crawler</span>
-              <span className={`px-2 py-1 rounded text-xs font-semibold ${
-                systemHealth.crawler === 'active' ? 'bg-green-900/50 text-green-300 border border-green-500/30' :
-                'bg-red-900/50 text-red-300 border border-red-500/30'
-              }`}>
-                {systemHealth.crawler}
-              </span>
-            </div>
-            <p className="text-sm text-gray-400">Active: <span className="text-gray-300">{systemHealth.activeCrawlers}</span></p>
-          </div>
-          
-          <div className="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-4 rounded-lg border border-purple-500/20">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-gray-400 font-medium">Tor Network</span>
-              <span className={`px-2 py-1 rounded text-xs font-semibold ${
-                systemHealth.tor === 'connected' ? 'bg-green-900/50 text-green-300 border border-green-500/30' :
-                'bg-red-900/50 text-red-300 border border-red-500/30'
-              }`}>
-                {systemHealth.tor}
-              </span>
-            </div>
-            <p className="text-sm text-gray-400">Circuits: <span className="text-gray-300">{systemHealth.torCircuits}</span></p>
-          </div>
-        </div>
-      </div>
-    )}
-
-    {/* Crawler Configuration */}
-    <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50">
-      <div className="flex items-center gap-2 mb-6">
-        <Settings className="text-cyan-400" size={20} />
-        <h3 className="text-lg font-semibold text-cyan-400">Crawler Configuration</h3>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div>
-          <label className="block text-gray-400 text-sm mb-2 font-medium">Crawl Rate (requests/min)</label>
-          <input
-            type="number"
-            value={crawlerConfig.crawlRate}
-            onChange={(e) => setCrawlerConfig({...crawlerConfig, crawlRate: parseInt(e.target.value) || 0})}
-            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-            min="1"
-            max="100"
-          />
-          <p className="text-gray-500 text-xs mt-1">Higher rates may trigger rate limiting</p>
-        </div>
-        
-        <div>
-          <label className="block text-gray-400 text-sm mb-2 font-medium">Circuit Rotation (requests)</label>
-          <input
-            type="number"
-            value={crawlerConfig.circuitRotation}
-            onChange={(e) => setCrawlerConfig({...crawlerConfig, circuitRotation: parseInt(e.target.value) || 0})}
-            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-            min="1"
-            max="50"
-          />
-          <p className="text-gray-500 text-xs mt-1">Rotate Tor circuits after N requests</p>
-        </div>
-        
-        <div>
-          <label className="block text-gray-400 text-sm mb-2 font-medium">Timeout (seconds)</label>
-          <input
-            type="number"
-            value={crawlerConfig.timeout}
-            onChange={(e) => setCrawlerConfig({...crawlerConfig, timeout: parseInt(e.target.value) || 0})}
-            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-            min="5"
-            max="60"
-          />
-          <p className="text-gray-500 text-xs mt-1">Request timeout duration</p>
-        </div>
-      </div>
-      <div className="flex gap-4">
-        <button
-          onClick={handleUpdateConfig}
-          className="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 rounded-lg flex items-center gap-2 transition-colors shadow-lg shadow-cyan-500/10"
-        >
-          <Settings size={18} />
-          Update Configuration
-        </button>
-        <button className="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg flex items-center gap-2 transition-colors">
-          <RefreshCw size={18} />
-          Reset to Defaults
-        </button>
-      </div>
-    </div>
-
-    {/* System Information */}
-    <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50">
-      <div className="flex items-center gap-2 mb-6">
-        <Database className="text-cyan-400" size={20} />
-        <h3 className="text-lg font-semibold text-cyan-400">System Information</h3>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-gray-900/30 p-4 rounded-lg border border-gray-600/30">
-          <p className="text-gray-400 text-sm mb-1">Version</p>
-          <p className="text-white font-medium">OnionTraceX v1.0.0</p>
-        </div>
-        <div className="bg-gray-900/30 p-4 rounded-lg border border-gray-600/30">
-          <p className="text-gray-400 text-sm mb-1">Last Database Update</p>
-          <p className="text-white font-medium">{new Date().toLocaleString()}</p>
-        </div>
-        <div className="bg-gray-900/30 p-4 rounded-lg border border-gray-600/30">
-          <p className="text-gray-400 text-sm mb-1">Total Data Collected</p>
-          <p className="text-white font-medium">~2.4 GB</p>
-        </div>
-        <div className="bg-gray-900/30 p-4 rounded-lg border border-gray-600/30">
-          <p className="text-gray-400 text-sm mb-1">System Uptime</p>
-          <p className="text-white font-medium">24 days, 16 hours</p>
-        </div>
-      </div>
-      
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-gray-900/30 p-4 rounded-lg border border-gray-600/30">
-          <p className="text-gray-400 text-sm mb-2">Database Statistics</p>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-400">Total Sites:</span>
-              <span className="text-white">15,432</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-400">Active Vendors:</span>
-              <span className="text-white">892</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-400">BTC Wallets:</span>
-              <span className="text-white">3,567</span>
-            </div>
-          </div>
-        </div>
-        
-        <div className="bg-gray-900/30 p-4 rounded-lg border border-gray-600/30">
-          <p className="text-gray-400 text-sm mb-2">Performance Metrics</p>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-400">Avg Response Time:</span>
-              <span className="text-white">4.2s</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-400">Success Rate:</span>
-              <span className="text-green-400">94.7%</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-400">Queue Size:</span>
-              <span className="text-white">128</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 
   // Navigation items
@@ -865,7 +625,7 @@ const renderSettings = (): JSX.Element => (
           {activeSection === "vendors" && <VendorNetworkGraph data={vendorGraphData} loading={loading} />}
           {activeSection === "bitcoin" && <BitcoinAnalysis />}
           {activeSection === 'reports' && <Reports />}
-          {activeSection === 'settings' && renderSettings()}
+          {activeSection === "settings" && <SystemSettings />}
         </main>
       </div>
     </div>

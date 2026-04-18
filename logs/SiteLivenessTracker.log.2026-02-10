@@ -1,0 +1,6 @@
+2026-02-10 06:12:00 - SiteLivenessTracker - INFO - [logger.py:97] - Site liveness tracker started
+2026-02-10 06:12:00 - SiteLivenessTracker - INFO - [logger.py:97] - PostgreSQL connection pool initialized
+2026-02-10 06:12:00 - SiteLivenessTracker - INFO - [logger.py:97] - Fetched 14350 onion sites for liveness check
+2026-02-10 06:12:00 - SiteLivenessTracker - INFO - [logger.py:97] - Processing batch 1-50
+2026-02-10 06:12:03 - SiteLivenessTracker - INFO - [logger.py:97] - Checked db24aa2c78aa | status=Alive | latency=2.88s
+2026-02-10 06:12:09 - SiteLivenessTracker - INFO - [logger.py:97] - Checked c875df4ddc5b | status=Alive | latency=8.44s

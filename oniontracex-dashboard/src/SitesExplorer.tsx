@@ -36,19 +36,67 @@ const DEFAULT_KEYWORD_STYLE =
   "bg-slate-800/60 text-slate-300 border border-slate-500/30";
 
 const KEYWORD_COLORS: Record<string, string> = {
-  drugs: "bg-purple-900/40 text-purple-300 border border-purple-500/40",
+
+  // ===============================
+  // Cybercrime / Fraud
+  // ===============================
   fraud: "bg-red-900/40 text-red-300 border border-red-500/40",
   carding: "bg-orange-900/40 text-orange-300 border border-orange-500/40",
+  counterfeit: "bg-amber-900/40 text-amber-300 border border-amber-500/40",
+  identity: "bg-rose-900/40 text-rose-300 border border-rose-500/40",
+
+  // ===============================
+  // Drugs
+  // ===============================
+  drugs: "bg-purple-900/40 text-purple-300 border border-purple-500/40",
+
+  // ===============================
+  // Hacking / Malware
+  // ===============================
   hacking: "bg-blue-900/40 text-blue-300 border border-blue-500/40",
   malware: "bg-pink-900/40 text-pink-300 border border-pink-500/40",
-  weapons: "bg-gray-800 text-gray-300 border border-gray-500/40",
-  forum: "bg-cyan-900/40 text-cyan-300 border border-cyan-500/40",
+  ransomware: "bg-fuchsia-900/40 text-fuchsia-300 border border-fuchsia-500/40",
+
+  // ===============================
+  // Weapons
+  // ===============================
+  weapons: "bg-gray-900 text-gray-300 border border-gray-500/40",
+
+  // ===============================
+  // Marketplaces
+  // ===============================
   marketplace: "bg-indigo-900/40 text-indigo-300 border border-indigo-500/40",
+  vendors: "bg-indigo-800/40 text-indigo-300 border border-indigo-400/40",
 
+  // ===============================
+  // Financial / Crypto
+  // ===============================
   money: "bg-emerald-900/40 text-emerald-300 border border-emerald-500/40",
-  mafia: "bg-rose-900/40 text-rose-300 border border-rose-500/40",
   finance: "bg-green-900/40 text-green-300 border border-green-500/40",
+  financial: "bg-green-800/40 text-green-300 border border-green-400/40",
+  crypto: "bg-teal-900/40 text-teal-300 border border-teal-500/40",
+  mixer: "bg-lime-900/40 text-lime-300 border border-lime-500/40",
 
+  // ===============================
+  // Forums / Communities
+  // ===============================
+  forum: "bg-cyan-900/40 text-cyan-300 border border-cyan-500/40",
+  forums: "bg-sky-900/40 text-sky-300 border border-sky-500/40",
+
+  // ===============================
+  // Organized Crime
+  // ===============================
+  mafia: "bg-rose-900/40 text-rose-300 border border-rose-500/40",
+  services: "bg-yellow-900/40 text-yellow-300 border border-yellow-500/40",
+
+  // ===============================
+  // Adult / Illegal Content
+  // ===============================
+  adult: "bg-red-950/40 text-red-300 border border-red-600/40",
+
+  // ===============================
+  // Default / Unknown
+  // ===============================
   other: "bg-gray-700 text-gray-300 border border-gray-500/40",
 };
 

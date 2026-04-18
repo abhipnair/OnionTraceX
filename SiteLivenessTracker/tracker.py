@@ -157,7 +157,11 @@ async def run_tracker():
             rows = await conn.fetch("""
                 SELECT site_id, url
                 FROM OnionSites
+                WHERE
+                    last_seen IS NULL
+                    OR last_seen < (NOW() AT TIME ZONE 'UTC') - INTERVAL '6 hours'
             """)
+
             sites = [dict(r) for r in rows]
 
         info("Fetched %d onion sites for liveness check", len(sites))

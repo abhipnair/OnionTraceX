@@ -1,0 +1,9 @@
+2026-03-10 09:51:18 - app - ERROR - [logger.py:103] - Unexpected error for http://bananaen6hcopc4iwdt7xbnfjtxszgoe6a5pobfrbfmbol5ihweoxiid.onion/: General SOCKS server failure
+2026-03-10 09:51:44 - app - ERROR - [logger.py:103] - Unexpected error for http://v6ytmy6yafqelvbmm2t6icit6myjiicbefhu7g6kq32l5rgjklwe7uqd.onion/: Host unreachable
+2026-03-10 10:09:11 - app - ERROR - [logger.py:103] - Unexpected error for http://xwnocztikxwixhaqwbw6hoxulfhbwnyr5ywp2pi3taerynbe4ctk5cyd.onion/: Host unreachable
+2026-03-10 10:12:49 - app - ERROR - [logger.py:103] - Unexpected error for http://gunsdfzpekgqa4vebrfsd2mnxpqdxwu6zvrrlp2leacejmqn367uiyad.onion/: Host unreachable
+2026-03-10 10:27:14 - app - ERROR - [logger.py:103] - Unexpected error for http://black6yf2wbpwjxtj2aqgyue4suaelomwjbs2dg6ognj4xh65windmad.onion/: Host unreachable
+2026-03-10 10:27:34 - app - ERROR - [logger.py:103] - Unexpected error for http://realrehfsv5h6qyz2ifyiw2noyfixiqlkeek57dayotvcqxb3g6lf5qd.onion/: Host unreachable
+2026-03-10 10:51:18 - app - ERROR - [logger.py:103] - Unexpected error for http://oz36d5p6ajqwuosmjlz5ug5jctqxrgiqtyear23fdjg6kp3hucqkrfad.onion/product-category/firearms/rifles: TTL expired
+2026-03-10 11:09:56 - app - ERROR - [logger.py:103] - Unexpected error for http://arcadix5k3mrvh3eze565qvyuuwvob7yplp2cgbcz4xljdaglpzvqsid.onion/: Host unreachable
+2026-03-10 19:51:04 - app - ERROR - [logger.py:103] - Unexpected error for http://anonymo27rf3rcuc2zuc3t5j7wjec4m6ere4cckvkgyio3v2tq6oypyd.onion/page/38: TTL expired

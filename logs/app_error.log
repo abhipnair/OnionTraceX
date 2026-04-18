@@ -1,6 +1,2 @@
-2026-02-08 20:35:05 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: column "tx_analysed" does not exist
-HINT:  Perhaps you meant to reference the column "bitcoinaddresses.tx_analyzed".
-2026-02-08 20:39:14 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: column "tx_analysed" does not exist
-HINT:  Perhaps you meant to reference the column "bitcoinaddresses.tx_analyzed".
-2026-02-08 20:40:42 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: render_site_dossier_pdf() got an unexpected keyword argument 'output'
-2026-02-08 21:04:13 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: 'metadata'
+2026-03-31 10:29:54 - app - ERROR - [logger.py:103] - Unexpected error for http://djzpkjr5b5hozcfw4sj5o2mdwglurpe7k4m3hls7ioncvcsctoit6lid.onion/?product_cat=documents: TTL expired
+2026-03-31 12:38:47 - app - ERROR - [logger.py:103] - Unexpected error for http://djzpkjr5b5hozcfw4sj5o2mdwglurpe7k4m3hls7ioncvcsctoit6lid.onion/#poisons: TTL expired

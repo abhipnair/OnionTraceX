@@ -1,0 +1,25 @@
+2026-03-09 00:00:17 - app - ERROR - [logger.py:103] - ❌ Page insert failed for http://www.r5cyorufgflx3sjqnqf4vgk2s3srj3esrqhwey7p5j4rmh67jtmvroid.onion/product-category/cvv-and-cards: insert or update on table "pages" violates foreign key constraint "pages_site_id_fkey"
+DETAIL:  Key (site_id)=(ce36ad7f9e6c19812b8029774462a767296b0fff92e994f16508ea8688185746) is not present in table "onionsites".
+2026-03-09 00:00:24 - app - ERROR - [logger.py:103] - ❌ Page insert failed for http://www.r5cyorufgflx3sjqnqf4vgk2s3srj3esrqhwey7p5j4rmh67jtmvroid.onion/product-category/bank-logs: insert or update on table "pages" violates foreign key constraint "pages_site_id_fkey"
+DETAIL:  Key (site_id)=(ce36ad7f9e6c19812b8029774462a767296b0fff92e994f16508ea8688185746) is not present in table "onionsites".
+2026-03-09 00:36:40 - app - ERROR - [logger.py:103] - Unexpected error for http://vuizrjnx6u76x7eau4qc2olyindjj36wdmh3yf7cmq2eg37agmjmmfqd.onion/: Host unreachable
+2026-03-09 01:07:59 - app - ERROR - [logger.py:103] - Unexpected error for http://jdogarph4e4mkcgpgkjbao2nme54xig7twogi2csxf4fpn4be7g3kgqd.onion/: Host unreachable
+2026-03-09 01:12:39 - app - ERROR - [logger.py:103] - Unexpected error for http://deepsmrip5zfek23mjhhyjuk43q332ljk4r64gov6qrpxz3doge3nfyd.onion/: Host unreachable
+2026-03-09 01:13:16 - app - ERROR - [logger.py:103] - Unexpected error for http://bananadw6brvgj3bx2pmnfwtevpmvbqycjvhhr26hj3advsg4dum7iad.onion/: General SOCKS server failure
+2026-03-09 01:21:18 - app - ERROR - [logger.py:103] - Unexpected error for http://obsid7fdhmxih6ypy6sa6djlu5gj6hoc4bnbozf3lfp4q4xhyh2znryd.onion/: Host unreachable
+2026-03-09 01:57:00 - app - ERROR - [logger.py:103] - Unexpected error for http://zn53ya2lbajqnkpxv6gdrucva3licbz33fmjerg3m46m2gizzqz2x2yd.onion/: Host unreachable
+2026-03-09 02:23:19 - app - ERROR - [logger.py:103] - Unexpected error for http://good27dvx3qzar6n4ooxbt2crmsgkgwxhbe6atljlx7bp5fsztgj5xqd.onion/: Host unreachable
+2026-03-09 02:28:06 - app - ERROR - [logger.py:103] - Unexpected error for http://xftx6fpqeqg2ayoawg5ioziz4pmxe3jivoagywrkrwmafde6yrnp62yd.onion/: Host unreachable
+2026-03-09 02:54:30 - app - ERROR - [logger.py:103] - Unexpected error for http://bzn25wsy3b3vk4xg2uzj3qmg4f3unukkjgoxtvz3lc5qm5uidhshceid.onion/: Host unreachable
+2026-03-09 03:06:01 - app - ERROR - [logger.py:103] - Unexpected error for http://deepcbfr7x33k3osipefxvch4bitwxrpk5pkmbyereutdyddptnmkeqd.onion/: Host unreachable
+2026-03-09 03:15:35 - app - ERROR - [logger.py:103] - Unexpected error for http://torx2mgvzzano56neaodyl6wdha6tvm3fu7qod24ffz2zklcnxm3zkyd.onion/: Host unreachable
+2026-03-09 03:17:38 - app - ERROR - [logger.py:103] - Unexpected error for http://575e6jl7wnegpelyn5h754pg5pvm3erulmgxgkxf5bahswfbfxfqdcid.onion/: Host unreachable
+2026-03-09 03:45:07 - app - ERROR - [logger.py:103] - Unexpected error for http://torcavzqsudnbkq3hu5ob7oac4wftdq6x2hyz7mmm5xajdbku2nfuqqd.onion/: Host unreachable
+2026-03-09 04:51:25 - app - ERROR - [logger.py:103] - Unexpected error for http://torakckxqrrl6u5s7p5xkdbnlm6cm34qpbpnlro43bliiaai7ugbanyd.onion/: Host unreachable
+2026-03-09 05:20:33 - app - ERROR - [logger.py:103] - Unexpected error for https://buypalqrfvalcgc7gimqw56vzgkr4343iro74lwvzpkp3qnhzyfmnhid.onion: Connection refused by destination host
+2026-03-09 06:03:07 - app - ERROR - [logger.py:103] - Unexpected error for http://drugalcay2rkclrtjsdzinba7ahpovl5ay5nlf53qtynwbfs7d6gstyd.onion/: Host unreachable
+2026-03-09 06:20:11 - app - ERROR - [logger.py:103] - Unexpected error for http://2222amgnaupypabkm7uqikhtt7gb62lrbbsl46ojugjktu52wslvckid.onion/: Host unreachable
+2026-03-09 20:14:12 - app - ERROR - [logger.py:103] - Unexpected error for http://s4ytw4ji6qh5tuk2pgurnytv7727yosvhjlvttufgz7ieh2qb2jyroid.onion/#three-product: TTL expired
+2026-03-09 20:30:27 - app - ERROR - [logger.py:103] - Unexpected error for http://triadpxxohnsqycypcwfutocpggwab5icem4bkhdbwnglwj6ewoxvnqd.onion/: Host unreachable
+2026-03-09 21:46:11 - app - ERROR - [logger.py:103] - Unexpected error for http://goodgwy22x73odc2to2cl2xhjquskjo65fqepox77yzgl3hsu76bh3ad.onion/: Host unreachable
+2026-03-09 22:54:56 - app - ERROR - [logger.py:103] - Unexpected error for http://ffzp65xsdbzv27gulxnsqr4frgf4rctubcuauhkkolwsp7r6zly4lyyd.onion/product/buy-usa-diplomatic-passport: TTL expired

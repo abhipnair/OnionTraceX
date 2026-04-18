@@ -649,7 +649,7 @@ def render_btc_address_pdf(report, output_path, logo_path):
                 height=120 * mm
             )
         )
-        graph_blocks.append(Spacer(1, 6))
+        graph_blocks.append(Spacer(5, 6))
         graph_blocks.append(
             Paragraph(f"Graph SHA-256: {graph['sha256']}", styles["MONO"])
         )

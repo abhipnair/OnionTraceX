@@ -1,0 +1,11 @@
+2026-03-30 21:11:08 - app - INFO - [logger.py:97] - ============================================================
+2026-03-30 21:11:08 - app - INFO - [logger.py:97] - 🌐  OnionTraceX Flask Backend API
+2026-03-30 21:11:08 - app - INFO - [logger.py:97] - ============================================================
+2026-03-30 21:11:08 - app - INFO - [logger.py:97] - Sites: 80 | Vendors: 50 | Wallets: 100
+2026-03-30 21:11:08 - app - INFO - [logger.py:97] - Running at: http://localhost:5000
+2026-03-30 21:11:08 - app - INFO - [logger.py:97] - ============================================================
+2026-03-30 21:11:08 - app - INFO - [logger.py:97] - AsyncPG pool initialized.
+2026-03-30 21:11:33 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=371 Links=500
+2026-03-30 21:11:33 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=371 Links=500
+2026-03-30 21:11:57 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=371 Links=500
+2026-03-30 21:11:58 - app - INFO - [logger.py:97] - 🔗 BTC Network | Nodes=371 Links=500

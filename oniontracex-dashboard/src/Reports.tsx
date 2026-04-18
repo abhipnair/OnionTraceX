@@ -88,17 +88,31 @@ const Reports: React.FC = () => {
 
       switch (reportType) {
         case "SITE_DOSSIER":
-          endpoint = "/reports/site";
+        endpoint = "/reports/site";
+        if (siteId.includes(".onion") || siteId.includes("http")) {
+          payload.url = siteId;
+        } else {
           payload.site_id = siteId;
-          break;
+        }
+        break;
         case "BTC_ADDRESS_REPORT":
-          endpoint = "/reports/bitcoin";
+        endpoint = "/reports/bitcoin";
+        if (addressId.startsWith("bc1") || addressId.startsWith("1") || addressId.startsWith("3")) {
+          payload.address = addressId;
+        } else {
           payload.address_id = addressId;
-          break;
+        }
+        break;
         case "VENDOR_PROFILE":
-          endpoint = "/reports/vendor";
+        endpoint = "/reports/vendor";
+        if (vendorId.length > 40) {
+          // likely SHA vendor_id
           payload.vendor_id = vendorId;
-          break;
+        } else {
+          // human readable vendor name
+          payload.vendor_name = vendorId;
+        }
+        break;
         case "CATEGORY_INTEL":
           endpoint = "/reports/category";
           payload.category = category;
@@ -223,7 +237,7 @@ const Reports: React.FC = () => {
           <input
             value={siteId}
             onChange={(e) => setSiteId(e.target.value)}
-            placeholder="site_id"
+            placeholder="site_id or url"
             className="input"
           />
         )}
@@ -232,7 +246,7 @@ const Reports: React.FC = () => {
           <input
             value={addressId}
             onChange={(e) => setAddressId(e.target.value)}
-            placeholder="address_id"
+            placeholder="address_id or address"
             className="input"
           />
         )}
@@ -241,7 +255,7 @@ const Reports: React.FC = () => {
           <input
             value={vendorId}
             onChange={(e) => setVendorId(e.target.value)}
-            placeholder="vendor_id"
+            placeholder="vendor_id or vendor name"
             className="input"
           />
         )}

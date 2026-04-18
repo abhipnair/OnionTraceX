@@ -1,0 +1,9 @@
+2026-02-08 20:35:05 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: column "tx_analysed" does not exist
+HINT:  Perhaps you meant to reference the column "bitcoinaddresses.tx_analyzed".
+2026-02-08 20:39:14 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: column "tx_analysed" does not exist
+HINT:  Perhaps you meant to reference the column "bitcoinaddresses.tx_analyzed".
+2026-02-08 20:40:42 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: render_site_dossier_pdf() got an unexpected keyword argument 'output'
+2026-02-08 21:04:13 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: 'metadata'
+2026-02-10 12:39:51 - app - ERROR - [logger.py:103] - Unexpected error for http://ly75dbzixy7hlp663j32xo4dtoiikm6bxb53jvivqkpo6jwppptx3sad.onion/: Host unreachable
+2026-02-10 12:44:08 - app - ERROR - [logger.py:103] - Unexpected error for http://ymix2fioqsehk7c2icpdpwk5ke3qsocgihkjxdzoi4h52sj6sfn2fwid.onion/: Host unreachable
+2026-02-10 13:09:45 - app - ERROR - [logger.py:103] - Unexpected error for http://clonelc725yrm6fkwl3a6pnm4bayovctgkxnullpxi5tl3obzwzrgsqd.onion/: Host unreachable

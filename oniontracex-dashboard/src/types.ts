@@ -130,24 +130,7 @@ export interface ReportConfig {
   includeBitcoin: boolean;
 }
 
-export interface SystemHealth {
-  database: string;
-  dbConnections: number;
-  crawler: string;
-  activeCrawlers: number;
-  tor: string;
-  torCircuits: number;
-  memoryUsage?: number;         // Added from backend
-  cpuUsage?: number;            // Added from backend
-  diskSpace?: number;           // Added from backend
-  uptime?: string;              // Added from backend
-}
 
-export interface CrawlerConfig {
-  crawlRate: number;
-  circuitRotation: number;
-  timeout: number;
-}
 
 // Optional: Add API response wrapper interface
 export interface ApiResponse<T> {

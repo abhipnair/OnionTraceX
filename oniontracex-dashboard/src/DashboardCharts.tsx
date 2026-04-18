@@ -123,24 +123,23 @@ const DashboardCharts: React.FC = () => {
           </h3>
         </div>
         <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={categoryData}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label={({ name, percent }) =>
-                `${name} ${(percent * 100).toFixed(0)}%`
-              }
-              outerRadius={100}
-              fill="#8884d8"
-              dataKey="value"
-            >
-              {categoryData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
-              ))}
-            </Pie>
+        <PieChart>
+          <Pie
+            data={categoryData}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={100}
+            dataKey="value"
+            label={false}
+          >
+            {categoryData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+          </Pie>
+
             <Tooltip
+              formatter={(value: number, name: string) => [`${value} sites`, name]}
               contentStyle={{
                 backgroundColor: "rgba(17, 24, 39, 0.9)",
                 border: "1px solid #374151",
@@ -148,7 +147,9 @@ const DashboardCharts: React.FC = () => {
                 backdropFilter: "blur(8px)",
               }}
             />
-          </PieChart>
+
+          <Legend layout="vertical" align="right" verticalAlign="middle" />
+        </PieChart>
         </ResponsiveContainer>
       </div>
 

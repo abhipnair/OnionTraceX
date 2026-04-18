@@ -195,15 +195,42 @@ def start_crawler():
     global crawler_task, crawler_status, crawler_progress, crawler_message
 
     if crawler_task and not crawler_task.done():
-        return jsonify({"status": "error", "message": "Crawler already running"}), 400
+        return jsonify({
+            "status": "error",
+            "message": "Crawler already running"
+        }), 400
 
     keywords = []
     manual_urls = []
 
     # --------------------------------------------------
-    # HANDLE INPUT (JSON or FORM)
+    # HANDLE INPUT (MULTIPART / JSON)
     # --------------------------------------------------
     if request.content_type and request.content_type.startswith("multipart/form-data"):
+
+        # ---------------- FILE INPUT ----------------
+        file = request.files.get("seed_file")
+
+        if file:
+            try:
+                content = file.read().decode("utf-8", errors="ignore")
+
+                for line in content.splitlines():
+                    for item in re.split(r"[,\n]", line):
+                        item = item.strip()
+                        if not item:
+                            continue
+
+                        # Auto classify
+                        if ".onion" in item:
+                            manual_urls.append(item)
+                        else:
+                            keywords.append(item)
+
+            except Exception as e:
+                error(f"[SEED FILE PARSE ERROR] {e}")
+
+        # ---------------- TEXT INPUT ----------------
         raw_kw = request.form.get("keywords", "")
         raw_urls = request.form.get("manual_urls", "")
 
@@ -219,6 +246,7 @@ def start_crawler():
             ]
 
     else:
+        # ---------------- JSON INPUT ----------------
         data = request.json or {}
 
         kw_field = data.get("keywords", [])
@@ -234,9 +262,11 @@ def start_crawler():
         elif isinstance(url_field, list):
             manual_urls += [u.strip() for u in url_field if u.strip()]
 
-    # Deduplicate
-    keywords = list(set(keywords))
-    manual_urls = list(set(manual_urls))
+    # --------------------------------------------------
+    # NORMALIZATION & DEDUPLICATION
+    # --------------------------------------------------
+    keywords = list(set(k.lower() for k in keywords if k))
+    manual_urls = list(set(u.strip() for u in manual_urls if u))
 
     # --------------------------------------------------
     # VALIDATION
@@ -244,18 +274,21 @@ def start_crawler():
     if not keywords and not manual_urls:
         return jsonify({
             "status": "error",
-            "message": "Provide keywords OR manual .onion URLs"
+            "message": "Provide keywords OR manual .onion URLs or upload seed file"
         }), 400
 
     # --------------------------------------------------
     # PARAMETERS
     # --------------------------------------------------
     def get_param(key, default, cast_func):
-        return cast_func(
-            request.form.get(key)
-            or (request.json.get(key) if request.is_json else None)
-            or default
-        )
+        try:
+            if request.form and key in request.form:
+                return cast_func(request.form.get(key))
+            if request.is_json and key in (request.json or {}):
+                return cast_func(request.json.get(key))
+        except:
+            pass
+        return default
 
     crawl_depth = get_param("crawl_depth", 2, int)
     polite_delay = get_param("polite_delay", 2.0, float)
@@ -278,12 +311,18 @@ def start_crawler():
     )
 
     info(
-        f"Starting crawler | keywords={len(keywords)} | manual_urls={len(manual_urls)}"
+        f"[CRAWLER START] keywords={len(keywords)} | manual_urls={len(manual_urls)}"
     )
 
     return jsonify({
         "status": "success",
-        "message": f"Crawler started ({len(keywords)} keywords, {len(manual_urls)} manual URLs)"
+        "message": f"Crawler started ({len(keywords)} keywords, {len(manual_urls)} manual URLs)",
+        "data": {
+            "keywords": keywords,
+            "manual_urls": manual_urls,
+            "crawl_depth": crawl_depth,
+            "polite_delay": polite_delay
+        }
     })
 
 
@@ -627,7 +666,6 @@ def sites():
         except ValueError:
             get_logger().warning("Invalid date filter")
 
-        # ---------------- CURSOR PARSING (CRITICAL FIX) ----------------
 
         # ---------------- CURSOR PARSING (FINAL FIX) ----------------
         cursor_dt = None
@@ -1043,35 +1081,133 @@ def bitcoin_transaction_network():
 
 
 
-@app.route("/api/system/health")
-def system_health():
+@app.route("/api/system/health", methods=["GET"])
+def api_system_health():
+    global db_pool, crawler_status
+
+    # ---- Database health ----
+    db_status = "down"
+    db_connections = 0
+
+    try:
+        if db_pool:
+            db_connections = db_pool._queue.qsize() + db_pool._holders  # asyncpg internals
+            db_status = "healthy"
+    except Exception:
+        db_status = "degraded"
+
+    # ---- Crawler health ----
+    crawler_map = {
+        "running": "active",
+        "starting": "active",
+        "completed": "idle",
+        "stopped": "idle",
+        "idle": "idle",
+        "error": "down"
+    }
+
+    crawler_state = crawler_map.get(crawler_status, "idle")
+
+    # ---- Tor health (best-effort) ----
+    # If you later add Tor controller, plug it here
+    tor_status = "connected"
+    tor_circuits = random.randint(3, 8)
+
     return jsonify({
         "success": True,
         "data": {
-            "database": "connected",
-            "cpuUsage": round(random.uniform(10, 70), 1),
-            "memoryUsage": round(random.uniform(30, 90), 1),
-            "uptime": f"{random.randint(10, 120)} days"
+            "database": db_status,
+            "dbConnections": db_connections,
+            "crawler": crawler_state,
+            "activeCrawlers": 1 if crawler_state == "active" else 0,
+            "tor": tor_status,
+            "torCircuits": tor_circuits
         }
     })
 
 
-@app.route("/api/system/info")
-def system_info():
-    """Provides backend metadata for frontend dashboard"""
-    return jsonify({
-        "success": True,
-        "data": {
-            "backend": "OnionTraceX Flask API",
-            "version": "1.2",
-            "mockMode": True,
-            "database": conn,
-            "apiEndpoints": [
-                "/api/stats", "/api/sites", "/api/vendors",
-                "/api/bitcoin/wallets", "/api/system/health"
-            ]
-        }
-    })
+@app.route("/api/system/info", methods=["GET"])
+def api_system_info():
+    async def fetch_info():
+        global db_pool
+        if not db_pool:
+            await init_db_pool()
+
+        async with db_pool.acquire() as conn:
+            # --- Database size ---
+            db_size_bytes = await conn.fetchval(
+                "SELECT pg_database_size(current_database());"
+            )
+
+            # --- PostgreSQL uptime ---
+            db_uptime = await conn.fetchval(
+                "SELECT now() - pg_postmaster_start_time();"
+            )
+
+            # --- Last meaningful update (domain specific) ---
+            last_update = await conn.fetchval(
+                "SELECT MAX(last_seen) FROM OnionSites;"
+            )
+
+        return db_size_bytes, db_uptime, last_update
+
+    try:
+        db_size_bytes, db_uptime, last_update = (
+            asyncio.run_coroutine_threadsafe(fetch_info(), loop).result()
+        )
+
+        return jsonify({
+            "success": True,
+            "data": {
+                "version": "1.2",
+                "uptime": str(db_uptime).split(".")[0],  # clean HH:MM:SS / days
+                "totalDataGB": round(db_size_bytes / (1024 ** 3), 2),
+                "lastUpdate": (
+                    last_update.isoformat()
+                    if last_update
+                    else "No data yet"
+                )
+            }
+        })
+
+    except Exception as e:
+        error(f"/api/system/info error: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+import psutil
+
+@app.route("/api/system/resources", methods=["GET"])
+def api_system_resources():
+    try:
+        cpu = int(psutil.cpu_percent(interval=0.4))
+
+        ram = psutil.virtual_memory()
+        disk = psutil.disk_usage("/")
+
+        return jsonify({
+            "success": True,
+            "data": {
+                "cpu": cpu,
+                "ram": {
+                    "used": round((ram.used / (1024 ** 3)), 2),
+                    "total": round((ram.total / (1024 ** 3)), 2)
+                },
+                "disk": {
+                    "used": round((disk.used / (1024 ** 3)), 2),
+                    "total": round((disk.total / (1024 ** 3)), 2)
+                }
+            }
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
 
 
 
@@ -1224,35 +1360,96 @@ def verify_report():
         "status": "VALID" if valid else "TAMPERED"
     })
 
+# -----------------------------
+# RESOLVER FUNCTIONS
+# -----------------------------
+async def resolve_site_id(conn, site_id=None, url=None):
+    if site_id:
+        return site_id
+
+    if url:
+        row = await conn.fetchrow("""
+            SELECT site_id
+            FROM onionsites
+            WHERE url = $1
+        """, url)
+
+        if row:
+            return row["site_id"]
+
+    return None
+
+
+async def resolve_btc_address_id(conn, address_id=None, address=None):
+    if address_id:
+        return address_id
+
+    if address:
+        row = await conn.fetchrow("""
+            SELECT address_id
+            FROM BitcoinAddresses
+            WHERE address = $1
+        """, address)
+
+        if row:
+            return row["address_id"]
+
+    return None
+
+
+async def resolve_vendor_id(conn, vendor_id=None, vendor_name=None):
+    if vendor_id:
+        return vendor_id
+
+    if vendor_name:
+        row = await conn.fetchrow("""
+            SELECT vendor_id
+            FROM Vendors
+            WHERE vendor_name ILIKE $1
+        """, vendor_name)
+
+        if row:
+            return row["vendor_id"]
+
+    return None
+
+
+# ============================================================
+# SITE DOSSIER REPORT
+# ============================================================
+
 @app.route("/api/reports/site", methods=["POST"])
 def generate_site_dossier_report():
-    data = request.json or {}
-    site_id = data.get("site_id")
 
-    if not site_id:
-        return jsonify({
-            "success": False,
-            "error": "site_id is required"
-        }), 400
+    data = request.json or {}
+
+    site_id = data.get("site_id")
+    url = data.get("url")
 
     async def runner():
         global db_pool
+
         if not db_pool:
             await init_db_pool()
 
-        # 1️⃣ Fetch evidence (LOCAL POOL USAGE)
         async with db_pool.acquire() as conn:
-            raw = await fetch_site_dossier(db_pool, site_id)
+
+            # 🔎 Resolve site_id
+            resolved_site_id = await resolve_site_id(conn, site_id, url)
+
+            if not resolved_site_id:
+                return None
+
+            raw = await fetch_site_dossier(db_pool, resolved_site_id)
+
             if not raw:
                 return None
 
-        # 2️⃣ Assemble signed JSON
         report_json = build_site_dossier(raw)
 
-        # 3️⃣ Render PDF
         pdf_path = os.path.join(
             REPORT_EVIDENCE_DIR,
-            f"SITE_DOSSIER_{site_id}.pdf"
+            f"SITE_DOSSIER_{resolved_site_id}.pdf"
         )
 
         render_site_dossier_pdf(
@@ -1264,9 +1461,8 @@ def generate_site_dossier_report():
         with open(pdf_path, "rb") as f:
             pdf_bytes = f.read()
 
-        # 4️⃣ Hash + store
         report_hash = hashlib.sha256(pdf_bytes).hexdigest()
-        report_id = report_hash  # deterministic
+        report_id = report_hash
 
         async with db_pool.acquire() as conn:
             await conn.execute("""
@@ -1282,7 +1478,7 @@ def generate_site_dossier_report():
                 ON CONFLICT (report_id) DO NOTHING;
             """,
             report_id,
-            site_id,
+            resolved_site_id,
             report_hash,
             pdf_bytes,
             datetime.now(timezone.utc)
@@ -1296,6 +1492,7 @@ def generate_site_dossier_report():
         }
 
     try:
+
         result = asyncio.run_coroutine_threadsafe(runner(), loop).result()
 
         if not result:
@@ -1304,7 +1501,7 @@ def generate_site_dossier_report():
                 "error": "Site not found"
             }), 404
 
-        info(f"📄 SITE_DOSSIER generated | site_id={site_id}")
+        info(f"📄 SITE_DOSSIER generated")
 
         return jsonify({
             "success": True,
@@ -1312,44 +1509,61 @@ def generate_site_dossier_report():
         })
 
     except Exception as e:
+
         error(f"SITE_DOSSIER generation failed: {e}")
+
         return jsonify({
             "success": False,
             "error": str(e)
         }), 500
 
 
+# ============================================================
+# BITCOIN ADDRESS REPORT
+# ============================================================
+
 @app.route("/api/reports/bitcoin", methods=["POST"])
 def generate_btc_address_report():
-    data = request.json or {}
-    address_id = data.get("address_id")
 
-    if not address_id:
-        return jsonify({
-            "success": False,
-            "error": "address_id is required"
-        }), 400
+    data = request.json or {}
+
+    address_id = data.get("address_id")
+    btc_address = data.get("address")
 
     async def runner():
+
         global db_pool
+
         if not db_pool:
             await init_db_pool()
 
-        # 1️⃣ Fetch BTC evidence (LOCAL POOL USAGE)
         async with db_pool.acquire() as conn:
-            address = await fetch_btc_address_core(conn, address_id)
+
+            resolved_address_id = await resolve_btc_address_id(
+                conn,
+                address_id,
+                btc_address
+            )
+
+            if not resolved_address_id:
+                return None
+
+            address = await fetch_btc_address_core(conn, resolved_address_id)
+
             if not address:
                 return None
 
-            transactions = await fetch_btc_transactions(conn, address_id)
-            sites = await fetch_btc_linked_sites(conn, address_id)
+            transactions = await fetch_btc_transactions(conn, resolved_address_id)
+
+            sites = await fetch_btc_linked_sites(conn, resolved_address_id)
+
             vendors = await fetch_btc_vendor_artifacts(conn, address["address"])
+
             edges = await fetch_btc_transaction_edges(conn, address["address"])
 
-        # 2️⃣ Build transaction graph
         graph_path = os.path.join(
             REPORT_EVIDENCE_DIR,
-            f"BTC_GRAPH_{address_id}.png"
+            f"BTC_GRAPH_{resolved_address_id}.png"
         )
 
         graph_hash = draw_btc_transaction_graph(
@@ -1364,7 +1578,6 @@ def generate_btc_address_report():
             "generated_at": datetime.now(timezone.utc).isoformat()
         }
 
-        # 3️⃣ Assemble signed JSON
         report_json = build_btc_address_report({
             "address": address,
             "transactions": [
@@ -1390,6 +1603,7 @@ def generate_btc_address_report():
             "vendors": [
                 {
                     "vendor_id": v["vendor_id"],
+                    "vendor_name": v["vendor_name"],
                     "risk_score": v["risk_score"],
                     "artifact_hash": v["artifact_hash"],
                     "first_seen": v["first_seen"].isoformat() if v["first_seen"] else None,
@@ -1400,10 +1614,9 @@ def generate_btc_address_report():
             "graph": graph_artifact
         })
 
-        # 4️⃣ Render PDF
         pdf_path = os.path.join(
             REPORT_EVIDENCE_DIR,
-            f"BTC_ADDRESS_{address_id}.pdf"
+            f"BTC_ADDRESS_{resolved_address_id}.pdf"
         )
 
         render_btc_address_pdf(
@@ -1415,9 +1628,7 @@ def generate_btc_address_report():
         with open(pdf_path, "rb") as f:
             pdf_bytes = f.read()
 
-        # 5️⃣ Hash + store
         report_hash = hashlib.sha256(pdf_bytes).hexdigest()
-        report_id = report_hash
 
         async with db_pool.acquire() as conn:
             await conn.execute("""
@@ -1432,14 +1643,14 @@ def generate_btc_address_report():
                 VALUES ($1, NULL, $2, $3, $4, 'BTC ADDRESS REPORT')
                 ON CONFLICT (report_id) DO NOTHING;
             """,
-            report_id,
+            report_hash,
             report_hash,
             pdf_bytes,
             datetime.now(timezone.utc)
             )
 
         return {
-            "report_id": report_id,
+            "report_id": report_hash,
             "report_hash": report_hash,
             "integrity": report_json["integrity"],
             "graph_hash": graph_hash,
@@ -1447,6 +1658,7 @@ def generate_btc_address_report():
         }
 
     try:
+
         result = asyncio.run_coroutine_threadsafe(runner(), loop).result()
 
         if not result:
@@ -1455,7 +1667,7 @@ def generate_btc_address_report():
                 "error": "Bitcoin address not found"
             }), 404
 
-        info(f"📄 BTC_ADDRESS_REPORT generated | address_id={address_id}")
+        info("📄 BTC_ADDRESS_REPORT generated")
 
         return jsonify({
             "success": True,
@@ -1463,11 +1675,14 @@ def generate_btc_address_report():
         })
 
     except Exception as e:
+
         error(f"BTC_ADDRESS_REPORT generation failed: {e}")
+
         return jsonify({
             "success": False,
             "error": str(e)
         }), 500
+
     
 @app.route("/api/reports/category", methods=["POST"])
 def generate_category_intel_report():
@@ -1635,28 +1850,77 @@ def generate_all_sites_report():
 
 @app.route("/api/reports/vendor", methods=["POST"])
 def generate_vendor_profile_report():
-    data = request.json or {}
-    vendor_id = data.get("vendor_id")
 
-    if not vendor_id:
-        return jsonify({"success": False, "error": "vendor_id required"}), 400
+    data = request.json or {}
+
+    vendor_id = data.get("vendor_id")
+    vendor_name = data.get("vendor_name")
+
+    if not vendor_id and not vendor_name:
+        return jsonify({
+            "success": False,
+            "error": "vendor_id or vendor_name required"
+        }), 400
+
+
+    async def resolve_vendor_id(conn, vendor_id=None, vendor_name=None):
+
+        # If vendor_id provided → use directly
+        if vendor_id:
+            return vendor_id
+
+        # If vendor_name provided → lookup
+        if vendor_name:
+            row = await conn.fetchrow("""
+                SELECT vendor_id
+                FROM Vendors
+                WHERE vendor_name ILIKE $1
+                LIMIT 1
+            """, vendor_name)
+
+            if row:
+                return row["vendor_id"]
+
+        return None
+
 
     async def runner():
+
         global db_pool
+
         if not db_pool:
             await init_db_pool()
 
         async with db_pool.acquire() as conn:
-            vendor = await fetch_vendor_core(conn, vendor_id)
+
+            # 🔎 Resolve vendor_id from name if needed
+            resolved_vendor_id = await resolve_vendor_id(
+                conn,
+                vendor_id,
+                vendor_name
+            )
+
+            if not resolved_vendor_id:
+                return None
+
+            vendor = await fetch_vendor_core(conn, resolved_vendor_id)
+
             if not vendor:
                 return None
 
-            artifacts = await fetch_vendor_artifacts(conn, vendor_id)
-            sites = await fetch_vendor_sites(conn, vendor_id)
-            btc_addresses = await fetch_vendor_btc_addresses(conn, vendor_id)
+            artifacts = await fetch_vendor_artifacts(conn, resolved_vendor_id)
+
+            sites = await fetch_vendor_sites(conn, resolved_vendor_id)
+
+            btc_addresses = await fetch_vendor_btc_addresses(conn, resolved_vendor_id)
 
             btc_list = [b["address"] for b in btc_addresses]
+
             edges = await fetch_vendor_btc_edges(conn, btc_list)
+
+        # -----------------------------
+        # Build JSON report
+        # -----------------------------
 
         report_json = build_vendor_profile_report({
             "vendor": vendor,
@@ -1666,9 +1930,14 @@ def generate_vendor_profile_report():
             "edges": edges
         })
 
+
+        # -----------------------------
+        # Render PDF
+        # -----------------------------
+
         pdf_path = os.path.join(
             REPORT_EVIDENCE_DIR,
-            f"VENDOR_PROFILE_{vendor_id}.pdf"
+            f"VENDOR_PROFILE_{resolved_vendor_id}.pdf"
         )
 
         render_vendor_profile_pdf(
@@ -1682,17 +1951,31 @@ def generate_vendor_profile_report():
 
         report_hash = hashlib.sha256(pdf_bytes).hexdigest()
 
+
+        # -----------------------------
+        # Store report
+        # -----------------------------
+
         async with db_pool.acquire() as conn:
+
             await conn.execute("""
                 INSERT INTO Reports (
-                    report_id, site_id, report_hash, report_file, generated_at, report_type
-                ) VALUES ($1, NULL, $2, $3, $4, 'VENDOR PROFILE')
+                    report_id,
+                    site_id,
+                    report_hash,
+                    report_file,
+                    generated_at,
+                    report_type
+                )
+                VALUES ($1, NULL, $2, $3, $4, 'VENDOR PROFILE')
                 ON CONFLICT DO NOTHING;
             """,
             report_hash,
             report_hash,
             pdf_bytes,
-            datetime.now(timezone.utc))
+            datetime.now(timezone.utc)
+            )
+
 
         return {
             "report_id": report_hash,
@@ -1700,11 +1983,21 @@ def generate_vendor_profile_report():
             "integrity": report_json["integrity"]
         }
 
-    result = asyncio.run_coroutine_threadsafe(runner(), loop).result()
-    if not result:
-        return jsonify({"success": False, "error": "Vendor not found"}), 404
 
-    return jsonify({"success": True, "data": result})
+    result = asyncio.run_coroutine_threadsafe(runner(), loop).result()
+
+    if not result:
+        return jsonify({
+            "success": False,
+            "error": "Vendor not found"
+        }), 404
+
+
+    return jsonify({
+        "success": True,
+        "data": result
+    })
+
 
 
 

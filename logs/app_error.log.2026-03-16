@@ -1,0 +1,4 @@
+2026-03-16 05:50:51 - app - ERROR - [logger.py:103] - Unexpected error for http://proorxli43pfz7yathen7f7miayajrbap4vy6hgupuxwrijmnxqh5dqd.onion/?add-to-cart=4836: TTL expired
+2026-03-16 06:05:58 - app - ERROR - [logger.py:103] - Unexpected error for http://yysc6o3i3gbbbb5spffoljzodcfg33axrdj4hbzoy4xb3yqv66ljp5id.onion/: TTL expired
+2026-03-16 17:00:30 - app - ERROR - [logger.py:103] - Unexpected error for http://bzmmttq6p7ririsavbnql2zdhbongq236r722cg62wjlg2bynhjp5zad.onion/list: TTL expired
+2026-03-16 17:43:56 - app - ERROR - [logger.py:103] - SITE_DOSSIER generation failed: relation "sites" does not exist

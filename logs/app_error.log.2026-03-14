@@ -1,0 +1,22 @@
+2026-03-14 10:20:42 - app - ERROR - [logger.py:103] - Unexpected error for http://zhlbnwvw64rmfe7lurfwfq4l6s7ee7retdyqs6nysc27csfsboig3fid.onion/: TTL expired
+2026-03-14 11:17:09 - app - ERROR - [logger.py:103] - Unexpected error for http://btcxi6ka4wp7tuk2njhfox2yffddimzsasmmvpcny3qeh2zyx3tnvfqd.onion/: Host unreachable
+2026-03-14 11:24:42 - app - ERROR - [logger.py:103] - Unexpected error for http://walletdhjtlu7wkzwhlkgdtl45glxx3olfwywpt7cv33q67aotajdmad.onion/: Host unreachable
+2026-03-14 11:26:40 - app - ERROR - [logger.py:103] - TX fetch error [bc1qkerl4x0feea959rkel235n7xw4g7u9a7rexr2z]: Cannot connect to host blockstream.info:443 ssl:default [Connection reset by peer]
+2026-03-14 11:28:55 - app - ERROR - [logger.py:103] - Unexpected error for http://torscamismihh6gxwzf4wmbnosvzfzs546tlvgj5macmi2evtfxh5nid.onion/: Host unreachable
+2026-03-14 11:31:52 - app - ERROR - [logger.py:103] - Unexpected error for http://vi7zl3oabdanlzsd43stadkbiggmbaxl6hlcbph23exzg5lsvqeuivid.onion/: Host unreachable
+2026-03-14 11:45:50 - app - ERROR - [logger.py:103] - Unexpected error for https://bitmixeqlpdbdrw2xvquvaxgjkscuzvt4rwovhgcsnqrgnueko4j4jad.onion: Connection refused by destination host
+2026-03-14 11:49:22 - app - ERROR - [logger.py:103] - Unexpected error for http://shadowmacphgmha42ff2ap5ry4qd2m362l6i3tsgiob5gg6tatgrw7ad.onion/: Host unreachable
+2026-03-14 12:03:50 - app - ERROR - [logger.py:103] - Unexpected error for http://bitcoinpvcaacv6wgvwqpw35gufypz2ynbnak24vsoylghayrw7v5wid.onion/: Host unreachable
+2026-03-14 12:42:43 - app - ERROR - [logger.py:103] - TX fetch error [bc1qfzgpxflkuqsqexpc5ggt5szue3sjp223r9yfkk]: Cannot connect to host blockstream.info:443 ssl:default [Temporary failure in name resolution]
+2026-03-14 13:41:31 - app - ERROR - [logger.py:103] - Unexpected error for http://2mjcyeebnrm7hbxzqahqqxqy2cahi34cdf6dz77353y7pwbtbrz3dpad.onion/: TTL expired
+2026-03-14 14:25:48 - app - ERROR - [logger.py:103] - Unexpected error for http://ikzfo6o6iqixcmci5h54ehuhi3lijzyovnrhwzy666ruaza2cg65hbyd.onion/: TTL expired
+2026-03-14 18:45:11 - app - ERROR - [logger.py:103] - Unexpected error for http://btcwiki5t477lfmfece63y3cc3rctr6mwg4zyui2dzau4xaeh4fwydad.onion/: TTL expired
+2026-03-14 18:57:01 - app - ERROR - [logger.py:103] - Unexpected error for http://6nhmgdpnyoljh5uzr5kwlatx2u3diou4ldeommfxjz3wkhalzgjqxzqd.onion/: Connection refused by destination host
+2026-03-14 19:09:40 - app - ERROR - [logger.py:103] - Unexpected error for http://uwbgdziyojur7ng25d24ggezbdtbf6myjcls2x6eu7vm6hldsxoonwqd.onion/go?url=http://torchdeedp3i2jigzjdmfpn5ttjhthh5wbmda2rr3jvqjg5p77c54dqd.onion&link_rel=: General SOCKS server failure
+2026-03-14 19:13:19 - app - ERROR - [logger.py:103] - Unexpected error for http://uwbgdziyojur7ng25d24ggezbdtbf6myjcls2x6eu7vm6hldsxoonwqd.onion/go?url=http://torchdeedp3i2jigzjdmfpn5ttjhthh5wbmda2rr3jvqjg5p77c54dqd.onion&link_rel=16afdb61aebb69f7c729dae760aea8c544b7282a162365af5b5c353785b1c101d4248b82f8dbe39c7c134cca261b15b9: General SOCKS server failure
+2026-03-14 19:32:00 - app - ERROR - [logger.py:103] - TX fetch error [bc1qdfvduvphmutmcnem8czvlkjl7qegu6ft5muhsh]: Cannot connect to host blockstream.info:443 ssl:default [Connection reset by peer]
+2026-03-14 19:36:09 - app - ERROR - [logger.py:103] - Unexpected error for http://paavlaytlfsqyvkg3yqj7hflfg5jw2jdg2fgkza5ruf6lplwseeqtvyd.onion/: Connection refused by destination host
+2026-03-14 23:38:51 - app - ERROR - [logger.py:103] - Unexpected error for http://zn5phdxerow3eujdbdxiuxo7rv2kxjm35vfa7wkebsxwaeobss4eqvyd.onion/list: TTL expired
+2026-03-15 03:17:13 - app - ERROR - [logger.py:103] - TX fetch error [bc1q4devu7uqmxahqjjjz6rq20rp8htxe8mjt6cs35]: Cannot connect to host blockstream.info:443 ssl:default [Temporary failure in name resolution]
+2026-03-15 18:36:06 - app - ERROR - [logger.py:103] - TX fetch error [bc1qq7kud5zjvkzyr6c2x0c48ttsncprmck33fsg9k]: Cannot connect to host blockstream.info:443 ssl:default [Connection reset by peer]
+2026-03-16 09:24:22 - app - ERROR - [logger.py:103] - TX fetch error [bc1qaq4zdzj24artnpwaca8xhdtkg0gk2wp9au0j6f]: Cannot connect to host blockstream.info:443 ssl:default [Temporary failure in name resolution]
